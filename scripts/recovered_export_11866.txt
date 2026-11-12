@@ -1,0 +1,509 @@
+/**
+ * Official Wedding Invitation Export & Download Utilities
+ * Pure code-generated export system for Mithun & Sakhi Wedding.
+ * Strict 4:6 Portrait Aspect Ratio (800 x 1200 base, 2400 x 3600 at 3x scale).
+ * Zero raster image dependencies. 100% Vector & High-Resolution Canvas Rendering.
+ */
+
+import { generateQrMatrix } from "./qr-code";
+
+export const CANONICAL_PUBLIC_INVITATION_URL =
+  "https://mithun-sakhi-wedding.vercel.app/invitation";
+export const CANONICAL_INVITATION_PNG_FILENAME =
+  "mithun-sakhi-official-wedding-invitation-4x6.png";
+
+export interface InvitationExportOptions {
+  scale?: number;
+  filename?: string;
+  canonicalUrl?: string;
+}
+
+/**
+ * High-Density Canvas Renderer for the Official Mithun & Sakhi Wedding Invitation.
+ * Renders at ultra-high print resolution (default 2400 x 3600 at 3x scale of 800 x 1200) with
+ * architectural stepped gold borders, concentric halo, royal M&S seal, luxury typography,
+ * burgundy date cartouche, 2x2 ceremony grid, and genuine scannable QR code.
+ */
+export function renderInvitationToCanvas(
+  canvas: HTMLCanvasElement,
+  options: InvitationExportOptions = {}
+): void {
+  const scale = options.scale ?? 3;
+  const baseWidth = 800;
+  const baseHeight = 1200; // Exact 4:6 ratio (800 : 1200 = 4 : 6)
+
+  canvas.width = baseWidth * scale;
+  canvas.height = baseHeight * scale;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  ctx.scale(scale, scale);
+
+  // 1. Warm Silk Parchment Background with Rounded Card Base
+  const bgGrad = ctx.createLinearGradient(0, 0, 0, baseHeight);
+  bgGrad.addColorStop(0, "#FFFDF9");
+  bgGrad.addColorStop(0.5, "#FAF5EC");
+  bgGrad.addColorStop(1, "#F5EFEB");
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(0, 0, baseWidth, baseHeight, 28);
+  ctx.clip();
+
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, baseWidth, baseHeight);
+
+  // 2. Architectural Beveled & Stepped Notched Gold Border Frame (Exact 4:6)
+  // Outer hairline (Inset 16px)
+  ctx.strokeStyle = "rgba(170, 130, 42, 0.5)";
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.roundRect(16, 16, baseWidth - 32, baseHeight - 32, 20);
+  ctx.stroke();
+
+  // Primary Stepped Notched Border (Inset 28px)
+  const step = 32;
+  ctx.strokeStyle = "#D4AF37";
+  ctx.lineWidth = 2.2;
+  ctx.beginPath();
+  ctx.moveTo(28 + step, 28);
+  ctx.lineTo(baseWidth - 28 - step, 28);
+  ctx.lineTo(baseWidth - 28 - step, 28 + step / 2);
+  ctx.lineTo(baseWidth - 28, 28 + step / 2);
+  ctx.lineTo(baseWidth - 28, baseHeight - 28 - step / 2);
+  ctx.lineTo(baseWidth - 28 - step, baseHeight - 28 - step / 2);
+  ctx.lineTo(baseWidth - 28 - step, baseHeight - 28);
+  ctx.lineTo(28 + step, baseHeight - 28);
+  ctx.lineTo(28 + step, baseHeight - 28 - step / 2);
+  ctx.lineTo(28, baseHeight - 28 - step / 2);
+  ctx.lineTo(28, 28 + step / 2);
+  ctx.lineTo(28 + step, 28 + step / 2);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Corner Diamond Finials
+  const drawDiamond = (x: number, y: number, sz: number) => {
+    ctx.fillStyle = "#D4AF37";
+    ctx.beginPath();
+    ctx.moveTo(x, y - sz);
+    ctx.lineTo(x + sz, y);
+    ctx.lineTo(x, y + sz);
+    ctx.lineTo(x - sz, y);
+    ctx.closePath();
+    ctx.fill();
+  };
+  drawDiamond(28 + step, 28 + step / 2, 4);
+  drawDiamond(baseWidth - 28 - step, 28 + step / 2, 4);
+  drawDiamond(28 + step, baseHeight - 28 - step / 2, 4);
+  drawDiamond(baseWidth - 28 - step, baseHeight - 28 - step / 2, 4);
+
+  // Inset Dashed Fine Accent Border (Inset 40px)
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.45)";
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.roundRect(40, 40, baseWidth - 80, baseHeight - 80, 10);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // 3. TOP: Royal Monogram Seal: M&S
+  const sealY = 96;
+  ctx.save();
+  ctx.translate(baseWidth / 2, sealY);
+
+  // Outer dashed ring
+  ctx.strokeStyle = "#D4AF37";
+  ctx.lineWidth = 1.2;
+  ctx.setLineDash([3, 2]);
+  ctx.beginPath();
+  ctx.arc(0, 0, 36, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Inner solid ring
+  ctx.strokeStyle = "#AA822A";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(0, 0, 31, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Seal Base Disc
+  ctx.fillStyle = "#FFFDF9";
+  ctx.beginPath();
+  ctx.arc(0, 0, 28, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Cardinal Diamonds
+  drawDiamond(0, -36, 3);
+  drawDiamond(0, 36, 3);
+  drawDiamond(-36, 0, 3);
+  drawDiamond(36, 0, 3);
+
+  // Monogram M&S
+  ctx.fillStyle = "#5A0F1A";
+  ctx.font = "bold 20px Georgia, serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("M & S", 0, 1);
+  ctx.restore();
+
+  // 4. Sanskrit Invocation & Divine Blessing
+  ctx.fillStyle = "#A67C2E";
+  ctx.font = "14px Georgia, serif";
+  ctx.textAlign = "center";
+  ctx.fillText("॥ ॐ श्री गणेशाय नमः ॥", baseWidth / 2, 154);
+
+  ctx.fillStyle = "#5A0F1A";
+  ctx.font = "bold 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  ctx.letterSpacing = "3px";
+  ctx.fillText("WITH THE DIVINE BLESSINGS OF OUR ANCESTORS AND FAMILIES", baseWidth / 2, 180);
+
+  // Symmetrical Divider
+  const drawDivider = (y: number) => {
+    ctx.strokeStyle = "rgba(212, 175, 55, 0.5)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(baseWidth / 2 - 120, y);
+    ctx.lineTo(baseWidth / 2 - 20, y);
+    ctx.moveTo(baseWidth / 2 + 20, y);
+    ctx.lineTo(baseWidth / 2 + 120, y);
+    ctx.stroke();
+
+    ctx.fillStyle = "#AA822A";
+    drawDiamond(baseWidth / 2 - 10, y, 2.5);
+    drawDiamond(baseWidth / 2 + 10, y, 2.5);
+    ctx.fillStyle = "#5A0F1A";
+    drawDiamond(baseWidth / 2, y, 3.5);
+  };
+  drawDivider(204);
+
+  // 5. Parents Attribution
+  const parentsY = 224;
+  const pColOffset = 180;
+
+  // Groom's Parents
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#A67C2E";
+  ctx.font = "bold 11px -apple-system, sans-serif";
+  ctx.letterSpacing = "2px";
+  ctx.fillText("GROOM'S PARENTS", baseWidth / 2 - pColOffset, parentsY);
+
+  ctx.fillStyle = "#2C1810";
+  ctx.font = "bold 16px Georgia, serif";
+  ctx.letterSpacing = "0px";
+  ctx.fillText("Mr. Kenaram Gorain", baseWidth / 2 - pColOffset, parentsY + 24);
+  ctx.fillText("& Ms. Savita Gorian", baseWidth / 2 - pColOffset, parentsY + 44);
+
+  ctx.fillStyle = "#6B5A52";
+  ctx.font = "12px -apple-system, sans-serif";
+  ctx.fillText("Chitmu, Kotshila, Purulia", baseWidth / 2 - pColOffset, parentsY + 66);
+
+  // Vertical Center Axis
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+  ctx.beginPath();
+  ctx.moveTo(baseWidth / 2, parentsY - 6);
+  ctx.lineTo(baseWidth / 2, parentsY + 66);
+  ctx.stroke();
+  drawDiamond(baseWidth / 2, parentsY + 30, 3);
+
+  // Bride's Parents
+  ctx.fillStyle = "#A67C2E";
+  ctx.font = "bold 11px -apple-system, sans-serif";
+  ctx.letterSpacing = "2px";
+  ctx.fillText("BRIDE'S PARENTS", baseWidth / 2 + pColOffset, parentsY);
+
+  ctx.fillStyle = "#2C1810";
+  ctx.font = "bold 16px Georgia, serif";
+  ctx.letterSpacing = "0px";
+  ctx.fillText("Mr. Upen Gorain", baseWidth / 2 + pColOffset, parentsY + 24);
+  ctx.fillText("& Ms. Kokila Gorain", baseWidth / 2 + pColOffset, parentsY + 44);
+
+  ctx.fillStyle = "#6B5A52";
+  ctx.font = "12px -apple-system, sans-serif";
+  ctx.fillText("Ghaghra, Jaipur, Purulia", baseWidth / 2 + pColOffset, parentsY + 66);
+
+  drawDivider(320);
+
+  // 6. Invitation Decree Statement
+  ctx.fillStyle = "#4A3832";
+  ctx.font = "italic 16px Georgia, serif";
+  ctx.textAlign = "center";
+  ctx.fillText(
+    "With the blessings of our families, we joyfully invite you to celebrate the sacred union of",
+    baseWidth / 2,
+    350
+  );
+
+  // 7. CENTERPIECE: Couple Names
+  const coupleY = 415;
+  ctx.fillStyle = "#5A0F1A";
+  ctx.font = "bold 44px Georgia, serif";
+  ctx.letterSpacing = "3px";
+  ctx.fillText("MITHUN GORAIN", baseWidth / 2, coupleY);
+
+  // Ampersand
+  ctx.fillStyle = "#A67C2E";
+  ctx.font = "italic 26px Georgia, serif";
+  ctx.letterSpacing = "0px";
+  ctx.fillText("&", baseWidth / 2, coupleY + 38);
+
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.6)";
+  ctx.beginPath();
+  ctx.moveTo(baseWidth / 2 - 60, coupleY + 38);
+  ctx.lineTo(baseWidth / 2 - 20, coupleY + 38);
+  ctx.moveTo(baseWidth / 2 + 20, coupleY + 38);
+  ctx.lineTo(baseWidth / 2 + 60, coupleY + 38);
+  ctx.stroke();
+
+  ctx.fillStyle = "#5A0F1A";
+  ctx.font = "bold 44px Georgia, serif";
+  ctx.letterSpacing = "3px";
+  ctx.fillText("SAKHI GORAIN", baseWidth / 2, coupleY + 82);
+
+  // 8. Date & Location Ribbon
+  const plaqueY = coupleY + 112;
+  const plaqueW = 340;
+  const plaqueH = 38;
+
+  const plaqueGrad = ctx.createLinearGradient(baseWidth / 2 - plaqueW / 2, 0, baseWidth / 2 + plaqueW / 2, 0);
+  plaqueGrad.addColorStop(0, "#4A0A10");
+  plaqueGrad.addColorStop(0.5, "#65101D");
+  plaqueGrad.addColorStop(1, "#4A0A10");
+
+  ctx.fillStyle = plaqueGrad;
+  ctx.strokeStyle = "#D4AF37";
+  ctx.lineWidth = 1.8;
+  ctx.beginPath();
+  ctx.roundRect(baseWidth / 2 - plaqueW / 2, plaqueY, plaqueW, plaqueH, 8);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = "#FFFDF8";
+  ctx.font = "bold 15px Georgia, serif";
+  ctx.letterSpacing = "3px";
+  ctx.fillText("19 – 22 NOVEMBER 2026", baseWidth / 2, plaqueY + 24);
+
+  ctx.fillStyle = "#5A0F1A";
+  ctx.font = "bold 12px -apple-system, sans-serif";
+  ctx.letterSpacing = "2.5px";
+  ctx.fillText("PURULIA, WEST BENGAL", baseWidth / 2, plaqueY + 56);
+
+  drawDivider(plaqueY + 76);
+
+  // 9. Four-Ceremony Quad Grid (2x2)
+  const gridY = plaqueY + 96;
+  const boxW = 320;
+  const boxH = 92;
+  const col1 = baseWidth / 2 - boxW - 12;
+  const col2 = baseWidth / 2 + 12;
+
+  const ceremonies = [
+    {
+      ritual: "RITUAL 01",
+      title: "HALDI CEREMONY",
+      dt: "19 Nov 2026 | 9:00 AM IST",
+      venue: "Groom's Home, Chitmu, Kotshila, Purulia",
+      bg: "#FFFDF4",
+      border: "rgba(229, 201, 122, 0.8)",
+      x: col1,
+      y: gridY,
+    },
+    {
+      ritual: "RITUAL 02",
+      title: "MEHNDI CEREMONY",
+      dt: "20 Nov 2026 | 9:00 AM IST",
+      venue: "Groom's Home, Chitmu, Kotshila, Purulia",
+      bg: "#F5FAF6",
+      border: "rgba(162, 204, 166, 0.8)",
+      x: col2,
+      y: gridY,
+    },
+    {
+      ritual: "RITUAL 03",
+      title: "THE SACRED WEDDING",
+      dt: "21 Nov 2026 | 11:00 PM IST",
+      venue: "Bride's Home, Ghaghra, Jaipur, Purulia",
+      bg: "#FDF6F6",
+      border: "rgba(223, 159, 159, 0.8)",
+      x: col1,
+      y: gridY + boxH + 12,
+    },
+    {
+      ritual: "RITUAL 04",
+      title: "RECEPTION & PREETIBHOJ",
+      dt: "22 Nov 2026 | 5:00 PM IST",
+      venue: "Groom's Home, Chitmu, Kotshila, Purulia",
+      bg: "#FAF7F4",
+      border: "rgba(214, 189, 168, 0.8)",
+      x: col2,
+      y: gridY + boxH + 12,
+    },
+  ];
+
+  ceremonies.forEach((c) => {
+    ctx.fillStyle = c.bg;
+    ctx.strokeStyle = c.border;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(c.x, c.y, boxW, boxH, 10);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#8C673D";
+    ctx.font = "bold 9.5px -apple-system, sans-serif";
+    ctx.letterSpacing = "1.5px";
+    ctx.fillText(c.ritual, c.x + boxW / 2, c.y + 19);
+
+    ctx.fillStyle = "#5A0F1A";
+    ctx.font = "bold 14px Georgia, serif";
+    ctx.letterSpacing = "1.5px";
+    ctx.fillText(c.title, c.x + boxW / 2, c.y + 40);
+
+    ctx.fillStyle = "#2C1810";
+    ctx.font = "bold 12px -apple-system, sans-serif";
+    ctx.letterSpacing = "0px";
+    ctx.fillText(c.dt, c.x + boxW / 2, c.y + 60);
+
+    ctx.fillStyle = "#6B5A52";
+    ctx.font = "11px -apple-system, sans-serif";
+    ctx.fillText(c.venue, c.x + boxW / 2, c.y + 78);
+  });
+
+  // 10. LOWER PEDESTAL: Genuine Scannable QR Code & Decree
+  const footY = gridY + boxH * 2 + 36;
+  const qrUrl = options.canonicalUrl || CANONICAL_PUBLIC_INVITATION_URL;
+  const qrMatrix = generateQrMatrix(qrUrl);
+  const qrSize = 76;
+  const qrX = baseWidth / 2 - 170;
+
+  // Horizontal divider above footer
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.35)";
+  ctx.beginPath();
+  ctx.moveTo(baseWidth / 2 - 240, footY - 14);
+  ctx.lineTo(baseWidth / 2 + 240, footY - 14);
+  ctx.stroke();
+
+  // QR White Base
+  ctx.fillStyle = "#FFFFFF";
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.6)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(qrX - 4, footY - 4, qrSize + 8, qrSize + 8, 8);
+  ctx.fill();
+  ctx.stroke();
+
+  // Draw QR Modules
+  const moduleCount = qrMatrix.length;
+  const cellSize = qrSize / moduleCount;
+  ctx.fillStyle = "#2A1418";
+
+  for (let r = 0; r < moduleCount; r++) {
+    for (let c = 0; c < moduleCount; c++) {
+      if (qrMatrix[r][c]) {
+        ctx.fillRect(qrX + c * cellSize, footY + r * cellSize, cellSize, cellSize);
+      }
+    }
+  }
+
+  // Vertical Separator
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+  ctx.beginPath();
+  ctx.moveTo(baseWidth / 2 - 65, footY);
+  ctx.lineTo(baseWidth / 2 - 65, footY + qrSize);
+  ctx.stroke();
+
+  // Footer Text
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#3D2822";
+  ctx.font = "14px Georgia, serif";
+  ctx.letterSpacing = "0px";
+  ctx.fillText("Scan to view complete celebration details & RSVP.", baseWidth / 2 - 45, footY + 22);
+
+  ctx.fillStyle = "#7C665D";
+  ctx.font = "11px -apple-system, sans-serif";
+  ctx.fillText("mithun-sakhi-wedding.vercel.app/invitation", baseWidth / 2 - 45, footY + 44);
+
+  ctx.fillStyle = "#A67C2E";
+  ctx.font = "12px Georgia, serif";
+  ctx.letterSpacing = "1px";
+  ctx.fillText("॥ शुभम् भवतु ॥ • BOUND BY SACRED VEDIC VOWS", baseWidth / 2 - 45, footY + 66);
+
+  ctx.restore();
+}
+
+/**
+ * Triggers a direct download of the high-resolution 4:6 PNG invitation.
+ */
+export async function downloadInvitationCardAsPng(
+  options: InvitationExportOptions = {}
+): Promise<void> {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+
+  const canvas = document.createElement("canvas");
+  renderInvitationToCanvas(canvas, options);
+
+  const filename = options.filename || CANONICAL_INVITATION_PNG_FILENAME;
+
+  canvas.toBlob((blob) => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, "image/png");
+}
+
+/**
+ * Backward-compatible helper for exporting the official invitation card to PNG.
+ */
+export async function exportInvitationCardToPng(
+  options?: InvitationExportOptions
+): Promise<void> {
+  await downloadInvitationCardAsPng(options);
+}
+
+/**
+ * Triggers browser print/PDF export preserving exact 4:6 aspect ratio.
+ */
+export function printOfficialInvitation(): void {
+  if (typeof window !== "undefined") {
+    window.print();
+  }
+}
+
+/**
+ * Handles sharing the canonical public invitation URL or copying to clipboard.
+ */
+export async function shareOrCopyInvitationUrl(): Promise<{ success: boolean; message: string }> {
+  if (typeof window === "undefined") {
+    return { success: false, message: "Browser window not available." };
+  }
+
+  const shareData = {
+    title: "Mithun & Sakhi — Official Wedding Invitation",
+    text: "Official royal wedding invitation decree for Mithun Gorain & Sakhi Gorain. 19–22 November 2026, Purulia, West Bengal.",
+    url: CANONICAL_PUBLIC_INVITATION_URL,
+  };
+
+  if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+    try {
+      await navigator.share(shareData);
+      return { success: true, message: "Invitation shared successfully!" };
+    } catch {
+      // Fall through to clipboard copy
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(CANONICAL_PUBLIC_INVITATION_URL);
+    return { success: true, message: "Invitation link copied to clipboard!" };
+  } catch {
+    return { success: false, message: `Public URL: ${CANONICAL_PUBLIC_INVITATION_URL}` };
+  }
+}

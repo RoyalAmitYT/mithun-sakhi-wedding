@@ -1,0 +1,317 @@
+import { generateQrMatrix } from "./qr-code";
+import { WEDDING_DATA } from "@/data/wedding-data";
+
+export interface InvitationExportData {
+  template: "cinematic" | "traditional";
+  headlineText?: string;
+  introText?: string;
+  qrCodeTargetUrl?: string;
+  customAnnouncement?: string | null;
+}
+
+/**
+ * High-Resolution HTML5 Canvas PNG Generator (TC-INV-02)
+ * Generates an ultra-crisp 1200x1600 (300 DPI equivalent) luxury wedding invitation graphic.
+ * Completely client-side, zero external dependencies, 100% reliable across browsers.
+ */
+export async function exportInvitationCardToPng(data: InvitationExportData): Promise<void> {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+
+  const width = 1200;
+  const height = data.template === "traditional" ? 1650 : 1500;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  // 1. Background Luxury Gradient
+  const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+  if (data.template === "cinematic") {
+    bgGrad.addColorStop(0, "#FFFFFF");
+    bgGrad.addColorStop(0.5, "#FFFDF9");
+    bgGrad.addColorStop(1, "#F7F1E6");
+  } else {
+    bgGrad.addColorStop(0, "#FFFDF8");
+    bgGrad.addColorStop(0.3, "#FFFFFF");
+    bgGrad.addColorStop(0.7, "#FFFDF8");
+    bgGrad.addColorStop(1, "#F5EFE0");
+  }
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, width, height);
+
+  // 2. Borders & Corner Ornaments
+  ctx.strokeStyle = "#B8975E";
+  ctx.lineWidth = 4;
+  ctx.strokeRect(40, 40, width - 80, height - 80);
+
+  ctx.strokeStyle = "rgba(184, 151, 94, 0.4)";
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(55, 55, width - 110, height - 110);
+
+  // Corner decorative marks
+  const corners = [
+    [55, 55],
+    [width - 55, 55],
+    [55, height - 55],
+    [width - 55, height - 55],
+  ];
+  corners.forEach(([cx, cy]) => {
+    ctx.beginPath();
+    ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+    ctx.fillStyle = "#B8975E";
+    ctx.fill();
+  });
+
+  // Typography helper
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  if (data.template === "cinematic") {
+    // ----------------------------------------------------
+    // DESIGN EDITION A: CINEMATIC EDITORIAL
+    // ----------------------------------------------------
+
+    // Top Monogram Arch
+    ctx.beginPath();
+    ctx.arc(width / 2, 170, 45, 0, Math.PI * 2);
+    ctx.strokeStyle = "#B8975E";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.font = "bold 26px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#B8975E";
+    ctx.fillText("M • K", width / 2, 170);
+
+    // Headline
+    const headline = data.headlineText || "Celebrate the Wedding of";
+    ctx.font = "600 24px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#A52232";
+    ctx.fillText(headline.toUpperCase(), width / 2, 260);
+
+    // Couple Names
+    ctx.font = "normal 82px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#292322";
+    ctx.fillText("Mithun & Kabita", width / 2, 350);
+
+    // Intro / Subtitle
+    ctx.font = "italic 26px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#5C5452";
+    ctx.fillText("“Bound by sacred Vedic vows, blessed by eternal love.”", width / 2, 420);
+
+    // Date & Location Banner
+    ctx.font = "600 22px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#B8975E";
+    ctx.fillText("19 – 22 NOVEMBER 2026 • PURULIA, WEST BENGAL", width / 2, 480);
+
+    // Ceremonies Section Frame
+    const boxX = 140;
+    const boxY = 540;
+    const boxW = width - 280;
+    const boxH = 460;
+
+    ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+    ctx.fillRect(boxX, boxY, boxW, boxH);
+    ctx.strokeStyle = "rgba(184, 151, 94, 0.3)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(boxX, boxY, boxW, boxH);
+
+    ctx.font = "bold 20px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#A52232";
+    ctx.fillText("CEREMONY ITINERARY", width / 2, boxY + 45);
+
+    let cy = boxY + 110;
+    for (const c of WEDDING_DATA.ceremonies) {
+      ctx.textAlign = "left";
+      ctx.font = "600 24px 'Cormorant Garamond', Georgia, serif";
+      ctx.fillStyle = "#292322";
+      ctx.fillText(`${c.name}`, boxX + 40, cy);
+
+      ctx.font = "20px 'Manrope', -apple-system, sans-serif";
+      ctx.fillStyle = "#5C5452";
+      ctx.fillText(`${c.formattedDate} • ${c.timeString}`, boxX + 40, cy + 30);
+
+      ctx.textAlign = "right";
+      ctx.font = "20px 'Manrope', -apple-system, sans-serif";
+      ctx.fillStyle = "#B8975E";
+      ctx.fillText(c.venueName, boxX + boxW - 40, cy + 15);
+
+      cy += 85;
+    }
+
+    // QR Code Section
+    const qrUrl = data.qrCodeTargetUrl || "https://mithun-kabita-wedding.vercel.app";
+    const qrMatrix = generateQrMatrix(qrUrl);
+    const qrSize = 160;
+    const qrX = width / 2 - qrSize / 2;
+    const qrY = 1050;
+    const cellSize = qrSize / qrMatrix.length;
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(qrX - 10, qrY - 10, qrSize + 20, qrSize + 20);
+    ctx.strokeStyle = "rgba(184, 151, 94, 0.4)";
+    ctx.strokeRect(qrX - 10, qrY - 10, qrSize + 20, qrSize + 20);
+
+    ctx.fillStyle = "#292322";
+    for (let r = 0; r < qrMatrix.length; r++) {
+      for (let c = 0; c < qrMatrix.length; c++) {
+        if (qrMatrix[r][c]) {
+          ctx.fillRect(qrX + c * cellSize, qrY + r * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+
+    ctx.textAlign = "center";
+    ctx.font = "18px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#8A8280";
+    ctx.fillText("Scan to access ceremony details & official updates", width / 2, 1260);
+
+    ctx.font = "italic 18px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#B8975E";
+    ctx.fillText("mithun-kabita-wedding.vercel.app", width / 2, 1290);
+
+  } else {
+    // ----------------------------------------------------
+    // DESIGN EDITION B: TRADITIONAL ROYAL DECREE
+    // ----------------------------------------------------
+
+    // Auspicious Invocation
+    ctx.font = "italic 26px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#A52232";
+    ctx.fillText("In Auspicious Reverence to the Divine", width / 2, 140);
+
+    ctx.font = "600 20px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#B8975E";
+    ctx.fillText("WITH THE DIVINE BLESSINGS OF OUR ANCESTORS & FAMILIES", width / 2, 190);
+
+    // Hosts Announcement
+    ctx.font = "600 28px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#292322";
+    ctx.fillText("Mr. Kenaram Gorain & Ms. Savita Gorian", width / 2, 260);
+
+    ctx.font = "italic 22px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#5C5452";
+    ctx.fillText("cordially invite you to celebrate the holy marriage of their son", width / 2, 305);
+
+    // Groom
+    ctx.font = "bold 64px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#A52232";
+    ctx.fillText("Mithun", width / 2, 385);
+
+    // With
+    ctx.font = "italic 32px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#B8975E";
+    ctx.fillText("with", width / 2, 445);
+
+    // Bride
+    ctx.font = "bold 64px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#A52232";
+    ctx.fillText("Kabita", width / 2, 515);
+
+    ctx.font = "bold 20px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#8A8280";
+    ctx.fillText("( MANJURA )", width / 2, 560);
+
+    // Bride's Parents
+    ctx.font = "italic 22px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#5C5452";
+    ctx.fillText("Daughter of Mr. Upen Gorain & Ms. Kokila Gorain", width / 2, 605);
+
+    // Date Banner
+    ctx.font = "bold 32px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#292322";
+    ctx.fillText("19 – 22 November 2026", width / 2, 675);
+
+    ctx.font = "600 18px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#B8975E";
+    ctx.fillText("GROOM'S HOME: CHITMU • BRIDE'S HOME: GHAGHRA", width / 2, 715);
+
+    // Custom Announcement if configured
+    if (data.customAnnouncement) {
+      ctx.font = "italic 22px 'Cormorant Garamond', Georgia, serif";
+      ctx.fillStyle = "#A52232";
+      ctx.fillText(`“${data.customAnnouncement}”`, width / 2, 765);
+    }
+
+    // Schedule Box
+    const sBoxX = 120;
+    const sBoxY = data.customAnnouncement ? 805 : 765;
+    const sBoxW = width - 240;
+    const sBoxH = 430;
+
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    ctx.fillRect(sBoxX, sBoxY, sBoxW, sBoxH);
+    ctx.strokeStyle = "rgba(184, 151, 94, 0.35)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(sBoxX, sBoxY, sBoxW, sBoxH);
+
+    ctx.font = "bold 22px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillStyle = "#A52232";
+    ctx.fillText("AUSPICIOUS CEREMONY SCHEDULE", width / 2, sBoxY + 45);
+
+    let sy = sBoxY + 105;
+    for (const c of WEDDING_DATA.ceremonies) {
+      ctx.textAlign = "left";
+      ctx.font = "600 22px 'Cormorant Garamond', Georgia, serif";
+      ctx.fillStyle = "#292322";
+      ctx.fillText(`${c.name} (${c.traditionalTitle || ""})`, sBoxX + 35, sy);
+
+      ctx.font = "18px 'Manrope', -apple-system, sans-serif";
+      ctx.fillStyle = "#5C5452";
+      ctx.fillText(`${c.dateString} • ${c.timeString}`, sBoxX + 35, sy + 28);
+
+      ctx.textAlign = "right";
+      ctx.font = "18px 'Manrope', -apple-system, sans-serif";
+      ctx.fillStyle = "#B8975E";
+      ctx.fillText(c.venueName, sBoxX + sBoxW - 35, sy + 14);
+
+      sy += 80;
+    }
+
+    // QR Code Section
+    const qrUrl = data.qrCodeTargetUrl || "https://mithun-kabita-wedding.vercel.app";
+    const qrMatrix = generateQrMatrix(qrUrl);
+    const qrSize = 150;
+    const qrX = width / 2 - qrSize / 2;
+    const qrY = sBoxY + sBoxH + 40;
+    const cellSize = qrSize / qrMatrix.length;
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(qrX - 8, qrY - 8, qrSize + 16, qrSize + 16);
+    ctx.strokeStyle = "rgba(184, 151, 94, 0.4)";
+    ctx.strokeRect(qrX - 8, qrY - 8, qrSize + 16, qrSize + 16);
+
+    ctx.fillStyle = "#292322";
+    for (let r = 0; r < qrMatrix.length; r++) {
+      for (let c = 0; c < qrMatrix.length; c++) {
+        if (qrMatrix[r][c]) {
+          ctx.fillRect(qrX + c * cellSize, qrY + r * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+
+    ctx.textAlign = "center";
+    ctx.font = "17px 'Manrope', -apple-system, sans-serif";
+    ctx.fillStyle = "#8A8280";
+    ctx.fillText("Scan with smartphone to open official digital invitation & RSVP", width / 2, qrY + qrSize + 35);
+  }
+
+  // Trigger Download
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) return resolve();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const filename = `mithun-kabita-invitation-${data.template}.png`;
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      resolve();
+    }, "image/png");
+  });
+}

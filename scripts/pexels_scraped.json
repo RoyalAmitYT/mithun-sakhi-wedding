@@ -1,0 +1,49 @@
+{
+  "hero_couple": [
+    {
+      "id": "17657612",
+      "title": "indian couple",
+      "previewUrl": "https://images.pexels.com/photos/17657612/pexels-photo-17657612.jpeg?h=40&w=40&fit=crop&dpr=1",
+      "highResUrl": "https://images.pexels.com/photos/17657612/pexels-photo-17657612.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "pageUrl": "https://www.pexels.com/photo/17657612/",
+      "author": "Pexels Contributor",
+      "license": "Pexels License (Free to use, commercial and non-commercial, attribution not required)"
+    },
+    {
+      "id": "19609201",
+      "title": "indian couple romantic",
+      "previewUrl": "https://images.pexels.com/photos/19609201/pexels-photo-19609201.jpeg?h=40&w=40&fit=crop&dpr=1",
+      "highResUrl": "https://images.pexels.com/photos/19609201/pexels-photo-19609201.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "pageUrl": "https://www.pexels.com/photo/19609201/",
+      "author": "Pexels Contributor",
+      "license": "Pexels License (Free to use, commercial and non-commercial, attribution not required)"
+    },
+    {
+      "id": "10454182",
+      "title": "indian wedding ceremony",
+      "previewUrl": "https://images.pexels.com/photos/10454182/pexels-photo-10454182.jpeg?h=40&w=40&fit=crop&dpr=1",
+      "highResUrl": "https://images.pexels.com/photos/10454182/pexels-photo-10454182.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "pageUrl": "https://www.pexels.com/photo/10454182/",
+      "author": "Pexels Contributor",
+      "license": "Pexels License (Free to use, commercial and non-commercial, attribution not required)"
+    },
+    {
+      "id": "39625024",
+      "title": "indian wedding",
+      "previewUrl": "https://images.pexels.com/photos/39625024/pexels-photo-39625024.jpeg?h=40&w=40&fit=crop&dpr=1",
+      "highResUrl": "https://images.pexels.com/photos/39625024/pexels-photo-39625024.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "pageUrl": "https://www.pexels.com/photo/39625024/",
+      "author": "Pexels Contributor",
+      "license": "Pexels License (Free to use, commercial and non-commercial, attribution not required)"
+    }
+  ],
+  "bride_portrait": [],
+  "groom_portrait": [],
+  "haldi_ceremony": [],
+  "mehndi_ceremony": [],
+  "wedding_ceremony": [],
+  "reception": [],
+  "decor": [],
+  "video_ceremony": [],
+  "video_bride": []
+}

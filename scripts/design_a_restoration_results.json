@@ -1,0 +1,54 @@
+{
+  "viewports": [
+    {
+      "viewport": "desktop_1440",
+      "dimensions": "1440x900",
+      "cardWidth": 580,
+      "cardHeight": 725,
+      "ratio": "0.8000",
+      "aspectMatch": true
+    },
+    {
+      "viewport": "laptop_1366",
+      "dimensions": "1366x768",
+      "cardWidth": 580,
+      "cardHeight": 725,
+      "ratio": "0.8000",
+      "aspectMatch": true
+    },
+    {
+      "viewport": "mobile_390",
+      "dimensions": "390x844",
+      "cardWidth": 358,
+      "cardHeight": 447.5,
+      "ratio": "0.8000",
+      "aspectMatch": true
+    },
+    {
+      "viewport": "mobile_360",
+      "dimensions": "360x800",
+      "cardWidth": 328,
+      "cardHeight": 410,
+      "ratio": "0.8000",
+      "aspectMatch": true
+    }
+  ],
+  "elementsCheck": {
+    "Edition Kicker: Design Edition A": true,
+    "Edition Tag: Cinematic Editorial": true,
+    "Monogram Seal: M•S": true,
+    "Headline Kicker: Celebrate the Wedding of": true,
+    "Couple Headline: Mithun & Sakhi": true,
+    "Sacred Quote": true,
+    "Date & Location Banner": true,
+    "Groom's Parents": true,
+    "Bride's Parents": true,
+    "Ceremony Schedule Header": true,
+    "Haldi Ceremony": true,
+    "Mehndi Ceremony": true,
+    "The Sacred Wedding": true,
+    "Reception & Preetibhoj": true,
+    "Digital Guest Studio": true
+  },
+  "passed": true
+}

@@ -1,0 +1,314 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #fffcf6;
+  --color-canvas-white: #ffffff;
+  --color-canvas-champagne: #f7f1e6;
+  --color-gold: #b8975e;
+  --color-gold-hover: #a3824b;
+  --color-gold-light: #d8be8d;
+  --color-gold-muted: rgba(184, 151, 94, 0.25);
+  --color-gold-subtle: rgba(184, 151, 94, 0.12);
+  --color-sindoor: #a52232;
+  --color-sindoor-hover: #8e1b29;
+  --color-sindoor-light: #c23b4c;
+  --color-maroon: #481923;
+  --color-maroon-hover: #38121a;
+  --color-sage: #69765d;
+  --color-sage-light: #7e8d70;
+  --color-ink: #292322;
+  --color-ink-muted: #5c5452;
+  --color-ink-subtle: #8a8280;
+
+  --font-serif: var(--font-serif), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-sans), "Manrope", system-ui, -apple-system, sans-serif;
+
+  --shadow-luxury-sm: 0 2px 8px -1px rgba(41, 35, 34, 0.04), 0 1px 4px -1px rgba(184, 151, 94, 0.03);
+  --shadow-luxury-md: 0 12px 32px -4px rgba(41, 35, 34, 0.06), 0 4px 12px -2px rgba(184, 151, 94, 0.04);
+  --shadow-luxury-lg: 0 24px 64px -8px rgba(41, 35, 34, 0.12), 0 8px 24px -4px rgba(184, 151, 94, 0.06);
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+
+:root {
+  /* Primitive Tokens */
+  --color-luminous-champagne: #fffcf6;
+  --color-editorial-white: #ffffff;
+  --color-soft-champagne: #f7f1e6;
+  --color-refined-gold: #b8975e;
+  --color-refined-gold-hover: #a3824b;
+  --color-sindoor-red: #a52232;
+  --color-sindoor-red-hover: #8e1b29;
+  --color-wedding-maroon: #481923;
+  --color-muted-sage: #69765d;
+  --color-warm-ink: #292322;
+  --color-warm-ink-muted: #5c5452;
+
+  /* Semantic Aliases */
+  --bg-canvas: var(--color-luminous-champagne);
+  --bg-surface: var(--color-editorial-white);
+  --bg-surface-secondary: var(--color-soft-champagne);
+  --bg-contrast: var(--color-wedding-maroon);
+
+  --text-primary: var(--color-warm-ink);
+  --text-muted: var(--color-warm-ink-muted);
+  --text-gold: var(--color-refined-gold);
+  --text-accent: var(--color-sindoor-red);
+  --text-on-dark: #ffffff;
+
+  --border-hairline: rgba(184, 151, 94, 0.25);
+  --border-hairline-subtle: rgba(184, 151, 94, 0.15);
+  --border-gold: var(--color-refined-gold);
+  --border-sindoor: var(--color-sindoor-red);
+  --border-subtle: rgba(41, 35, 34, 0.1);
+
+  --focus-ring: var(--color-refined-gold);
+  --focus-ring-offset: var(--color-luminous-champagne);
+
+  --selection-bg: rgba(184, 151, 94, 0.22);
+  --selection-text: var(--color-warm-ink);
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 2px 8px -1px rgba(41, 35, 34, 0.04), 0 1px 4px -1px rgba(184, 151, 94, 0.03);
+  --shadow-md: 0 12px 32px -4px rgba(41, 35, 34, 0.06), 0 4px 12px -2px rgba(184, 151, 94, 0.04);
+  --shadow-lg: 0 24px 64px -8px rgba(41, 35, 34, 0.12), 0 8px 24px -4px rgba(184, 151, 94, 0.06);
+
+  /* Radius System */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-full: 9999px;
+
+  /* Transition Curves */
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile Touch & Scroll Ergonomics & Lenis Integration */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Text Selection */
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* Accessible Focus Styling */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Audio Player Equalizer Wave */
+@keyframes musicBar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 16px;
+  }
+}
+
+/* Stage 3.1 Advanced Cinematic Visual Effects & Lighting */
+@keyframes goldLightSweep {
+  0% {
+    transform: translateX(-150%) skewX(-12deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(250%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ambientPulseGlow {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes subtleGoldShimmer {
+  0%, 100% {
+    border-color: rgba(184, 151, 94, 0.35);
+  }
+  50% {
+    border-color: rgba(212, 175, 55, 0.65);
+  }
+}
+
+.gold-rim-glow {
+  box-shadow: 0 0 25px -4px rgba(184, 151, 94, 0.28), 0 0 10px -2px rgba(212, 175, 55, 0.18);
+}
+
+.luxury-card-shadow {
+  box-shadow: 0 12px 36px -4px rgba(41, 35, 34, 0.06), 0 4px 16px -2px rgba(184, 151, 94, 0.06);
+}
+
+.luxury-card-shadow-hover:hover {
+  box-shadow: 0 20px 48px -4px rgba(41, 35, 34, 0.12), 0 8px 24px -2px rgba(184, 151, 94, 0.14);
+}
+
+/* Wishes Wall 2.0 Continuous Marquee Animations */
+@keyframes marqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marqueeRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.marquee-row {
+  contain: paint layout;
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  contain: layout;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.animate-marquee-left {
+  animation: marqueeLeft 48s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.animate-marquee-right {
+  animation: marqueeRight 48s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Pause on hover and focus within each marquee row */
+.marquee-row:hover .marquee-track,
+.marquee-row:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Pause when user explicitly toggles the accessible pause button */
+.is-paused .marquee-track,
+.marquee-track.is-paused {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Print Utilities for Digital Invitation Studio */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 1cm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .no-print,
+  nav,
+  footer,
+  aside,
+  button:not(.allow-print) {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+}
+
+

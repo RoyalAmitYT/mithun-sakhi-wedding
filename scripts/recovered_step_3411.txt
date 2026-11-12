@@ -1,0 +1,108 @@
+import React from "react";
+import { WEDDING_DATA } from "@/data/wedding-data";
+import { SectionKicker } from "@/components/ui/section-kicker";
+import { OrnamentalDivider } from "@/components/ui/ornamental-divider";
+import { QrCodeDisplay } from "./qr-code-display";
+
+interface InvitationCardCinematicProps {
+  headlineText?: string;
+  introText?: string;
+  qrCodeTargetUrl?: string;
+}
+
+export function InvitationCardCinematic({
+  headlineText = "Celebrate the Wedding of",
+  introText = "With the blessings of our parents, we warmly invite you to join us in celebrating the holy union of Mithun & Kabita.",
+  qrCodeTargetUrl = "https://mithun-kabita-wedding.vercel.app",
+}: InvitationCardCinematicProps) {
+  const { ceremonies } = WEDDING_DATA;
+
+  return (
+    <article
+      id="printable-invitation"
+      className="w-full max-w-xl mx-auto flex flex-col justify-between p-8 sm:p-12 rounded-lg bg-gradient-to-b from-[#FFFFFF] via-[#FFFDF9] to-[#F7F1E6]/70 border-2 border-[rgba(184,151,94,0.35)] shadow-[0_12px_40px_-6px_rgba(41,35,34,0.08)] relative print:border-none print:shadow-none print:p-6"
+    >
+      {/* Decorative Corner Flourishes */}
+      <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#B8975E]/60 pointer-events-none" />
+      <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#B8975E]/60 pointer-events-none" />
+      <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#B8975E]/60 pointer-events-none" />
+      <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#B8975E]/60 pointer-events-none" />
+
+      <div>
+        {/* Header Badge */}
+        <div className="flex items-center justify-between pb-4 border-b border-[rgba(184,151,94,0.2)] mb-6 print:mb-4">
+          <SectionKicker variant="gold">Design Edition A</SectionKicker>
+          <span className="text-[11px] font-sans uppercase tracking-widest text-[#8A8280]">
+            Cinematic Editorial
+          </span>
+        </div>
+
+        {/* Arched Architectural Visual Frame */}
+        <div className="rounded-t-[120px] rounded-b-[4px] p-6 sm:p-8 border border-[rgba(184,151,94,0.3)] bg-white text-center mb-8 shadow-xs">
+          <div className="w-14 h-14 mx-auto rounded-full border border-[rgba(184,151,94,0.5)] flex items-center justify-center text-[#B8975E] mb-3">
+            <span className="font-serif text-xl font-semibold">M&bull;K</span>
+          </div>
+
+          <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#A52232] block mb-1">
+            {headlineText}
+          </span>
+
+          <h2 className="font-serif text-4xl sm:text-5xl font-normal text-[#292322] tracking-tight">
+            Mithun <span className="font-light italic text-[#B8975E] text-3xl sm:text-4xl">&amp;</span> Kabita
+          </h2>
+
+          <p className="font-serif italic text-sm text-[#5C5452] mt-2 max-w-sm mx-auto">
+            &ldquo;Bound by sacred Vedic vows, blessed by eternal love.&rdquo;
+          </p>
+
+          <OrnamentalDivider variant="gold" size="sm" className="my-4" />
+
+          <div className="text-xs font-semibold tracking-wider uppercase text-[#B8975E]">
+            Purulia, West Bengal &bull; 19–22 November 2026
+          </div>
+        </div>
+
+        {/* Intro Message */}
+        <p className="font-serif italic text-center text-sm text-[#5C5452] mb-6 leading-relaxed max-w-md mx-auto">
+          {introText}
+        </p>
+
+        {/* Ceremony Itinerary */}
+        <div className="space-y-3 p-5 rounded-md bg-white border border-[rgba(184,151,94,0.2)] mb-8 shadow-xs">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#A52232] block pb-2 border-b border-[rgba(184,151,94,0.15)]">
+            Ceremony Schedule
+          </span>
+          {ceremonies.map((c) => (
+            <div key={c.id} className="flex flex-col sm:flex-row sm:items-center justify-between text-xs py-1 border-b border-neutral-100 last:border-b-0">
+              <span className="font-medium text-[#292322]">
+                {c.formattedDate}: {c.name}
+              </span>
+              <div className="flex items-center gap-2 text-[#8A8280]">
+                <span>{c.timeString}</span>
+                <span>&bull;</span>
+                <span className="text-[#B8975E] font-medium">{c.venueName}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* QR Code & Scan Notice */}
+      <div className="pt-6 border-t border-[rgba(184,151,94,0.25)] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="text-center sm:text-left">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#292322] block">
+            Digital Guest Studio
+          </span>
+          <p className="text-[11px] text-[#8A8280] max-w-[240px] mt-0.5">
+            Scan to access interactive RSVP, ceremony itinerary, and event updates.
+          </p>
+          <span className="text-[10px] font-serif italic text-[#B8975E] mt-1 block">
+            {qrCodeTargetUrl}
+          </span>
+        </div>
+
+        <QrCodeDisplay url={qrCodeTargetUrl} size={110} label="" />
+      </div>
+    </article>
+  );
+}

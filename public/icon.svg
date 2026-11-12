@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Deep Royal Burgundy / Maroon -->
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#8B1528" />
+      <stop offset="60%" stop-color="#600D1A" />
+      <stop offset="100%" stop-color="#3D0610" />
+    </radialGradient>
+
+    <!-- Metallic Gold Gradient -->
+    <linearGradient id="goldLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE5A4" />
+      <stop offset="25%" stop-color="#ECC66D" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#AA8222" />
+      <stop offset="100%" stop-color="#E5BE57" />
+    </linearGradient>
+
+    <!-- Shimmer Gold Gradient -->
+    <linearGradient id="shimmerGold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C59B27" />
+      <stop offset="50%" stop-color="#FFF3C4" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+
+    <!-- Subtle Drop Shadow -->
+    <filter id="goldShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+  </defs>
+
+  <!-- Base Squircle -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGlow)" />
+
+  <!-- Outer Ornate Gold Border -->
+  <rect x="28" y="28" width="456" height="456" rx="108" fill="none" stroke="url(#goldLinear)" stroke-width="6" opacity="0.9" />
+
+  <!-- Inner Thin Ornamental Border -->
+  <rect x="42" y="42" width="428" height="428" rx="96" fill="none" stroke="url(#shimmerGold)" stroke-width="2" stroke-dasharray="8 6" opacity="0.6" />
+
+  <!-- Corner Ornamental Florets (4 corners) -->
+  <g fill="url(#goldLinear)">
+    <!-- Top-Left -->
+    <circle cx="56" cy="56" r="5" />
+    <polygon points="56,46 59,56 69,56 61,61 64,71 56,65 48,71 51,61 43,56 53,56" />
+
+    <!-- Top-Right -->
+    <circle cx="456" cy="56" r="5" />
+    <polygon points="456,46 459,56 469,56 461,61 464,71 456,65 448,71 451,61 443,56 453,56" />
+
+    <!-- Bottom-Left -->
+    <circle cx="56" cy="456" r="5" />
+    <polygon points="56,446 59,456 69,456 61,461 64,471 56,465 48,471 51,461 43,456 53,456" />
+
+    <!-- Bottom-Right -->
+    <circle cx="456" cy="456" r="5" />
+    <polygon points="456,446 459,456 469,456 461,461 464,471 456,465 448,471 451,461 443,456 453,456" />
+  </g>
+
+  <!-- Auspicious Vedic Crown / Kalash & Diya Motif (Top Crest) -->
+  <g transform="translate(256, 118)" filter="url(#goldShadow)">
+    <path d="M 0,-42 C 16,-22 22,-8 14,10 C 8,20 -8,20 -14,10 C -22,-8 -16,-22 0,-42 Z" fill="url(#shimmerGold)" />
+    <path d="M 0,-26 C 8,-12 10,-2 6,6 C 2,12 -2,12 -6,6 C -10,-2 -8,-12 0,-26 Z" fill="#FFFDF0" />
+    <path d="M -38,18 C -22,12 22,12 38,18 C 44,28 32,40 22,42 L -22,42 C -32,40 -44,28 -38,18 Z" fill="url(#goldLinear)" />
+    <path d="M -26,16 C -44,2 -60,18 -48,32 C -36,44 -20,32 -26,16 Z" fill="url(#goldLinear)" opacity="0.85" />
+    <path d="M 26,16 C 44,2 60,18 48,32 C 36,44 20,32 26,16 Z" fill="url(#goldLinear)" opacity="0.85" />
+  </g>
+
+  <!-- Central Royal Monogram: M · S -->
+  <g filter="url(#goldShadow)">
+    <text
+      x="256"
+      y="304"
+      text-anchor="middle"
+      font-family="'Cormorant Garamond', 'Cinzel', 'Playfair Display', 'Times New Roman', serif"
+      font-size="160"
+      font-weight="700"
+      letter-spacing="4"
+      fill="url(#shimmerGold)"
+    >M<tspan dy="-18" font-size="80" fill="url(#goldLinear)"> &amp; </tspan><tspan dy="18">S</tspan></text>
+  </g>
+
+  <!-- Bottom Filigree Scroll & Auspicious Knot -->
+  <g transform="translate(256, 384)" filter="url(#goldShadow)">
+    <polygon points="0,-10 12,0 0,10 -12,0" fill="#FFFDF0" />
+    <circle cx="0" cy="0" r="3" fill="#8B1528" />
+
+    <path
+      d="M -20,0 C -50,0 -80,-16 -100,-4 C -110,4 -105,18 -92,14 C -80,10 -82,-2 -56,-2 C -40,-2 -26,4 -20,0 Z"
+      fill="url(#goldLinear)"
+    />
+    <circle cx="-104" cy="2" r="3.5" fill="url(#shimmerGold)" />
+
+    <path
+      d="M 20,0 C 50,0 80,-16 100,-4 C 110,4 105,18 92,14 C 80,10 82,-2 56,-2 C 40,-2 26,4 20,0 Z"
+      fill="url(#goldLinear)"
+    />
+    <circle cx="104" cy="2" r="3.5" fill="url(#shimmerGold)" />
+
+    <circle cx="-35" cy="12" r="2.5" fill="url(#goldLinear)" />
+    <circle cx="35" cy="12" r="2.5" fill="url(#goldLinear)" />
+  </g>
+</svg>

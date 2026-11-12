@@ -1,0 +1,56 @@
+/**
+ * Official Wedding Invitation Export & Download Utilities
+ * Exclusively uses the single canonical official invitation artwork:
+ * /images/mithun&sakhi-wedding-invitation.webp
+ */
+
+export const OFFICIAL_INVITATION_IMAGE_SRC =
+  "/images/mithun&sakhi-wedding-invitation.webp";
+export const OFFICIAL_INVITATION_DOWNLOAD_FILENAME =
+  "mithun&sakhi-wedding-invitation.webp";
+export const OFFICIAL_INVITATION_DIMENSIONS = {
+  width: 1087,
+  height: 1447,
+  aspectRatio: 1087 / 1447,
+};
+
+export interface InvitationExportData {
+  template?: string;
+  headlineText?: string;
+  introText?: string;
+  qrCodeTargetUrl?: string;
+  customAnnouncement?: string | null;
+}
+
+/**
+ * Triggers a direct download of the official WebP invitation artwork.
+ */
+export function downloadOfficialInvitationWebp(): void {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+
+  const a = document.createElement("a");
+  a.href = OFFICIAL_INVITATION_IMAGE_SRC;
+  a.download = OFFICIAL_INVITATION_DOWNLOAD_FILENAME;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+/**
+ * Backward-compatible helper for downloading the official invitation artwork.
+ * Strictly uses the canonical official card image.
+ */
+export async function exportInvitationCardToPng(
+  _data?: InvitationExportData
+): Promise<void> {
+  downloadOfficialInvitationWebp();
+}
+
+/**
+ * Triggers browser print/PDF export preserving original aspect ratio.
+ */
+export function printOfficialInvitation(): void {
+  if (typeof window !== "undefined") {
+    window.print();
+  }
+}
