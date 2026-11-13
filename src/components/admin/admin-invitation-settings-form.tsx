@@ -19,10 +19,12 @@ interface AdminInvitationSettingsFormProps {
 }
 
 export function AdminInvitationSettingsForm({ initialSettings }: AdminInvitationSettingsFormProps) {
-  const [headline, setHeadline] = useState(initialSettings.headline_text || "Celebrate the Wedding of");
+  const [headline, setHeadline] = useState(
+    initialSettings.headline_text || "WITH THE DIVINE BLESSINGS OF OUR FAMILIES"
+  );
   const [intro, setIntro] = useState(
     initialSettings.intro_text ||
-      "With the blessings of our parents, we warmly invite you to join us in celebrating the holy union of Mithun & Sakhi."
+      "With joyful hearts, we invite you to celebrate our sacred union\nand bless the beautiful beginning of our life together."
   );
   const [qrUrl, setQrUrl] = useState(
     initialSettings.qr_code_target_url || "https://mithun-sakhi-wedding.vercel.app/#invitation"

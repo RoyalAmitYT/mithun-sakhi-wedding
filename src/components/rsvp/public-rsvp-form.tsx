@@ -20,28 +20,28 @@ const CEREMONIES: CeremonyConfig[] = [
     id: "haldi",
     title: "Haldi Ceremony",
     dateStr: "Thursday, 19 November 2026",
-    timeStr: "10:00 AM IST",
+    timeStr: "9:00 AM IST",
     description: "Sacred turmeric blessings, morning music & joy",
   },
   {
     id: "mehndi",
     title: "Mehndi Ceremony",
     dateStr: "Friday, 20 November 2026",
-    timeStr: "05:00 PM IST",
+    timeStr: "9:00 AM IST",
     description: "Intricate henna artistry, songs & celebration",
   },
   {
     id: "wedding",
     title: "The Sacred Wedding",
     dateStr: "Saturday, 21 November 2026",
-    timeStr: "07:00 PM IST",
+    timeStr: "11:00 PM IST",
     description: "Auspicious Vedic nuptials, Saat Phere & Sindoor Daan",
   },
   {
     id: "reception",
     title: "Reception",
     dateStr: "Sunday, 22 November 2026",
-    timeStr: "07:00 PM IST",
+    timeStr: "5:00 PM IST",
     description: "Grand banquet, family blessings & evening feast",
   },
 ];
@@ -284,17 +284,24 @@ export function PublicRsvpForm() {
               </div>
             </div>
 
-            {/* Actions: View Wedding Invitation or Return to Homepage */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mt-8">
+            {/* Actions: View Wedding Invitation, Return to Homepage, or Submit Another */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mt-8 flex-wrap">
               <Link
                 href="/#invitation"
                 className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#7D1525] via-[#9B1E30] to-[#6A1220] hover:brightness-110 active:scale-[0.98] text-white border border-[#D4AF37]/50 shadow-[0_6px_20px_rgba(155,30,48,0.28)] font-sans font-medium text-sm transition-all text-center"
               >
                 View Wedding Invitation &rarr;
               </Link>
+              <button
+                type="button"
+                onClick={handleResetForAnother}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-white hover:bg-[#FDF6E8] active:scale-[0.98] text-[#7D1525] border border-[#B8975E]/60 text-sm font-medium transition-all text-center cursor-pointer shadow-2xs"
+              >
+                Submit Another RSVP
+              </button>
               <Link
                 href="/"
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white hover:bg-[#FDF6E8] active:scale-[0.98] text-[#7D1525] border border-[#B8975E]/60 text-sm font-medium transition-all text-center flex items-center justify-center gap-2 shadow-2xs"
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white hover:bg-[#FDF6E8] active:scale-[0.98] text-[#5C5452] hover:text-[#292322] border border-[#B8975E]/40 text-sm font-medium transition-all text-center flex items-center justify-center gap-2 shadow-2xs"
               >
                 <svg
                   className="w-4 h-4 text-[#B8975E]"
@@ -309,7 +316,7 @@ export function PublicRsvpForm() {
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                   <polyline points="9 22 9 12 15 12 15 22" />
                 </svg>
-                <span>Return to Homepage</span>
+                <span>Return Home</span>
               </Link>
             </div>
           </motion.div>

@@ -41,15 +41,15 @@ export function OfficialWeddingInvitation({
       aria-label="Official Digital Wedding Invitation — Mithun Gorain and Sakhi Gorain"
       className={`
         relative mx-auto select-text overflow-hidden
-        aspect-[4/5] w-full
+        sm:aspect-[4/5] w-full
         ${isPreview ? "max-w-[620px] sm:max-w-[680px] md:max-w-[730px]" : "max-w-[640px] sm:max-w-[700px] md:max-w-[750px]"}
         bg-gradient-to-b from-[#FAF6EE] via-[#F8F3E6] to-[#F4ECE0]
         border border-[rgba(184,151,94,0.45)]
         text-[#292322] transition-all duration-300
         rounded-2xl sm:rounded-3xl
         shadow-[0_25px_60px_-15px_rgba(45,15,20,0.20),0_0_0_1px_rgba(255,255,255,0.85)_inset]
-        p-2 xs:p-2.5 sm:p-3.5 md:p-4
-        flex flex-col justify-between
+        p-3 xs:p-3.5 sm:p-3.5 md:p-4
+        flex flex-col justify-between gap-2.5 sm:gap-0
         print:shadow-none print:m-auto
         ${className}
       `}
@@ -169,7 +169,7 @@ export function OfficialWeddingInvitation({
       {/* 3. TOP HEADER BAR: M&S MONOGRAM, TITLE & PURULIA METADATA           */}
       {/* =================================================================== */}
       <div className="relative z-10 w-full pt-0.5 sm:pt-1">
-        <header className="flex items-center justify-between pb-1 sm:pb-1.5 pl-[29%] pr-1 sm:pr-2">
+        <header className="flex items-center justify-between pb-1 sm:pb-1.5 pl-[29%] pr-5 sm:pr-2">
           {/* Left: Navbar Brand Seal Logo & Title */}
           <div className="flex items-center gap-1.5 sm:gap-2">
             <span className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-[3px] border border-[rgba(184,151,94,0.4)] bg-white/80 text-[#B8975E] shadow-xs shrink-0">
@@ -311,7 +311,7 @@ export function OfficialWeddingInvitation({
           <div className="grid grid-cols-[1fr_auto_1fr] items-center text-center gap-2 sm:gap-4 relative z-10">
             {/* Groom's Parents */}
             <div>
-              <span className="text-[8px] xs:text-[9px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1">
+              <span className="text-[8px] xs:text-[9px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
                 ✦ GROOM&apos;S PARENTS ✦
               </span>
               <p className="font-serif text-[12px] xs:text-[13px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
@@ -329,7 +329,7 @@ export function OfficialWeddingInvitation({
 
             {/* Bride's Parents */}
             <div>
-              <span className="text-[8px] xs:text-[9px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1">
+              <span className="text-[8px] xs:text-[9px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
                 ✦ BRIDE&apos;S PARENTS ✦
               </span>
               <p className="font-serif text-[12px] xs:text-[13px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
@@ -361,7 +361,7 @@ export function OfficialWeddingInvitation({
       {/* 7. FOUR PHOTOGRAPHIC CEREMONY CARDS (SWEEPING CURVED DIAGONAL EDGE) */}
       {/* =================================================================== */}
       <div className="relative z-10 my-0.5">
-        <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
 
           {/* CARD 1: HALDI CEREMONY */}
           <div className="relative flex rounded-xl sm:rounded-2xl border border-[#E5C788]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#FFFDF7] via-[#FFFBF2] to-[#FFF8E7] min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]">

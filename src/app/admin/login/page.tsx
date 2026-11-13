@@ -11,7 +11,7 @@ import { getAdminContext } from "@/lib/supabase/auth-helpers";
 export const instant = false;
 
 export const metadata: Metadata = {
-  title: "Executive Sign In | Admin Portal — Mithun & Sakhi Wedding",
+  title: "Executive Sign In | Admin Portal",
   description: "Secure administrative sign-in portal for wedding management and operations.",
   robots: {
     index: false,

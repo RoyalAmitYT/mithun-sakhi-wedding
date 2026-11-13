@@ -1,4 +1,4 @@
--- Supabase Seed Data: Mithun & Kabita Wedding Website
+-- Supabase Seed Data: Mithun & Sakhi Wedding Website
 -- Source of Truth: docs/CONTENT_AND_EVENT_DATA.md
 -- Strict Anti-Fabrication: Only confirmed events seeded. Zero fake users, admins, wishes, or media.
 
@@ -117,9 +117,9 @@ INSERT INTO public.invitation_settings (
 VALUES
   (
     'default',
-    'Celebrate the Wedding of',
-    'With the blessings of our parents, we warmly invite you to join us in celebrating the holy union of Mithun & Kabita.',
-    'https://mithun-kabita-wedding.vercel.app',
+    'WITH THE DIVINE BLESSINGS OF OUR FAMILIES',
+    'With joyful hearts, we invite you to celebrate our sacred union' || chr(10) || 'and bless the beautiful beginning of our life together.',
+    'https://mithun-sakhi-wedding.vercel.app/#invitation',
     TRUE
   )
 ON CONFLICT (id) DO UPDATE SET

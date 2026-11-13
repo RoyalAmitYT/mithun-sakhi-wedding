@@ -135,13 +135,6 @@ export function EditorialFooter() {
               <Link href="/terms" className="hover:text-[#B8975E] transition-colors">
                 Terms of Use
               </Link>
-              <span>&bull;</span>
-              <Link
-                href="/design-preview"
-                className="text-[#B8975E] hover:text-[#A52232] underline underline-offset-4"
-              >
-                Design System Preview &rarr;
-              </Link>
             </div>
           </div>
         </div>

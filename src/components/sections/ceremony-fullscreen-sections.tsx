@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useSyncExternalStore, useRef, useState, useEffect } from "react";
+import React, { useSyncExternalStore, useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { Container } from "@/components/ui/container";
 import { getCurrentTimeMs } from "@/lib/lifecycle";
@@ -10,6 +10,15 @@ import { AnimatedDivider } from "@/components/motion/animated-divider";
 import { AmbientGlow, GoldLightSweep, GlassReflection } from "@/components/effects";
 import { MagneticButton } from "@/components/interactive";
 import { CountdownDigit } from "@/components/hero/hero-countdown";
+
+const emptySubscribe = () => () => {};
+function useMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
 
 export interface CeremonySectionData {
   id: string;
@@ -297,7 +306,7 @@ function subscribeToCeremonies(callback: () => void) {
 
       // Fallback: start on idle after page load has completely settled (avoids initial hydration contention)
       if ("requestIdleCallback" in window) {
-        (window as any).requestIdleCallback(startTimer, { timeout: 7000 });
+        window.requestIdleCallback(startTimer, { timeout: 7000 });
       } else {
         setTimeout(startTimer, 6000);
       }
@@ -699,11 +708,7 @@ function SingleCeremonySection({
   shouldReduceMotion: boolean;
 }) {
   const luxuryEase = MOTION_EASINGS.luxury as [number, number, number, number];
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   // Parallax: each ceremony has its active scroll range across 4 equal intervals:
   // [0.00 -> 0.25]: Haldi active (pinned), receding as Mehndi stacks on top

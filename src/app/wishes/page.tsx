@@ -13,7 +13,7 @@ import type { ApprovedWish } from "@/components/sections/wishes-preview-wall";
 export const instant = false;
 
 export const metadata: Metadata = {
-  title: "Guest Blessings & Wishes — Mithun & Sakhi Wedding",
+  title: "Guest Blessings & Wishes",
   description:
     "Read heartfelt prayers, blessings, and warm congratulations bestowed upon Mithun & Sakhi by family, elders, and cherished friends for their wedding in Purulia.",
   openGraph: {
@@ -35,9 +35,9 @@ export default async function WishesPage() {
 
     if (supabaseUrl && supabaseKey) {
       const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseKey);
-      const { data } = await supabase.rpc("get_approved_wishes");
+      const { data } = await supabase.rpc("get_public_wishes");
       if (data && Array.isArray(data)) {
-        approvedWishes = data.map((item) => ({
+        approvedWishes = (data as unknown as Array<{ id: string; author_display_name: string; wish_text: string; created_at: string }>).map((item) => ({
           id: item.id,
           author_display_name: item.author_display_name,
           wish_text: item.wish_text,

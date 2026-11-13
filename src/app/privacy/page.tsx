@@ -12,11 +12,11 @@ import { WEDDING_DATA } from "@/data/wedding-data";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Privacy, personal profile handling, and guest access verification notice for the Mithun & Sakhi wedding website.",
+    "Privacy and guest RSVP/blessings data handling notice for the Mithun & Sakhi wedding celebration website.",
   openGraph: {
     title: "Privacy Policy — Mithun & Sakhi Wedding",
     description:
-      "Privacy, personal profile handling, and guest access verification notice for the Mithun & Sakhi wedding website.",
+      "Privacy and guest RSVP/blessings data handling notice for the Mithun & Sakhi wedding celebration website.",
   },
 };
 
@@ -38,11 +38,11 @@ export default function PrivacyPage() {
               Privacy Policy
             </h1>
             <p className="font-serif italic text-base sm:text-lg text-[#5C5452] mt-2">
-              Information governance, profile handling, and guest verification standards.
+              Information governance, RSVP privacy, and wedding data protection standards.
             </p>
             <OrnamentalDivider variant="gold" size="sm" className="my-5" />
             <span className="text-xs text-[#8A8280]">
-              Last Updated: 27 October 2026 &bull; Family RSVP &amp; Attendee Management Notice
+              Last Updated: 12 November 2026 &bull; Public RSVP &amp; Guestbook Notice
             </span>
           </Reveal>
 
@@ -56,127 +56,70 @@ export default function PrivacyPage() {
                 1. Nature of This Website
               </h2>
               <p className="text-[#5C5452]">
-                This website is a private wedding celebration portal for the marriage of Mithun Gorain and Sakhi Gorain. It serves two distinct functions: providing public wedding schedules and venue navigation for guests, and managing a private, verified guest portal for celebration coordination.
+                This website is a personal wedding celebration portal for the marriage of Mithun Gorain and Sakhi Gorain. Guests can explore ceremony schedules, venues, digital invitations, published wedding memories, blessings, and submit RSVPs directly without creating an account or logging in.
               </p>
             </section>
 
             <section>
               <h2 className="font-serif text-xl font-medium text-[#292322] mb-2">
-                2. Guest Account Registration &amp; Profile Data
+                2. Public RSVP &amp; Guest Blessings Information
               </h2>
               <p className="text-[#5C5452] mb-3">
-                When visitors create an optional guest account, we collect only the necessary identifying details:
+                When you voluntarily confirm your attendance or share a blessing, we collect only the details you submit:
               </p>
               <ul className="list-disc list-inside space-y-1.5 text-[#5C5452] pl-2">
                 <li>
-                  <strong>Full Name:</strong> Used to identify you in the wedding guest registry and on your personalized portal.
+                  <strong>RSVP Details:</strong> Your full name, guest headcount, ceremony attendance choices, and optional contact number, village/city address, and relationship to the couple. Used solely for wedding hospitality, seating, and catering coordination.
                 </li>
                 <li>
-                  <strong>Email Address:</strong> Used strictly for secure authentication credentials, session verification, and password recovery.
-                </li>
-                <li>
-                  <strong>Mobile Number (Optional):</strong> Used solely for direct wedding coordination and emergency logistical updates.
+                  <strong>Wedding Wishes &amp; Blessings:</strong> Your display name and blessing message, displayed publicly on the wedding guestbook wall.
                 </li>
               </ul>
               <p className="text-[#5C5452] mt-3">
-                We do not sell, license, rent, or commercially share your contact details.
+                We do not sell, license, rent, or commercially share any guest information.
               </p>
             </section>
 
             <section>
               <h2 className="font-serif text-xl font-medium text-[#292322] mb-2">
-                3. Guest Access Request &amp; Family Verification
-              </h2>
-              <p className="text-[#5C5452] mb-3">
-                Registering an account does not automatically grant RSVP permissions. To ensure celebration intimacy and accurate catering planning across the four ceremonies, unapproved guests must submit an Access Request detailing:
-              </p>
-              <ul className="list-disc list-inside space-y-1.5 text-[#5C5452] pl-2">
-                <li>Your invited family or party name (e.g., &ldquo;The Mukherjee Family&rdquo;).</li>
-                <li>Your relationship to the bride or groom (e.g., &ldquo;Cousin of Groom&rdquo;).</li>
-                <li>An optional personal greeting or note to the couple.</li>
-              </ul>
-              <p className="text-[#5C5452] mt-3">
-                Designated wedding administrators review incoming requests. Upon verification:
-              </p>
-              <ul className="list-disc list-inside space-y-1.5 text-[#5C5452] pl-2">
-                <li>
-                  <strong>Approval:</strong> Your profile transitions to verified guest status, assigning you to an official family group.
-                </li>
-                <li>
-                  <strong>Rejection:</strong> If your registration cannot be verified, the request is marked declined with a specific explanation visible only on your account dashboard. You may submit a clarified request if needed.
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-xl font-medium text-[#292322] mb-2">
-                4. Data Isolation &amp; Security Boundaries
+                3. Data Isolation &amp; Security Boundaries
               </h2>
               <p className="text-[#5C5452]">
-                Your account details, access request submissions, and rejection notices are strictly isolated using PostgreSQL Row Level Security (RLS) and column-level permission grants. No guest can inspect, modify, or browse another guest&apos;s registration data. Access to pending requests is restricted exclusively to the wedding couple and administrators holding verified <code>guest_rsvp</code> privileges.
+                Public RSVP submissions are protected by PostgreSQL Row Level Security (RLS) so public visitors cannot view, list, or browse other guests&apos; RSVP contact details. Access to the RSVP roster and unpublished media drafts is restricted strictly to authorized wedding administrators.
               </p>
             </section>
 
             <section>
               <h2 className="font-serif text-xl font-medium text-[#292322] mb-2">
-                5. Session Cookies &amp; Storage
+                4. Essential Cookies &amp; Administrative Sessions
               </h2>
               <p className="text-[#5C5452]">
-                This website uses essential first-party HTTP cookies strictly to maintain your authenticated login session and security tokens. We do not use third-party advertising cookies, external tracking pixels, or commercial behavioral analytics scripts.
+                Public guests do not require accounts or login cookies. Essential first-party HTTP cookies are used solely for authorized administrator authentication sessions. We do not use third-party advertising cookies, tracking pixels, or commercial behavioral analytics.
               </p>
             </section>
 
             <section>
               <h2 className="font-serif text-xl font-medium text-[#292322] mb-2">
-                6. Family RSVP Engine, Attendee Management &amp; Dietary Requests
+                5. Removal or Update Requests
               </h2>
-              <p className="text-[#5C5452] mb-3">
-                Verified wedding guests assigned to a family unit participate in our ceremony-by-ceremony RSVP system:
-              </p>
-              <ul className="list-disc list-inside space-y-1.5 text-[#5C5452] pl-2">
-                <li>
-                  <strong>Designated Family Manager:</strong> Each family unit has a single active representative authorized to submit and update ceremony attendance on behalf of the family. Non-manager family members can view confirmed responses in a secure read-only view.
-                </li>
-                <li>
-                  <strong>Individual Attendee Roster:</strong> When marking a ceremony as &ldquo;Attending&rdquo;, the manager submits individual attendee names and age classifications (Adult, Child, Infant). Catering headcounts and seating arrangements are strictly derived from these explicit child attendee records.
-                </li>
-                <li>
-                  <strong>Optional Logistics &amp; Dietary Information:</strong> Managers may optionally provide arrival travel details (train/flight schedules) and dietary requirements (e.g. pure vegetarian, Jain, allergies). This information is encrypted and isolated; it is accessible only to the wedding coordination team and never shared with other guests or public directories.
-                </li>
-                <li>
-                  <strong>Strict Deadline Enforcement:</strong> Submissions and edits automatically lock at 11:59:59 PM IST on the preceding day for each of the four ceremonies. After the deadline, database constraints permanently prevent mutations by any user role.
-                </li>
-                <li>
-                  <strong>Zero External Spreadsheets or Exports:</strong> Guest attendance rosters are strictly managed within the secure wedding database; direct export to external CSV or Excel spreadsheets is disabled to prevent accidental data dissemination.
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-xl font-medium text-[#292322] mb-2">
-                7. Features In Progress &amp; Data Deletion Support
-              </h2>
-              <p className="text-[#5C5452] mb-3">
-                Please note that public wishes and interactive media galleries are scheduled for upcoming release phases (P-10 &amp; P-11).
-              </p>
               <p className="text-[#5C5452]">
-                Self-service account deletion will be made available in the guest dashboard during Phase P-10. If you wish to delete your account or withdraw an access request immediately, please reach out to the wedding coordination desk via telephone or WhatsApp at{" "}
+                If you would like to update an RSVP or remove a submitted blessing or contact record, please reach out to our wedding coordination desk via telephone or WhatsApp at{" "}
                 <a
                   href={contact.telHref}
                   className="text-[#A52232] font-semibold hover:underline"
                 >
                   {contact.formattedPhone}
                 </a>
-                . Your account records will be promptly purged upon request.
+                , and your request will be handled promptly.
               </p>
             </section>
 
             <section>
               <h2 className="font-serif text-xl font-medium text-[#292322] mb-2">
-                8. Contact for Privacy Inquiries
+                6. Contact for Privacy Inquiries
               </h2>
               <p className="text-[#5C5452]">
-                For any privacy inquiries or assistance regarding your guest registration, please contact the wedding coordination desk:
+                For any privacy inquiries or assistance regarding your RSVP or shared blessing, please contact the wedding coordination desk:
               </p>
               <div className="mt-3 p-4 rounded-[4px] bg-[#F7F1E6] border border-[rgba(184,151,94,0.25)] space-y-1 text-xs">
                 <p>

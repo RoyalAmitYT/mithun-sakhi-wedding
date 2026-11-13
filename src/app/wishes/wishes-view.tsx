@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/motion/reveal";
 import { AnimatedDivider } from "@/components/motion/animated-divider";
 import { WishCard } from "@/components/wishes/wish-card";
 import { WishSubmissionModal } from "@/components/wishes/wish-submission-modal";
 import { MagneticButton } from "@/components/interactive";
-import { getPublicWishes } from "@/data/sample-wishes";
 import type { ApprovedWish } from "@/components/sections/wishes-preview-wall";
 
 interface WishesViewProps {
@@ -18,11 +16,7 @@ interface WishesViewProps {
 export function WishesView({ initialWishes }: WishesViewProps) {
   const [isSubmissionOpen, setIsSubmissionOpen] = useState(false);
 
-  const { wishes, isDemoSample } = useMemo(
-    () => getPublicWishes(initialWishes),
-    [initialWishes]
-  );
-
+  const wishes = initialWishes;
   const hasWishes = wishes.length > 0;
 
   return (
@@ -73,10 +67,9 @@ export function WishesView({ initialWishes }: WishesViewProps) {
               <span>WRITE A BLESSING</span>
             </button>
 
-            {isDemoSample && (
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B8975E]/15 border border-[#B8975E]/30 text-[#A67C1E] text-xs font-semibold tracking-wider uppercase select-none">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#A67C1E] animate-pulse" />
-                <span>DEMO PREVIEW &middot; SAMPLE WISHES</span>
+            {hasWishes && (
+              <div className="font-sans text-xs text-[#5C5452] tracking-wide select-none">
+                {wishes.length} {wishes.length === 1 ? "blessing" : "blessings"} shared
               </div>
             )}
           </div>

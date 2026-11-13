@@ -175,7 +175,7 @@ SELECT is(
     SELECT (public.admin_update_invitation_settings(
       'Royal Wedding Celebration',
       'Honored guests are invited to the auspicious union.',
-      'https://mithun-kabita-wedding.vercel.app/rsvp',
+      'https://mithun-sakhi-wedding.vercel.app/rsvp',
       'traditional',
       true,
       'Auspicious Celebrations begin 19 November 2026'

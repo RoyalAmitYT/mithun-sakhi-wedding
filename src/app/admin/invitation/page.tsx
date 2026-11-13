@@ -39,9 +39,9 @@ export default async function AdminInvitationPage() {
   const { data: rawSettings } = await supabase.rpc("admin_get_invitation_settings");
   const settings = (rawSettings as unknown as AdminInvitationSettings) || {
     id: "default",
-    headline_text: "Celebrate the Wedding of",
+    headline_text: "WITH THE DIVINE BLESSINGS OF OUR FAMILIES",
     intro_text:
-      "With the blessings of our parents, we warmly invite you to join us in celebrating the holy union of Mithun & Sakhi.",
+      "With joyful hearts, we invite you to celebrate our sacred union\nand bless the beautiful beginning of our life together.",
     qr_code_target_url: "https://mithun-sakhi-wedding.vercel.app/#invitation",
     default_template: "cinematic",
     is_published: true,

@@ -9,7 +9,7 @@ import { SectionHeaderFiligree } from "@/components/ui/decorative-surfaces";
 export const instant = false;
 
 export const metadata: Metadata = {
-  title: "Confirm Your Presence (RSVP) — Mithun & Sakhi Wedding",
+  title: "Confirm Your Presence (RSVP)",
   description:
     "Confirm your attendance for the sacred wedding celebrations of Mithun Gorain & Sakhi Gorain in Purulia, West Bengal. 19–22 November 2026.",
   openGraph: {

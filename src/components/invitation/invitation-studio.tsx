@@ -167,8 +167,9 @@ export function InvitationStudio({ initialSettings }: InvitationStudioProps = {}
       <div className="max-w-2xl lg:max-w-[750px] mx-auto pb-16 sm:pb-12">
         <OfficialWeddingInvitation
           variant="full"
-          headlineText={initialSettings?.headline_text}
-          introText={initialSettings?.intro_text}
+          canonicalUrl={initialSettings?.qr_code_target_url || undefined}
+          headlineText={initialSettings?.headline_text || undefined}
+          introText={initialSettings?.intro_text || undefined}
         />
       </div>
     </div>

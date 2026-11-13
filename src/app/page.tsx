@@ -7,6 +7,10 @@ import {
   WishesPreviewSection,
   WishesPreviewSkeleton,
 } from "@/components/sections/wishes-preview-section";
+import {
+  InvitationPreviewSection,
+  InvitationPreviewSkeleton,
+} from "@/components/sections/invitation-preview-section";
 
 // Below-the-fold sections code-split with full SSR static pre-rendering
 const OurStorySection = dynamic(
@@ -37,12 +41,6 @@ const VenuesSection = dynamic(
     )
 );
 
-const InvitationPreviewSection = dynamic(
-  () =>
-    import("@/components/sections/invitation-preview-section").then(
-      (m) => m.InvitationPreviewSection
-    )
-);
 
 const GalleryPreviewSection = dynamic(
   () =>
@@ -122,7 +120,9 @@ export default function HomePage() {
           <VenuesSection />
 
           {/* Section G: Digital Royal Invitation Studio Preview */}
-          <InvitationPreviewSection />
+          <Suspense fallback={<InvitationPreviewSkeleton />}>
+            <InvitationPreviewSection />
+          </Suspense>
 
           {/* Section H: Wedding Memories Gallery Preview */}
           <GalleryPreviewSection />

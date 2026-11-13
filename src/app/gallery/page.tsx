@@ -6,14 +6,13 @@ import { Container } from "@/components/ui/container";
 import { createClient } from "@/lib/supabase/server";
 import { GalleryView, type PublishedMediaItem } from "./gallery-view";
 import { SectionHeaderFiligree } from "@/components/ui/decorative-surfaces";
-import { Reveal } from "@/components/motion/reveal";
 import { AnimatedDivider } from "@/components/motion/animated-divider";
 import { PageTransition } from "@/components/motion/page-transition";
 
 export const instant = false;
 
 export const metadata: Metadata = {
-  title: "Wedding Memories Gallery — Mithun & Sakhi",
+  title: "Wedding Memories Gallery",
   description:
     "Official photography and cinematic film gallery for Mithun & Sakhi's wedding celebrations in Purulia, West Bengal.",
   openGraph: {

@@ -56,20 +56,14 @@ SECURITY DEFINER
 SET search_path = ''
 AS $$
 DECLARE
-  v_cutoff TIMESTAMPTZ;
   v_sanitised_name TEXT;
   v_sanitised_text TEXT;
 BEGIN
   -- ----------------------------------------------------------------
-  -- Cutoff check — reject submissions after the configured deadline
+  -- Cutoff check: new wishes blocked past Memories Mode cutoff (2026-11-22 18:30:00+00)
   -- ----------------------------------------------------------------
-  SELECT wish_submission_cutoff
-  INTO v_cutoff
-  FROM public.site_settings
-  LIMIT 1;
-
-  IF v_cutoff IS NOT NULL AND NOW() > v_cutoff THEN
-    RAISE EXCEPTION 'Wish submissions are closed.' USING ERRCODE = 'P0001';
+  IF COALESCE(NULLIF(current_setting('app.test_time_override', true), '')::timestamptz, NOW()) >= '2026-11-22 18:30:00+00'::timestamptz THEN
+    RAISE EXCEPTION 'Wedding celebration cutoff has passed. New wishes can no longer be submitted.' USING ERRCODE = 'P0001';
   END IF;
 
   -- ----------------------------------------------------------------
@@ -128,19 +122,13 @@ SECURITY DEFINER
 SET search_path = ''
 AS $$
 DECLARE
-  v_cutoff          TIMESTAMPTZ;
   v_sanitised_name  TEXT;
   v_sanitised_text  TEXT;
   v_new_id          UUID;
 BEGIN
-  -- Cutoff check
-  SELECT wish_submission_cutoff
-  INTO v_cutoff
-  FROM public.site_settings
-  LIMIT 1;
-
-  IF v_cutoff IS NOT NULL AND NOW() > v_cutoff THEN
-    RAISE EXCEPTION 'Wish submissions are closed.' USING ERRCODE = 'P0001';
+  -- Cutoff check: new wishes blocked past Memories Mode cutoff (2026-11-22 18:30:00+00)
+  IF COALESCE(NULLIF(current_setting('app.test_time_override', true), '')::timestamptz, NOW()) >= '2026-11-22 18:30:00+00'::timestamptz THEN
+    RAISE EXCEPTION 'Wedding celebration cutoff has passed. New wishes can no longer be submitted.' USING ERRCODE = 'P0001';
   END IF;
 
   -- Sanitise inputs
@@ -199,15 +187,23 @@ BEGIN
   SELECT COALESCE(
     jsonb_agg(
       jsonb_build_object(
-        'id',          m.id,
-        'category',    m.category,
-        'media_type',  m.media_type,
-        'storage_path',m.storage_path,
-        'caption',     m.caption,
-        'sort_order',  m.sort_order,
-        'created_at',  m.created_at
+        'id',               m.id,
+        'media_type',       m.media_type,
+        'storage_path',     m.storage_path,
+        'youtube_url',      m.youtube_url,
+        'category',         m.category,
+        'caption',          m.caption,
+        'download_enabled', m.download_enabled,
+        'display_order',    m.display_order,
+        'file_name',        m.file_name,
+        'file_size_bytes',  m.file_size_bytes,
+        'mime_type',        m.mime_type,
+        'width',            m.width,
+        'height',           m.height,
+        'thumbnail_path',   m.thumbnail_path,
+        'created_at',       m.created_at
       )
-      ORDER BY m.sort_order ASC, m.created_at DESC
+      ORDER BY m.display_order ASC, m.created_at DESC
     ),
     '[]'::jsonb
   )

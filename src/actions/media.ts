@@ -521,15 +521,6 @@ export async function getMediaSignedUrlAction(
 }
 
 /**
- * Server Action: Get public URL for a published storage object.
- */
-export async function getMediaPublicUrl(storagePath: string): Promise<string | null> {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (!supabaseUrl || !storagePath) return null;
-  return `${supabaseUrl}/storage/v1/object/public/${STORAGE_BUCKET}/${storagePath}`;
-}
-
-/**
  * Public Server Query: Get featured media items for the homepage section.
  */
 export async function getHomepageFeaturedMediaAction(limit = 12) {
