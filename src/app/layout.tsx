@@ -95,7 +95,7 @@ export default function RootLayout({
           fetchPriority="high"
         />
       </head>
-      <body className="min-h-screen flex flex-col font-sans antialiased">
+      <body className="min-h-screen flex flex-col font-sans antialiased overflow-x-clip">
         <MotionProvider>
           <SmoothScrollProvider>
             <AudioProvider>

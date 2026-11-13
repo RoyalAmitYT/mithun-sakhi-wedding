@@ -117,14 +117,19 @@ export function HeroSection() {
           aria-hidden="true"
         />
 
-        {/* Layer 2: Mobile/Tablet Vertical Readability Support Gradient */}
+        {/* Layer 2: Mobile/Tablet Luminous Editorial Vignette — Preserves vivid portrait clarity while providing crisp readability */}
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.9, delay: 0.1, ease: luxuryEase }}
-          className="absolute inset-0 block lg:hidden bg-gradient-to-b from-[#140307]/92 via-[#18040A]/86 to-[#140307]/96"
+          className="absolute inset-0 block lg:hidden pointer-events-none"
           aria-hidden="true"
-        />
+        >
+          {/* Subtle top-to-bottom cinematic tone gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#140307]/55 via-[#18040A]/20 via-transparent to-[#140307]/92" />
+          {/* Soft atmospheric radial gold-amber warmth focused behind bottom text */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_75%_at_50%_100%,rgba(20,3,7,0.85)_0%,rgba(24,4,10,0.45)_55%,transparent_100%)]" />
+        </motion.div>
 
         {/* Layer 3: Top Navbar Protection Scrim */}
         <div
@@ -286,7 +291,7 @@ export function HeroSection() {
               />
               <h1
                 id="hero-title"
-                className="font-serif text-[clamp(2.5rem,7.5vw,3.6rem)] sm:text-[clamp(3.5rem,6.8vw,4.8rem)] md:text-[clamp(4.2rem,6.2vw,5.5rem)] lg:text-[4.85rem] xl:text-[5.5rem] 2xl:text-[6.2rem] font-normal tracking-tight text-[#FFFDF8] leading-[1.05] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] whitespace-nowrap"
+                className="font-serif text-[clamp(2.15rem,7.8vw,3.4rem)] sm:text-[clamp(3.5rem,6.8vw,4.8rem)] md:text-[clamp(4.2rem,6.2vw,5.5rem)] lg:text-[4.85rem] xl:text-[5.5rem] 2xl:text-[6.2rem] font-normal tracking-tight text-[#FFFDF8] leading-[1.05] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] max-xs:whitespace-normal whitespace-nowrap"
                 style={{
                   textShadow:
                     "0 2px 10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(212, 175, 55, 0.42), 0 0 50px rgba(184, 151, 94, 0.22)",

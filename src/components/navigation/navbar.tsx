@@ -426,7 +426,7 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center gap-0.5 lg:gap-1 xl:gap-1.5">
+            <div className="hidden lg:flex items-center gap-0.5 lg:gap-1 xl:gap-1.5">
               {navLinks.map((link) => {
                 const itemConfig = NAV_ITEMS.find((it) => it.id === link.id)!;
                 const isActive = isLinkActive(itemConfig);
@@ -520,7 +520,7 @@ export function Navbar() {
                 aria-controls="mobile-navigation-drawer"
                 aria-label="Open navigation menu"
                 className={`
-                  md:hidden p-2 rounded-[2px] transition-colors
+                  lg:hidden p-2 rounded-[2px] transition-colors
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]
                   min-h-[44px] min-w-[44px] flex items-center justify-center
                   ${

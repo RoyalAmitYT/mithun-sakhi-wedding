@@ -74,8 +74,8 @@ export function SmoothScrollProvider({
   );
 
   useEffect(() => {
-    // Mobile devices use 100% native momentum scrolling; skip Lenis allocation and listeners on mobile
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
+    // Mobile and tablet devices (< 1024px) use 100% native momentum scrolling; skip Lenis allocation and listeners on mobile/tablet
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
       if (globalLenis) {
         globalLenis.destroy();
         globalLenis = null;
@@ -104,7 +104,7 @@ export function SmoothScrollProvider({
       syncTouch: false, // Strictly preserve 100% native mobile touch momentum
       touchMultiplier: 1,
       wheelMultiplier: 1.0, // Natural 1:1 responsive wheel input
-      autoRaf: typeof window !== "undefined" ? window.innerWidth >= 768 : true, // Optimized: avoid idle mobile RAF loop while preserving desktop smooth wheel
+      autoRaf: typeof window !== "undefined" ? window.innerWidth >= 1024 : true, // Optimized: avoid idle mobile/tablet RAF loop while preserving desktop smooth wheel
       anchors: true,
       prevent: (node: HTMLElement) => {
         // Prevent Lenis from intercepting scroll inside modals or drawers

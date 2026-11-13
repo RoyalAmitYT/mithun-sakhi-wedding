@@ -178,7 +178,143 @@ const CATEGORIES: CategoryDefinition[] = [
   },
 ];
 
-const ITEMS_PER_PAGE = 9; // 3x3 desktop grid matching visual reference
+const ITEMS_PER_PAGE = 24; // Masonry flowing grid matching visual reference
+
+interface MasonryPhotoCardProps {
+  photo: PublishedMediaItem;
+  globalIdx: number;
+  onSelect: () => void;
+}
+
+function MasonryPhotoCard({ photo, globalIdx, onSelect }: MasonryPhotoCardProps) {
+  // 1. Initial aspect ratio: use database dimensions if available (photo.width / photo.height)
+  const hasDbDimensions =
+    typeof photo.width === "number" &&
+    photo.width > 0 &&
+    typeof photo.height === "number" &&
+    photo.height > 0;
+  const initialRatio = hasDbDimensions ? photo.width! / photo.height! : null;
+
+  const [aspectRatio, setAspectRatio] = useState<number | null>(initialRatio);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+
+  // Derive natural dimensions when DB dimensions are missing
+  const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+      const derivedRatio = img.naturalWidth / img.naturalHeight;
+      setAspectRatio((prev) => prev ?? derivedRatio);
+    }
+    setIsLoaded(true);
+  };
+
+  // Immediate check for cached images (prevents flash & layout shifts on re-renders/cached loads)
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
+      const derivedRatio = imgRef.current.naturalWidth / imgRef.current.naturalHeight;
+      setAspectRatio((prev) => prev ?? derivedRatio);
+      setIsLoaded(true);
+    }
+  }, []);
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label={photo.caption || photo.file_name || `Wedding photograph ${globalIdx + 1}`}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      className="break-inside-avoid mb-3.5 sm:mb-4 lg:mb-5 group relative rounded-2xl overflow-hidden bg-white border border-[#E4D5C3] shadow-[0_4px_16px_rgba(41,35,34,0.06)] hover:shadow-[0_12px_28px_rgba(184,151,94,0.20)] hover:border-[#B8975E]/60 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] block select-none"
+    >
+      {/*
+        Intelligent Masonry Container:
+        - Locks to exact aspect ratio (from DB or derived from naturalWidth/naturalHeight)
+        - Prevents layout shifts with placeholder minHeight and skeleton shimmer while loading
+        - Absolutely zero image motion/scaling on hover
+      */}
+      <div
+        className="relative w-full overflow-hidden bg-[#24181B]/5"
+        style={
+          aspectRatio
+            ? { aspectRatio: String(aspectRatio) }
+            : { minHeight: "220px", aspectRatio: "4/5" }
+        }
+      >
+        {/* Placeholder skeleton shimmer while loading/resolving */}
+        {!isLoaded && (
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-[#24181B]/5 via-[#B8975E]/10 to-[#24181B]/5 animate-pulse"
+            aria-hidden="true"
+          />
+        )}
+
+        <Image
+          ref={imgRef}
+          src={`/api/media/${photo.id}`}
+          alt={photo.caption || photo.file_name || "Wedding memory photograph"}
+          width={photo.width || (aspectRatio ? Math.round(800 * aspectRatio) : 800)}
+          height={photo.height || 1000}
+          sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, (max-width: 1279px) 25vw, 20vw"
+          onLoad={handleImageLoad}
+          className={`w-full h-auto object-cover block select-none transition-opacity duration-300 ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          unoptimized
+          draggable={photo.download_enabled}
+          onContextMenu={(e) => {
+            if (!photo.download_enabled) e.preventDefault();
+          }}
+        />
+
+        {/* Subtle hover gradient overlay (color change only, zero motion) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
+
+        {/* Frosted Glass Media Type Indicator Pill (Bottom-Right, stationary) */}
+        <div
+          className="absolute bottom-3 right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-black/40 backdrop-blur-md border border-white/25 flex items-center justify-center text-white/95 shadow-sm pointer-events-none group-hover:bg-black/60 transition-colors"
+          aria-hidden="true"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+        </div>
+
+        {/* Category Tag pill on hover */}
+        <div className="absolute top-2.5 left-2.5 opacity-90 group-hover:opacity-100 transition-opacity">
+          <span className="px-2.5 py-1 rounded-full text-[9.5px] sm:text-[10px] font-sans font-semibold uppercase tracking-wider bg-white/95 text-[#8E6D38] border border-[#B8975E]/30 backdrop-blur-xs shadow-xs">
+            {CATEGORY_LABELS[photo.category] || photo.category}
+          </span>
+        </div>
+
+        {/* Caption bar on hover if exists (stationary) */}
+        {photo.caption && (
+          <div className="absolute bottom-2.5 left-2.5 right-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+            <p className="font-serif italic text-xs text-white truncate drop-shadow-sm">
+              {photo.caption}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export function GalleryView({ initialMedia = [] }: GalleryViewProps) {
   const [activeTab, setActiveTab] = useState<GalleryTab>("photos");
@@ -447,91 +583,18 @@ export function GalleryView({ initialMedia = [] }: GalleryViewProps) {
           >
             {filteredPhotos.length > 0 ? (
               <>
-                {/* 3-Column Desktop / 2-Column Tablet / 1-Column Mobile Photograph Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Pinterest-Style Intelligent Masonry: 2 cols Mobile (360px–767px) / 3 cols Tablet (768px–1023px) / 4 cols Desktop (1024px+) / 5 cols Wide */}
+                <div className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-3.5 sm:gap-4 lg:gap-5">
                   {paginatedPhotos.map((photo, pageIdx) => {
                     const globalIdx = (currentPage - 1) * ITEMS_PER_PAGE + pageIdx;
 
                     return (
-                      <motion.div
+                      <MasonryPhotoCard
                         key={photo.id}
-                        role="button"
-                        tabIndex={0}
-                        aria-label={photo.caption || photo.file_name || `Wedding photograph ${globalIdx + 1}`}
-                        onClick={() => setLightboxIndex(globalIdx)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            setLightboxIndex(globalIdx);
-                          }
-                        }}
-                        initial={{ opacity: 1, y: 0 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: shouldReduceMotion ? 0 : 0.45,
-                          delay: shouldReduceMotion ? 0 : pageIdx * 0.04,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        whileHover={shouldReduceMotion ? undefined : { y: -3, scale: 1.008 }}
-                        whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}
-                        className="group relative rounded-2xl overflow-hidden bg-white border border-[#E4D5C3] shadow-[0_4px_16px_rgba(41,35,34,0.06)] hover:shadow-[0_12px_28px_rgba(184,151,94,0.22)] hover:border-[#B8975E]/60 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
-                      >
-                        {/* Aspect Ratio 4:3 Image Container */}
-                        <div className="relative aspect-4/3 w-full overflow-hidden bg-[#24181B]/5">
-                          <Image
-                            src={`/api/media/${photo.id}`}
-                            alt={photo.caption || photo.file_name || "Wedding memory photograph"}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                            unoptimized
-                            draggable={photo.download_enabled}
-                            onContextMenu={(e) => {
-                              if (!photo.download_enabled) e.preventDefault();
-                            }}
-                          />
-
-                          {/* Subtle hover gradient overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                          {/* Frosted Glass Media Type Indicator Pill (Bottom-Right) matching Reference */}
-                          <div
-                            className="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-lg bg-black/40 backdrop-blur-md border border-white/25 flex items-center justify-center text-white/95 shadow-sm pointer-events-none group-hover:bg-black/60 group-hover:scale-105 transition-all"
-                            aria-hidden="true"
-                          >
-                            <svg
-                              width="15"
-                              height="15"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                              <circle cx="8.5" cy="8.5" r="1.5" />
-                              <polyline points="21 15 16 10 5 21" />
-                            </svg>
-                          </div>
-
-                          {/* Category Tag pill on hover */}
-                          <div className="absolute top-3 left-3 opacity-90 group-hover:opacity-100 transition-opacity">
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-sans font-semibold uppercase tracking-wider bg-white/95 text-[#8E6D38] border border-[#B8975E]/30 backdrop-blur-xs shadow-xs">
-                              {CATEGORY_LABELS[photo.category] || photo.category}
-                            </span>
-                          </div>
-
-                          {/* Caption bar on hover if exists */}
-                          {photo.caption && (
-                            <div className="absolute bottom-3 left-3 right-14 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                              <p className="font-serif italic text-xs text-white truncate drop-shadow-sm">
-                                {photo.caption}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      </motion.div>
+                        photo={photo}
+                        globalIdx={globalIdx}
+                        onSelect={() => setLightboxIndex(globalIdx)}
+                      />
                     );
                   })}
                 </div>
@@ -901,7 +964,7 @@ export function GalleryView({ initialMedia = [] }: GalleryViewProps) {
                   : { opacity: 0, scale: 0.96, y: 12 }
               }
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="relative max-w-5xl w-full max-h-[92vh] flex flex-col items-center"
+              className="relative max-w-6xl w-full max-h-[94vh] sm:max-h-[92vh] flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Top Bar: Counter & Close Button */}
@@ -930,15 +993,30 @@ export function GalleryView({ initialMedia = [] }: GalleryViewProps) {
                 </motion.button>
               </div>
 
-              {/* Image Viewer with Left/Right Arrows */}
-              <div className="relative w-full max-h-[70vh] sm:max-h-[76vh] aspect-4/3 sm:aspect-16/10 flex items-center justify-center rounded-xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl">
+              {/* Image Viewer: Full-Height Adaptive Image Presentation with Ambient Blur */}
+              <div className="relative w-full h-[66vh] sm:h-[74vh] md:h-[78vh] flex items-center justify-center rounded-2xl overflow-hidden bg-black/60 border border-white/15 shadow-2xl">
+                {/* Subtle blurred, enlarged version of current photograph as ambient backdrop */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+                  <Image
+                    src={`/api/media/${activeLightboxPhoto.id}`}
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    className="object-cover scale-125 blur-3xl opacity-35 brightness-75"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-black/45 backdrop-blur-xs" />
+                </div>
+
+                {/* Sharp, Dominant Foreground Photograph */}
                 <Image
                   src={`/api/media/${activeLightboxPhoto.id}`}
                   alt={activeLightboxPhoto.caption || activeLightboxPhoto.file_name || "Wedding memory photograph"}
                   fill
-                  sizes="100vw"
-                  className="object-contain"
+                  sizes="(max-width: 768px) 96vw, (max-width: 1280px) 92vw, 1400px"
+                  className="object-contain z-10 drop-shadow-[0_16px_36px_rgba(0,0,0,0.65)]"
                   unoptimized
+                  priority
                   draggable={activeLightboxPhoto.download_enabled}
                   onContextMenu={(e) => {
                     if (!activeLightboxPhoto.download_enabled) e.preventDefault();
@@ -952,7 +1030,7 @@ export function GalleryView({ initialMedia = [] }: GalleryViewProps) {
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.92 }}
                     onClick={handlePrevPhoto}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/20 shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                    className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/25 shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                     aria-label="Previous photograph"
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -968,7 +1046,7 @@ export function GalleryView({ initialMedia = [] }: GalleryViewProps) {
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.92 }}
                     onClick={handleNextPhoto}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/20 shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer border border-white/25 shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                     aria-label="Next photograph"
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

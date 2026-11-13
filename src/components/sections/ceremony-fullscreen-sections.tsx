@@ -19,6 +19,13 @@ function useMounted() {
     () => false
   );
 }
+function useIsDesktop() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => typeof window !== "undefined" && window.innerWidth >= 1024,
+    () => true
+  );
+}
 
 export interface CeremonySectionData {
   id: string;
@@ -709,6 +716,7 @@ function SingleCeremonySection({
 }) {
   const luxuryEase = MOTION_EASINGS.luxury as [number, number, number, number];
   const mounted = useMounted();
+  const isDesktop = useIsDesktop();
 
   // Parallax: each ceremony has its active scroll range across 4 equal intervals:
   // [0.00 -> 0.25]: Haldi active (pinned), receding as Mehndi stacks on top
@@ -789,9 +797,9 @@ function SingleCeremonySection({
         willChange: "transform",
       }}
       className={`
-        sticky top-0 w-full min-h-[100svh] h-[100svh] overflow-hidden
-        flex flex-col justify-center text-white
-        ${index > 0 ? "shadow-[0_-20px_50px_rgba(0,0,0,0.5)]" : ""}
+        relative lg:sticky lg:top-0 w-full min-h-0 h-auto lg:min-h-[100svh] lg:h-[100svh] overflow-hidden
+        flex flex-col justify-center text-white py-14 sm:py-18 lg:py-0
+        ${index > 0 ? "border-t border-white/10 lg:border-t-0 lg:shadow-[0_-20px_50px_rgba(0,0,0,0.5)]" : ""}
       `}
     >
       {/* Full-bleed Background Photograph with Restrained Scale Settling & Parallax */}
@@ -806,7 +814,7 @@ function SingleCeremonySection({
             ease: luxuryEase,
           }}
           style={
-            shouldReduceMotion || !mounted
+            shouldReduceMotion || !mounted || !isDesktop
               ? undefined
               : {
                   y: bgParallaxY,
@@ -862,7 +870,7 @@ function SingleCeremonySection({
       <motion.div
         suppressHydrationWarning
         style={
-          shouldReduceMotion || !mounted
+          shouldReduceMotion || !mounted || !isDesktop
             ? undefined
             : {
                 opacity: depthOpacity,
@@ -870,7 +878,7 @@ function SingleCeremonySection({
                 y: depthY,
               }
         }
-        className="relative z-10 w-full pt-16 sm:pt-20 pb-10 sm:pb-14 origin-center"
+        className="relative z-10 w-full pt-4 sm:pt-6 lg:pt-16 pb-4 sm:pb-6 lg:pb-14 origin-center"
       >
         {/* Ceremony-Specific Ambient Lighting Glow */}
         <AmbientGlow
@@ -1044,17 +1052,17 @@ function SingleCeremonySection({
 
             {/* Step 10: Action Buttons: Add to Calendar & Get Directions with Magnetic Hover */}
             <div
-              className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3 sm:mt-4 pt-1"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-4 sm:mt-5 pt-1 w-full sm:w-auto"
             >
               {/* Add to Calendar Button — Ultra-Premium Bespoke Ceremonial Gradient Pill */}
-              <MagneticButton>
+              <MagneticButton className="w-full sm:w-auto">
                 <a
                   href={googleCalendarUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`
                     group relative inline-flex items-center justify-center gap-2.5
-                    h-12 sm:h-[54px] px-6 sm:px-8 rounded-full
+                    h-12 sm:h-[54px] px-6 sm:px-8 rounded-full w-full sm:w-auto
                     ${ceremony.primaryButtonClass}
                     text-[11.5px] sm:text-[12px] font-sans font-bold uppercase tracking-[0.18em]
                     transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97]
@@ -1085,12 +1093,12 @@ function SingleCeremonySection({
               </MagneticButton>
 
               {/* Get Directions Button — Ultra-Premium Dark Translucent Liquid-Glass Pill */}
-              <MagneticButton>
+              <MagneticButton className="w-full sm:w-auto">
                 <a
                   href={ceremony.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-center gap-2.5 h-12 sm:h-[54px] px-6 sm:px-8 rounded-full bg-[rgba(16,10,12,0.68)] hover:bg-[rgba(26,16,20,0.85)] text-[#FFFDF8] hover:text-white text-[11.5px] sm:text-[12px] font-sans font-bold uppercase tracking-[0.18em] border border-[#D4AF37]/75 hover:border-[#F3D78A] backdrop-blur-md shadow-[0_6px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.14)] hover:shadow-[0_8px_26px_rgba(0,0,0,0.65),0_0_18px_rgba(212,175,55,0.25)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className="group relative inline-flex items-center justify-center gap-2.5 h-12 sm:h-[54px] px-6 sm:px-8 rounded-full w-full sm:w-auto bg-[rgba(16,10,12,0.68)] hover:bg-[rgba(26,16,20,0.85)] text-[#FFFDF8] hover:text-white text-[11.5px] sm:text-[12px] font-sans font-bold uppercase tracking-[0.18em] border border-[#D4AF37]/75 hover:border-[#F3D78A] backdrop-blur-md shadow-[0_6px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.14)] hover:shadow-[0_8px_26px_rgba(0,0,0,0.65),0_0_18px_rgba(212,175,55,0.25)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   <svg
                     className="w-4 h-4 sm:w-[17px] sm:h-[17px] text-[#E8C882] group-hover:text-[#FFE396] transition-all duration-300 shrink-0 drop-shadow-xs group-hover:scale-110 group-hover:rotate-12"
@@ -1184,8 +1192,8 @@ export function CeremonyFullscreenSections() {
             shouldReduceMotion={shouldReduceMotion}
           />
         ))}
-        {/* Scroll Runway for Final Chapter (Reception) to remain pinned through its intended interval */}
-        <div className="h-[100svh] w-full pointer-events-none" aria-hidden="true" />
+        {/* Scroll Runway for Final Chapter (Reception) to remain pinned through its intended interval on Desktop */}
+        <div className="hidden lg:block h-[100svh] w-full pointer-events-none" aria-hidden="true" />
       </div>
     </section>
   );

@@ -119,7 +119,7 @@ export function MobileDrawer({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -16 }}
           transition={transitionConfig}
-          className="fixed inset-0 z-50 flex flex-col bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#F7F1E6] px-5 sm:px-6 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] overflow-y-auto sm:hidden"
+          className="fixed inset-0 z-50 flex flex-col bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#F7F1E6] px-5 sm:px-6 md:px-8 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] overflow-y-auto lg:hidden"
         >
           {/* Top Bar inside Drawer */}
           <div className="flex items-center justify-between pb-3.5 border-b border-[rgba(184,151,94,0.25)]">

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/supabase/auth-helpers";
 import { extractYouTubeVideoId } from "@/lib/youtube";
+import { getImageDimensionsFromBuffer } from "@/lib/image-dimensions";
 
 export { extractYouTubeVideoId };
 
@@ -81,6 +82,9 @@ export async function uploadMediaAction(formData: FormData) {
       };
     }
 
+    const widthsRaw = formData.getAll("widths") as string[];
+    const heightsRaw = formData.getAll("heights") as string[];
+
     const createdIds: string[] = [];
     const uploadResults: Array<{
       fileName: string;
@@ -90,7 +94,8 @@ export async function uploadMediaAction(formData: FormData) {
       error?: string;
     }> = [];
 
-    for (const file of allFiles) {
+    for (let fileIdx = 0; fileIdx < allFiles.length; fileIdx++) {
+      const file = allFiles[fileIdx];
       if (file.size > MAX_FILE_SIZE) {
         return {
           success: false,
@@ -111,6 +116,23 @@ export async function uploadMediaAction(formData: FormData) {
       // Convert file to buffer for storage upload
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
+
+      // Detect natural dimensions directly from binary buffer or client form hints
+      const detectedDimensions = getImageDimensionsFromBuffer(buffer);
+      const clientW = widthsRaw[fileIdx] ? parseInt(widthsRaw[fileIdx], 10) : undefined;
+      const clientH = heightsRaw[fileIdx] ? parseInt(heightsRaw[fileIdx], 10) : undefined;
+      const width =
+        detectedDimensions && detectedDimensions.width > 0
+          ? detectedDimensions.width
+          : clientW && clientW > 0
+            ? clientW
+            : undefined;
+      const height =
+        detectedDimensions && detectedDimensions.height > 0
+          ? detectedDimensions.height
+          : clientH && clientH > 0
+            ? clientH
+            : undefined;
 
       // Determine content type and extension
       // The client-side compression in admin-media-manager sends WebP blobs,
@@ -150,7 +172,7 @@ export async function uploadMediaAction(formData: FormData) {
         continue;
       }
 
-      // Register metadata in database
+      // Register metadata in database with precise image width and height
       const { data: createdItem, error: rpcError } = await supabase.rpc(
         "admin_create_media_item",
         {
@@ -163,6 +185,8 @@ export async function uploadMediaAction(formData: FormData) {
           p_file_name: file.name,
           p_file_size_bytes: file.size,
           p_mime_type: contentType,
+          p_width: width ?? undefined,
+          p_height: height ?? undefined,
         }
       );
 
@@ -479,6 +503,7 @@ export async function toggleMediaFeaturedAction(mediaId: string) {
     }
 
     revalidatePath("/admin/media");
+    revalidatePath("/gallery");
     revalidatePath("/");
 
     const result = data as { is_featured: boolean } | null;

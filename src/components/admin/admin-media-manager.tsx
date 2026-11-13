@@ -50,12 +50,17 @@ const CATEGORIES: { label: string; value: MediaCategory }[] = [
 
 /**
  * Compresses an image file on the client using an off-screen HTML Canvas before upload.
- * Reduces bandwidth and upload latency while preserving high-definition wedding quality.
+ * Reduces bandwidth and upload latency while preserving high-definition wedding quality
+ * and capturing precise image dimensions (width, height) for responsive layout rendering.
  */
-async function compressImageClient(file: File, maxDimension = 1920, quality = 0.85): Promise<File> {
-  // If file is SVG or non-image, return as-is
+async function compressImageClient(
+  file: File,
+  maxDimension = 1920,
+  quality = 0.85
+): Promise<{ file: File; width: number; height: number }> {
+  // If file is SVG or non-image, return as-is with default zero dimensions
   if (!file.type.startsWith("image/") || file.type.includes("svg")) {
-    return file;
+    return { file, width: 0, height: 0 };
   }
 
   return new Promise((resolve) => {
@@ -82,7 +87,7 @@ async function compressImageClient(file: File, maxDimension = 1920, quality = 0.
         canvas.height = height;
         const ctx = canvas.getContext("2d");
         if (!ctx) {
-          resolve(file);
+          resolve({ file, width: img.naturalWidth || width, height: img.naturalHeight || height });
           return;
         }
 
@@ -92,23 +97,23 @@ async function compressImageClient(file: File, maxDimension = 1920, quality = 0.
           (blob) => {
             if (!blob || blob.size >= file.size) {
               // If compression didn't reduce size, keep original
-              resolve(file);
+              resolve({ file, width, height });
             } else {
               const baseName = file.name.replace(/\.[^/.]+$/, "");
               const compressedFile = new File([blob], `${baseName}.webp`, {
                 type: "image/webp",
                 lastModified: Date.now(),
               });
-              resolve(compressedFile);
+              resolve({ file: compressedFile, width, height });
             }
           },
           "image/webp",
           quality
         );
       };
-      img.onerror = () => resolve(file);
+      img.onerror = () => resolve({ file, width: 0, height: 0 });
     };
-    reader.onerror = () => resolve(file);
+    reader.onerror = () => resolve({ file, width: 0, height: 0 });
   });
 }
 
@@ -160,10 +165,12 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
       formData.set("is_published", String(uploadIsPublished));
       formData.set("download_enabled", String(uploadDownloadEnabled));
 
-      // Client-side compression for each image
+      // Client-side compression and dimension capture for each image
       for (const file of selectedFiles) {
-        const compressed = await compressImageClient(file);
+        const { file: compressed, width, height } = await compressImageClient(file);
         formData.append("files", compressed);
+        if (width > 0) formData.append("widths", String(width));
+        if (height > 0) formData.append("heights", String(height));
       }
 
       setIsCompressing(false);

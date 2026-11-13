@@ -110,8 +110,8 @@ export function WishesPreviewWall({ initialWishes = [] }: WishesPreviewWallProps
     }
 
     return {
-      topRow: makeSeamlessTrack(row1, 4),
-      bottomRow: makeSeamlessTrack(row2.length > 0 ? row2 : row1, 4),
+      topRow: makeSeamlessTrack(row1, 6),
+      bottomRow: makeSeamlessTrack(row2.length > 0 ? row2 : row1, 6),
     };
   }, [wishes, hasWishes]);
 
@@ -169,121 +169,122 @@ export function WishesPreviewWall({ initialWishes = [] }: WishesPreviewWallProps
           </div>
         </div>
 
-        {/* ==================================================================== */}
-        {/* 2. BLESSINGS WALL PRESENTATION                                       */}
-        {/* ==================================================================== */}
-        {hasWishes ? (
-          <div className="relative max-w-7xl mx-auto">
-            {/* Top Toolbar: Demo indicator & Play/Pause Controls */}
-            <div className="flex items-center justify-between mb-4 px-2 sm:px-4">
-              {/* Blessings count indicator */}
-              <div className="font-sans text-xs text-[#5C5452] tracking-wide select-none">
-                {wishes.length} {wishes.length === 1 ? "blessing" : "blessings"} shared
-              </div>
-
-              {/* Accessible Animation Play/Pause Toggle */}
-              <MagneticButton maxDistanceX={5} maxDistanceY={4}>
-                <button
-                  type="button"
-                  onClick={() => setIsPaused((prev) => !prev)}
-                  aria-label={isPaused ? "Resume blessings animation" : "Pause blessings animation"}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/85 border border-[#B8975E]/35 text-[#5C5452] hover:text-[#292322] hover:bg-white text-xs font-sans transition-all cursor-pointer shadow-xs active:scale-95"
-                >
-                  {isPaused ? (
-                    <>
-                      <svg
-                        className="w-3 h-3 text-[#7B1D28] fill-current"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <polygon points="5 3 19 12 5 21 5 3" />
-                      </svg>
-                      <span className="font-medium">Play Motion</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg
-                        className="w-3 h-3 text-[#7B1D28] fill-current"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <rect x="6" y="4" width="4" height="16" />
-                        <rect x="14" y="4" width="4" height="16" />
-                      </svg>
-                      <span className="font-medium">Pause Motion</span>
-                    </>
-                  )}
-                </button>
-              </MagneticButton>
+        {/* Top Toolbar: Demo indicator & Play/Pause Controls */}
+        {hasWishes && (
+          <div className="flex items-center justify-between mb-4 px-2 sm:px-4 max-w-7xl mx-auto">
+            {/* Blessings count indicator */}
+            <div className="font-sans text-xs text-[#5C5452] tracking-wide select-none">
+              {wishes.length} {wishes.length === 1 ? "blessing" : "blessings"} shared
             </div>
 
-            {/* MARQUEE WRAPPER (Edge-to-edge visible cards without fading masks) */}
+            {/* Accessible Animation Play/Pause Toggle */}
+            <MagneticButton maxDistanceX={5} maxDistanceY={4}>
+              <button
+                type="button"
+                onClick={() => setIsPaused((prev) => !prev)}
+                aria-label={isPaused ? "Resume blessings animation" : "Pause blessings animation"}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/85 border border-[#B8975E]/35 text-[#5C5452] hover:text-[#292322] hover:bg-white text-xs font-sans transition-all cursor-pointer shadow-xs active:scale-95"
+              >
+                {isPaused ? (
+                  <>
+                    <svg
+                      className="w-3 h-3 text-[#7B1D28] fill-current"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    <span className="font-medium">Play Motion</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className="w-3 h-3 text-[#7B1D28] fill-current"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <rect x="6" y="4" width="4" height="16" />
+                      <rect x="14" y="4" width="4" height="16" />
+                    </svg>
+                    <span className="font-medium">Pause Motion</span>
+                  </>
+                )}
+              </button>
+            </MagneticButton>
+          </div>
+        )}
+      </Container>
+
+      {/* ==================================================================== */}
+      {/* 2. BLESSINGS WALL PRESENTATION — GENUINE FULL-BLEED VIEWPORT TRACKS  */}
+      {/* ==================================================================== */}
+      {hasWishes ? (
+        <div
+          className={`relative w-full overflow-x-hidden select-none py-2 my-2 ${
+            isPaused || !isInView ? "is-paused" : ""
+          }`}
+        >
+          {/* ROW 1: TOP ROW (LEFT TO RIGHT) */}
+          <div
+            className="marquee-row relative w-full overflow-hidden py-2 mb-3 sm:mb-4"
+            aria-label="Guest blessings moving row 1"
+          >
             <div
-              className={`relative overflow-hidden py-2 ${
-                isPaused || !isInView ? "is-paused" : ""
+              className={`marquee-track flex gap-4 sm:gap-6 w-max ${
+                shouldReduceMotion ? "" : "animate-marquee-right"
               }`}
             >
-              {/* ROW 1: TOP ROW (LEFT TO RIGHT) */}
-              <div
-                className="marquee-row relative overflow-hidden py-2 mb-4"
-                aria-label="Guest blessings moving row 1"
-              >
-                <div
-                  className={`marquee-track flex gap-4 sm:gap-6 w-max ${
-                    shouldReduceMotion ? "" : "animate-marquee-right"
-                  }`}
-                >
-                  {topRow.map((wish, idx) => {
-                    const isDuplicate = idx >= topRow.length / 2;
-                    return (
-                      <div
-                        key={`top-${wish.id}-${idx}`}
-                        aria-hidden={isDuplicate ? "true" : undefined}
-                      >
-                        <WishCard
-                          wish={wish}
-                          variant="marquee"
-                          accent={idx % 3 === 0}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* ROW 2: BOTTOM ROW (RIGHT TO LEFT) */}
-              <div
-                className="marquee-row relative overflow-hidden py-2"
-                aria-label="Guest blessings moving row 2"
-              >
-                <div
-                  className={`marquee-track flex gap-4 sm:gap-6 w-max ${
-                    shouldReduceMotion ? "" : "animate-marquee-left"
-                  }`}
-                >
-                  {bottomRow.map((wish, idx) => {
-                    const isDuplicate = idx >= bottomRow.length / 2;
-                    return (
-                      <div
-                        key={`bottom-${wish.id}-${idx}`}
-                        aria-hidden={isDuplicate ? "true" : undefined}
-                      >
-                        <WishCard
-                          wish={wish}
-                          variant="marquee"
-                          accent={idx % 3 === 1}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              {topRow.map((wish, idx) => {
+                const isDuplicate = idx >= topRow.length / 2;
+                return (
+                  <div
+                    key={`top-${wish.id}-${idx}`}
+                    aria-hidden={isDuplicate ? "true" : undefined}
+                  >
+                    <WishCard
+                      wish={wish}
+                      variant="marquee"
+                      accent={idx % 3 === 0}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
-        ) : (
-          /* ================================================================== */
-          /* EMPTY STATE (0 approved wishes in production)                      */
-          /* ================================================================== */
+
+          {/* ROW 2: BOTTOM ROW (RIGHT TO LEFT) */}
+          <div
+            className="marquee-row relative w-full overflow-hidden py-2"
+            aria-label="Guest blessings moving row 2"
+          >
+            <div
+              className={`marquee-track flex gap-4 sm:gap-6 w-max ${
+                shouldReduceMotion ? "" : "animate-marquee-left"
+              }`}
+            >
+              {bottomRow.map((wish, idx) => {
+                const isDuplicate = idx >= bottomRow.length / 2;
+                return (
+                  <div
+                    key={`bottom-${wish.id}-${idx}`}
+                    aria-hidden={isDuplicate ? "true" : undefined}
+                  >
+                    <WishCard
+                      wish={wish}
+                      variant="marquee"
+                      accent={idx % 3 === 1}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* ================================================================== */
+        /* EMPTY STATE (0 approved wishes in production)                      */
+        /* ================================================================== */
+        <Container size="wide" className="relative z-10 px-4 sm:px-6 lg:px-8 mb-4">
           <Reveal preset="luxury" direction="up" distance={16} delay={0.2} threshold={0.15}>
             <div className="relative max-w-4xl mx-auto px-4">
               <div className="relative rounded-3xl bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EC]/90 to-[#F6EFE3]/80 border border-[#B8975E]/35 p-8 sm:p-12 text-center shadow-[0_16px_48px_rgba(184,151,94,0.1)] overflow-hidden">
@@ -336,7 +337,10 @@ export function WishesPreviewWall({ initialWishes = [] }: WishesPreviewWallProps
               </div>
             </div>
           </Reveal>
-        )}
+        </Container>
+      )}
+
+      <Container size="wide" className="relative z-10 px-4 sm:px-6 lg:px-8">
 
         {/* ==================================================================== */}
         {/* 3. MODERATION POLICY BOX                                             */}

@@ -11,6 +11,10 @@ import {
   InvitationPreviewSection,
   InvitationPreviewSkeleton,
 } from "@/components/sections/invitation-preview-section";
+import {
+  GalleryPreviewSection,
+  GalleryPreviewSkeleton,
+} from "@/components/sections/gallery-preview-section";
 
 // Below-the-fold sections code-split with full SSR static pre-rendering
 const OurStorySection = dynamic(
@@ -42,12 +46,7 @@ const VenuesSection = dynamic(
 );
 
 
-const GalleryPreviewSection = dynamic(
-  () =>
-    import("@/components/sections/gallery-preview-section").then(
-      (m) => m.GalleryPreviewSection
-    )
-);
+
 
 const RsvpPreviewSection = dynamic(
   () =>
@@ -83,7 +82,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+async function GalleryPreviewContainer({
+  searchParams,
+}: {
+  searchParams?: Promise<{ previewCount?: string }>;
+}) {
+  const resolved = searchParams ? await searchParams : undefined;
+  const count = resolved?.previewCount ? parseInt(resolved.previewCount, 10) : undefined;
+  return <GalleryPreviewSection simulatedCount={count} />;
+}
+
+export default function HomePage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ previewCount?: string }>;
+} = {}) {
   return (
     <>
       {/* Anchor for Smooth Scroll to Top */}
@@ -111,10 +124,10 @@ export default function HomePage() {
         {/* Four Consecutive Fullscreen Cinematic Ceremony Sections (Sticky-Stacked Scroll) */}
         <CeremonyFullscreenSections />
 
-        {/* Lower Content Layer: Curtain Sliding Over Ceremony Sections */}
+        {/* Lower Content Layer: Curtain Sliding Over Ceremony Sections (Desktop Only Stacked Curtain) */}
         <div
           style={{ transform: "translate3d(0, 0, 0)", willChange: "transform" }}
-          className="relative z-20 -mt-[100svh] bg-[#FFFCF6] shadow-[0_-24px_48px_rgba(0,0,0,0.35)]"
+          className="relative z-20 lg:-mt-[100svh] bg-[#FFFCF6] shadow-[0_-24px_48px_rgba(0,0,0,0.35)]"
         >
           {/* Section E: Venues & Google Maps Navigation */}
           <VenuesSection />
@@ -125,7 +138,9 @@ export default function HomePage() {
           </Suspense>
 
           {/* Section H: Wedding Memories Gallery Preview */}
-          <GalleryPreviewSection />
+          <Suspense fallback={<GalleryPreviewSkeleton />}>
+            <GalleryPreviewContainer searchParams={searchParams} />
+          </Suspense>
 
           {/* Section I: Wishes & Blessings Wall Preview */}
           <Suspense fallback={<WishesPreviewSkeleton />}>

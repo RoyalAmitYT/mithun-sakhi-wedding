@@ -247,7 +247,7 @@ export function FloatingMusicPlayer() {
 
                 {/* Title & Subtitle */}
                 <div className="flex flex-col">
-                  <span className="font-serif text-sm font-medium text-[#FFFDF8] group-hover:text-[#FFE8A3] transition-colors leading-tight max-w-[105px] xs:max-w-[130px] sm:max-w-[150px] truncate">
+                  <span className="font-serif text-sm font-medium text-[#FFFDF8] group-hover:text-[#FFE8A3] transition-colors leading-tight max-w-[72px] xs:max-w-[110px] sm:max-w-[150px] truncate">
                     {currentTrack.title}
                   </span>
                   <span className="text-[8.5px] font-sans uppercase tracking-[0.2em] text-[#D4AF37] leading-none mt-0.5">
@@ -262,7 +262,7 @@ export function FloatingMusicPlayer() {
                 onClick={previousTrack}
                 aria-label="Previous song"
                 title="Previous song"
-                className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-[#D4AF37]/90 hover:text-[#FFE8A3] hover:scale-110 hover:bg-white/10 active:scale-90 transition-all focus:outline-none focus:ring-1 focus:ring-[#D4AF37] cursor-pointer"
+                className="hidden xs:flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-[#D4AF37]/90 hover:text-[#FFE8A3] hover:scale-110 hover:bg-white/10 active:scale-90 transition-all focus:outline-none focus:ring-1 focus:ring-[#D4AF37] cursor-pointer"
               >
                 <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
@@ -328,7 +328,7 @@ export function FloatingMusicPlayer() {
                 onClick={() => setIsExpanded(true)}
                 aria-label="Open wedding playlist"
                 title="Open playlist"
-                className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-[#D4AF37]/90 hover:text-[#FFE8A3] hover:scale-110 hover:bg-white/10 active:scale-90 transition-all focus:outline-none focus:ring-1 focus:ring-[#D4AF37] cursor-pointer"
+                className="hidden sm:flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-[#D4AF37]/90 hover:text-[#FFE8A3] hover:scale-110 hover:bg-white/10 active:scale-90 transition-all focus:outline-none focus:ring-1 focus:ring-[#D4AF37] cursor-pointer"
               >
                 <svg
                   className="w-4 h-4"
