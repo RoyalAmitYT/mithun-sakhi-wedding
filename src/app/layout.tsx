@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import dynamic from "next/dynamic";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Manrope, Great_Vibes, Cinzel } from "next/font/google";
 import { getSiteUrl } from "@/lib/site-url";
 import { MotionProvider, SmoothScrollProvider } from "@/components/motion";
 import { AudioProvider } from "@/components/audio";
@@ -26,6 +26,20 @@ const cormorant = Cormorant_Garamond({
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  variable: "--font-script",
+  weight: ["400"],
+  display: "swap",
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-cinzel",
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
@@ -76,22 +90,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${manrope.variable} ${greatVibes.variable} ${cinzel.variable} scroll-smooth`}>
       <head>
         <link
           rel="preload"
           as="image"
-          type="image/avif"
-          href="/images/hero-portrait-mobile.avif"
-          media="(max-width: 768px)"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
-          type="image/avif"
-          href="/images/hero-portrait-desktop.avif"
-          media="(min-width: 769px)"
+          type="image/webp"
+          href="/images/hero/mithun-sakhi-cinematic-hero-bg.webp"
           fetchPriority="high"
         />
       </head>
