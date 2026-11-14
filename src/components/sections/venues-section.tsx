@@ -53,7 +53,7 @@ export function VenuesSection() {
     <section
       id="venues"
       aria-labelledby="venues-title"
-      className="relative pt-12 sm:pt-14 md:pt-16 pb-20 sm:pb-24 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-14 overflow-hidden"
+      className="relative pt-14 sm:pt-16 lg:pt-16 pb-16 sm:pb-20 lg:pb-24 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-14 overflow-hidden"
     >
       {/* Background Corner Filigree Linework */}
       <SectionHeaderFiligree color="#B8975E" opacity={0.2} />
@@ -100,7 +100,7 @@ export function VenuesSection() {
         {/* ================================================================ */}
         {/* DECORATIVE VENUE CONNECTION                                     */}
         {/* ================================================================ */}
-        <div className="max-w-4xl mx-auto mb-6 sm:mb-8 px-4 sm:px-10 lg:px-16 select-none">
+        <div className="max-w-4xl mx-auto mb-5 sm:mb-7 lg:mb-8 px-4 sm:px-10 lg:px-16 select-none">
           {/* Center Ornamental Animated Divider above the route */}
           <div className="flex justify-center mb-3">
             <AnimatedDivider variant="gold" size="sm" />
@@ -120,10 +120,10 @@ export function VenuesSection() {
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
               </div>
-              <span className="text-[9.5px] sm:text-[11px] font-sans font-bold uppercase tracking-[0.16em] text-[#292322] leading-tight">
+              <span className="text-[10px] sm:text-[11px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.16em] text-[#292322] leading-tight">
                 Chitmu &bull; Kotshila
               </span>
-              <span className="text-[9.5px] sm:text-[10px] font-sans text-[#8A8280] mt-0.5">
+              <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans text-[#8A8280] mt-0.5">
                 Groom&apos;s Home
               </span>
             </motion.div>
@@ -181,10 +181,10 @@ export function VenuesSection() {
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
               </div>
-              <span className="text-[9.5px] sm:text-[11px] font-sans font-bold uppercase tracking-[0.16em] text-[#292322] leading-tight">
+              <span className="text-[10px] sm:text-[11px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.16em] text-[#292322] leading-tight">
                 Ghaghra &bull; Jaipur
               </span>
-              <span className="text-[9.5px] sm:text-[10px] font-sans text-[#8A8280] mt-0.5">
+              <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans text-[#8A8280] mt-0.5">
                 Bride&apos;s Home
               </span>
             </motion.div>
@@ -194,7 +194,7 @@ export function VenuesSection() {
         {/* ================================================================ */}
         {/* TWO VENUE CARDS (SIDE-BY-SIDE EQUAL HEIGHT ON DESKTOP)          */}
         {/* ================================================================ */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7 max-w-5xl mx-auto items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 lg:gap-7 max-w-5xl mx-auto items-stretch">
           {/* -------------------------------------------------------------- */}
           {/* VENUE CARD 01: GROOM'S HOME                                     */}
           {/* -------------------------------------------------------------- */}
@@ -268,7 +268,7 @@ export function VenuesSection() {
                   aria-hidden="true"
                 >
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#B8975E]/40" />
-                  <span className="text-[9.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#A67C1E]">
+                  <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#A67C1E]">
                     Chitmu &bull; Kotshila
                   </span>
                   <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#B8975E]/40" />
@@ -294,7 +294,7 @@ export function VenuesSection() {
                     <p className="font-serif text-sm sm:text-[15px] font-medium text-[#292322] leading-snug">
                       Chitmu, Kotshila, Purulia, West Bengal 723215
                     </p>
-                    <p className="font-sans text-[11px] sm:text-xs text-[#8A8280] mt-0.5">
+                    <p className="font-sans text-[12px] sm:text-xs lg:text-[11px] text-[#8A8280] mt-0.5">
                       Village: Chitmu &bull; Block: Kotshila &bull; District: Purulia
                     </p>
                   </div>
@@ -314,7 +314,7 @@ export function VenuesSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: 0.36, ease: luxuryEase }}
-                    className="text-[9.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#A67C1E] block mb-2"
+                    className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#A67C1E] block mb-2"
                   >
                     Celebrations at this Venue
                   </motion.span>
@@ -350,7 +350,7 @@ export function VenuesSection() {
                               <line x1="8" y1="2" x2="8" y2="6" strokeLinecap="round" />
                               <line x1="3" y1="10" x2="21" y2="10" />
                             </svg>
-                            <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 min-w-0 text-[11.5px] sm:text-xs">
+                            <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 min-w-0 text-[12px] sm:text-[12.5px] lg:text-[11.5px]">
                               <span className="font-sans font-bold text-[#292322]">
                                 {c.name}
                               </span>
@@ -497,7 +497,7 @@ export function VenuesSection() {
                   aria-hidden="true"
                 >
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#8E1B29]/35" />
-                  <span className="text-[9.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29]">
+                  <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29]">
                     Ghaghra &bull; Jaipur
                   </span>
                   <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#8E1B29]/35" />
@@ -523,7 +523,7 @@ export function VenuesSection() {
                     <p className="font-serif text-sm sm:text-[15px] font-medium text-[#292322] leading-snug">
                       Ghaghra, Jaipur, Purulia, West Bengal 723201
                     </p>
-                    <p className="font-sans text-[11px] sm:text-xs text-[#8A8280] mt-0.5">
+                    <p className="font-sans text-[12px] sm:text-xs lg:text-[11px] text-[#8A8280] mt-0.5">
                       Village: Ghaghra &bull; Block: Jaipur &bull; District: Purulia
                     </p>
                   </div>
@@ -543,7 +543,7 @@ export function VenuesSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: 0.50, ease: luxuryEase }}
-                    className="text-[9.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29] block mb-2"
+                    className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29] block mb-2"
                   >
                     Celebrations at this Venue
                   </motion.span>
@@ -579,7 +579,7 @@ export function VenuesSection() {
                               <line x1="8" y1="2" x2="8" y2="6" strokeLinecap="round" />
                               <line x1="3" y1="10" x2="21" y2="10" />
                             </svg>
-                            <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 min-w-0 text-[11.5px] sm:text-xs">
+                            <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 min-w-0 text-[12px] sm:text-[12.5px] lg:text-[11.5px]">
                               <span className="font-sans font-bold text-[#292322]">
                                 {c.name}
                               </span>

@@ -576,7 +576,7 @@ function CeremonyLiveCountdown({
               {/* Heading: Ceramic Capsule flanked by thin horizontal gold lines */}
               <div className="flex items-center justify-center gap-1.5 sm:gap-2 pb-0.5 select-none">
                 <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-r from-transparent to-[#D4AF37]/80" />
-                <span className="text-[8px] sm:text-[9.5px] font-sans font-semibold uppercase tracking-[0.24em] text-[#E8C882] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                <span className="text-[9.5px] sm:text-[10px] lg:text-[9.5px] font-sans font-semibold uppercase tracking-[0.24em] text-[#E8C882] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                   {theme.topCaption}
                 </span>
                 <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-l from-transparent to-[#D4AF37]/80" />
@@ -596,7 +596,7 @@ function CeremonyLiveCountdown({
                     shadowClass="drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]"
                     shouldReduceMotion={shouldReduceMotion}
                   />
-                  <span className="text-[7.5px] sm:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] text-[#D4AF37]/90 mt-0.5">
+                  <span className="text-[9px] sm:text-[9.5px] lg:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] text-[#D4AF37]/90 mt-0.5">
                     Days
                   </span>
                 </div>
@@ -621,7 +621,7 @@ function CeremonyLiveCountdown({
                     shadowClass="drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]"
                     shouldReduceMotion={shouldReduceMotion}
                   />
-                  <span className="text-[7.5px] sm:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] text-[#D4AF37]/90 mt-0.5">
+                  <span className="text-[9px] sm:text-[9.5px] lg:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] text-[#D4AF37]/90 mt-0.5">
                     Hours
                   </span>
                 </div>
@@ -646,7 +646,7 @@ function CeremonyLiveCountdown({
                     shadowClass="drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]"
                     shouldReduceMotion={shouldReduceMotion}
                   />
-                  <span className="text-[7.5px] sm:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] text-[#D4AF37]/90 mt-0.5">
+                  <span className="text-[9px] sm:text-[9.5px] lg:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] text-[#D4AF37]/90 mt-0.5">
                     Mins
                   </span>
                 </div>
@@ -673,7 +673,7 @@ function CeremonyLiveCountdown({
                   />
                   <span
                     style={{ color: theme.accentColor }}
-                    className="text-[7.5px] sm:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] mt-0.5"
+                    className="text-[9px] sm:text-[9.5px] lg:text-[8px] font-sans font-semibold uppercase tracking-[0.18em] mt-0.5"
                   >
                     Secs
                   </span>
@@ -681,7 +681,7 @@ function CeremonyLiveCountdown({
               </div>
 
               {/* Authoritative Target Reference Footer */}
-              <div className="pt-1.5 sm:pt-2 mt-0.5 border-t border-[#D4AF37]/35 flex items-center justify-between text-[7px] sm:text-[8px] font-sans tracking-[0.12em] uppercase select-none">
+              <div className="pt-1.5 sm:pt-2 mt-0.5 border-t border-[#D4AF37]/35 flex items-center justify-between text-[8px] sm:text-[8.5px] lg:text-[8px] font-sans tracking-[0.12em] uppercase select-none">
                 <span className="text-[#FFFDF8] font-medium whitespace-nowrap">
                   {ceremony.dateDisplay.toUpperCase()} &bull; {ceremony.timeDisplay.toUpperCase()}
                 </span>
@@ -798,7 +798,7 @@ function SingleCeremonySection({
       }}
       className={`
         relative lg:sticky lg:top-0 w-full min-h-0 h-auto lg:min-h-[100svh] lg:h-[100svh] overflow-hidden
-        flex flex-col justify-center text-white py-14 sm:py-18 lg:py-0
+        flex flex-col justify-center text-white py-12 sm:py-16 lg:py-0
         ${index > 0 ? "border-t border-white/10 lg:border-t-0 lg:shadow-[0_-20px_50px_rgba(0,0,0,0.5)]" : ""}
       `}
     >
@@ -806,9 +806,9 @@ function SingleCeremonySection({
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
           suppressHydrationWarning
-          initial={false}
+          initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0.9, scale: 1.02 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{
             duration: shouldReduceMotion ? 0 : 1.1,
             ease: luxuryEase,
@@ -878,7 +878,7 @@ function SingleCeremonySection({
                 y: depthY,
               }
         }
-        className="relative z-10 w-full pt-4 sm:pt-6 lg:pt-16 pb-4 sm:pb-6 lg:pb-14 origin-center"
+        className="relative z-10 w-full pt-2 sm:pt-4 lg:pt-16 pb-2 sm:pb-4 lg:pb-14 origin-center"
       >
         {/* Ceremony-Specific Ambient Lighting Glow */}
         <AmbientGlow
@@ -900,11 +900,11 @@ function SingleCeremonySection({
         <Container size="wide">
           <motion.div
             suppressHydrationWarning
-            initial={false}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: luxuryEase }}
-            className="max-w-xl lg:max-w-3xl flex flex-col items-start text-left -translate-y-2 sm:-translate-y-5 lg:-translate-y-5"
+            viewport={{ once: true, amount: 0.15, margin: "-40px" }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: luxuryEase }}
+            className="max-w-xl lg:max-w-3xl flex flex-col items-start text-left -translate-y-0 sm:-translate-y-2 lg:-translate-y-5"
           >
             {/* Step 3: Ceremony Eyebrow: DAY 0X ──── CEREMONY NAME */}
             <div className="flex items-center gap-2 sm:gap-3 mb-2 select-none">
@@ -949,7 +949,7 @@ function SingleCeremonySection({
             </div>
 
             {/* Step 7: Ceremony Description */}
-            <p className="text-xs sm:text-sm text-[#E8DFD5] leading-relaxed max-w-xl mb-1">
+            <p className="text-[13.5px] sm:text-sm lg:text-xs text-[#E8DFD5] leading-relaxed max-w-xl mb-1">
               {ceremony.description}
             </p>
 
@@ -982,13 +982,13 @@ function SingleCeremonySection({
                   />
                 </svg>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-sans font-bold uppercase tracking-[0.18em] text-[#D4AF37]">
+                  <span className="text-[10px] sm:text-[10.5px] lg:text-[9px] font-sans font-bold uppercase tracking-[0.18em] text-[#D4AF37]">
                     Date
                   </span>
-                  <span className="font-serif text-xs sm:text-[13px] font-medium text-white leading-tight">
+                  <span className="font-serif text-[13px] sm:text-[13.5px] lg:text-xs font-medium text-white leading-tight">
                     {ceremony.dateDisplay}
                   </span>
-                  <span className="font-serif italic text-[11px] text-[#E8DFD5]">
+                  <span className="font-serif italic text-[11.5px] sm:text-xs lg:text-[11px] text-[#E8DFD5]">
                     {ceremony.dayOfWeek}
                   </span>
                 </div>
@@ -1011,13 +1011,13 @@ function SingleCeremonySection({
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2" />
                 </svg>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-sans font-bold uppercase tracking-[0.18em] text-[#D4AF37]">
+                  <span className="text-[10px] sm:text-[10.5px] lg:text-[9px] font-sans font-bold uppercase tracking-[0.18em] text-[#D4AF37]">
                     Time
                   </span>
-                  <span className="font-serif text-xs sm:text-[13px] font-medium text-white leading-tight">
+                  <span className="font-serif text-[13px] sm:text-[13.5px] lg:text-xs font-medium text-white leading-tight">
                     {ceremony.timeDisplay}
                   </span>
-                  <span className="font-serif italic text-[11px] text-[#E8DFD5]">
+                  <span className="font-serif italic text-[11.5px] sm:text-xs lg:text-[11px] text-[#E8DFD5]">
                     {ceremony.timeLabel}
                   </span>
                 </div>
@@ -1037,13 +1037,13 @@ function SingleCeremonySection({
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div className="flex flex-col">
-                  <span className="text-[9px] font-sans font-bold uppercase tracking-[0.18em] text-[#D4AF37]">
+                  <span className="text-[10px] sm:text-[10.5px] lg:text-[9px] font-sans font-bold uppercase tracking-[0.18em] text-[#D4AF37]">
                     Venue
                   </span>
-                  <span className="font-serif text-xs sm:text-[13px] font-medium text-white leading-tight">
+                  <span className="font-serif text-[13px] sm:text-[13.5px] lg:text-xs font-medium text-white leading-tight">
                     {ceremony.venueName}, {ceremony.venueCity}
                   </span>
-                  <span className="font-serif italic text-[11px] text-[#E8DFD5] truncate max-w-[170px]">
+                  <span className="font-serif italic text-[11.5px] sm:text-xs lg:text-[11px] text-[#E8DFD5] truncate max-w-[170px]">
                     {ceremony.venueSubtext}
                   </span>
                 </div>
@@ -1052,7 +1052,7 @@ function SingleCeremonySection({
 
             {/* Step 10: Action Buttons: Add to Calendar & Get Directions with Magnetic Hover */}
             <div
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-4 sm:mt-5 pt-1 w-full sm:w-auto"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-3.5 sm:mt-4 lg:mt-5 pt-1 w-full sm:w-auto"
             >
               {/* Add to Calendar Button — Ultra-Premium Bespoke Ceremonial Gradient Pill */}
               <MagneticButton className="w-full sm:w-auto">
@@ -1064,7 +1064,7 @@ function SingleCeremonySection({
                     group relative inline-flex items-center justify-center gap-2.5
                     h-12 sm:h-[54px] px-6 sm:px-8 rounded-full w-full sm:w-auto
                     ${ceremony.primaryButtonClass}
-                    text-[11.5px] sm:text-[12px] font-sans font-bold uppercase tracking-[0.18em]
+                    text-[12px] sm:text-[12.5px] lg:text-[11.5px] font-sans font-bold uppercase tracking-[0.18em]
                     transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97]
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-black
                   `}
@@ -1098,7 +1098,7 @@ function SingleCeremonySection({
                   href={ceremony.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-center gap-2.5 h-12 sm:h-[54px] px-6 sm:px-8 rounded-full w-full sm:w-auto bg-[rgba(16,10,12,0.68)] hover:bg-[rgba(26,16,20,0.85)] text-[#FFFDF8] hover:text-white text-[11.5px] sm:text-[12px] font-sans font-bold uppercase tracking-[0.18em] border border-[#D4AF37]/75 hover:border-[#F3D78A] backdrop-blur-md shadow-[0_6px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.14)] hover:shadow-[0_8px_26px_rgba(0,0,0,0.65),0_0_18px_rgba(212,175,55,0.25)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className="group relative inline-flex items-center justify-center gap-2.5 h-12 sm:h-[54px] px-6 sm:px-8 rounded-full w-full sm:w-auto bg-[rgba(16,10,12,0.68)] hover:bg-[rgba(26,16,20,0.85)] text-[#FFFDF8] hover:text-white text-[12px] sm:text-[12.5px] lg:text-[11.5px] font-sans font-bold uppercase tracking-[0.18em] border border-[#D4AF37]/75 hover:border-[#F3D78A] backdrop-blur-md shadow-[0_6px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.14)] hover:shadow-[0_8px_26px_rgba(0,0,0,0.65),0_0_18px_rgba(212,175,55,0.25)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   <svg
                     className="w-4 h-4 sm:w-[17px] sm:h-[17px] text-[#E8C882] group-hover:text-[#FFE396] transition-all duration-300 shrink-0 drop-shadow-xs group-hover:scale-110 group-hover:rotate-12"
@@ -1147,7 +1147,7 @@ export function CeremonyFullscreenSections() {
   return (
     <section id="events" aria-labelledby="events-heading" className="relative scroll-mt-24">
       {/* 1. Official Events Section Heading with Luxury Reveal */}
-      <div className="relative z-10 bg-[#FFFCF6] pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 border-t border-[rgba(184,151,94,0.2)]">
+      <div className="relative z-10 bg-[#FFFCF6] pt-14 sm:pt-18 md:pt-20 lg:pt-24 pb-8 sm:pb-12 lg:pb-16 border-t border-[rgba(184,151,94,0.2)]">
         <Container size="editorial">
           <div className="text-center max-w-2xl mx-auto">
             {/* Centered Eyebrow: FOUR DAYS · FOUR SPECIAL MOMENTS */}

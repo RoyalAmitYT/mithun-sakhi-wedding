@@ -125,7 +125,7 @@ export const WishCard = React.memo(function WishCard({
             &ldquo;
           </div>
           {formattedDate && (
-            <span className="font-sans text-[10px] tracking-wider uppercase text-[#8A8280]">
+            <span className="font-sans text-[10.5px] sm:text-[11px] lg:text-[10px] tracking-wider uppercase text-[#8A8280]">
               {formattedDate}
             </span>
           )}
@@ -137,7 +137,7 @@ export const WishCard = React.memo(function WishCard({
             {wish.wish_text}
           </p>
           {isLong && (
-            <span className="inline-block mt-1 text-[11px] font-sans font-medium text-[#7B1D28] group-hover:underline">
+            <span className="inline-block mt-1 text-[11.5px] sm:text-xs lg:text-[11px] font-sans font-medium text-[#7B1D28] group-hover:underline">
               Read more &rarr;
             </span>
           )}
@@ -157,7 +157,7 @@ export const WishCard = React.memo(function WishCard({
           </div>
 
           {/* Author Name */}
-          <span className="font-sans font-semibold text-xs sm:text-[12.5px] text-[#292322] tracking-wide ml-2.5 truncate">
+          <span className="font-sans font-semibold text-[12.5px] sm:text-[13px] lg:text-xs text-[#292322] tracking-wide ml-2.5 truncate">
             {wish.author_display_name}
           </span>
 

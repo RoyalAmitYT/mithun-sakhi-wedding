@@ -12,11 +12,12 @@ import {
 } from "@/lib/motion";
 import { useMotionReduced } from "@/lib/motion/hooks";
 
-export type RevealPreset = "luxury" | "editorial" | "card" | "snappy" | "gentle";
+export type RevealPreset = "luxury" | "editorial" | "cinematic" | "card" | "snappy" | "gentle";
 
 const PRESET_DURATIONS: Record<RevealPreset, number> = {
   luxury: MOTION_DURATIONS.reveal,
   editorial: MOTION_DURATIONS.editorial,
+  cinematic: MOTION_DURATIONS.cinematic,
   card: MOTION_DURATIONS.card,
   snappy: MOTION_DURATIONS.control,
   gentle: MOTION_DURATIONS.reveal,
@@ -25,6 +26,7 @@ const PRESET_DURATIONS: Record<RevealPreset, number> = {
 const PRESET_EASINGS: Record<RevealPreset, [number, number, number, number]> = {
   luxury: [...MOTION_EASINGS.luxury],
   editorial: [...MOTION_EASINGS.luxury],
+  cinematic: [...MOTION_EASINGS.cinematic],
   card: [...MOTION_EASINGS.luxury],
   snappy: [...MOTION_EASINGS.snappy],
   gentle: [...MOTION_EASINGS.gentle],

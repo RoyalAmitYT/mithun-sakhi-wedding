@@ -24,7 +24,7 @@ export function ContactSection() {
     <section
       id="hospitality"
       aria-labelledby="contact-title"
-      className="py-20 sm:py-28 md:py-32 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-20 relative overflow-hidden"
+      className="py-14 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-20 relative overflow-hidden"
     >
       {/* Background Section Filigree Linework */}
       <SectionHeaderFiligree color="#B8975E" opacity={0.2} />
@@ -40,7 +40,7 @@ export function ContactSection() {
         {/* ==================================================================== */}
         {/* 1. SECTION HEADER LOCKUP WITH CHOREOGRAPHED REVEAL                   */}
         {/* ==================================================================== */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-7 sm:mb-10 lg:mb-14">
           {/* Eyebrow */}
           <Reveal preset="luxury" direction="up" distance={10} threshold={0.15}>
             <div className="flex items-center justify-center gap-2 mb-2.5 select-none">
@@ -84,7 +84,7 @@ export function ContactSection() {
             <motion.article
               whileHover={shouldReduceMotion ? undefined : { y: -2 }}
               transition={{ duration: 0.3, ease: luxuryEase }}
-              className="group relative p-7 sm:p-10 md:p-12 rounded-3xl bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EC]/90 to-[#F6EFE3]/80 border border-[#B8975E]/35 shadow-[0_16px_48px_rgba(184,151,94,0.1)] text-center overflow-hidden transition-shadow duration-300 hover:shadow-[0_24px_64px_rgba(184,151,94,0.18)] hover:border-[#B8975E]/60"
+              className="group relative p-6 sm:p-9 lg:p-12 rounded-3xl bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EC]/90 to-[#F6EFE3]/80 border border-[#B8975E]/35 shadow-[0_16px_48px_rgba(184,151,94,0.1)] text-center overflow-hidden transition-shadow duration-300 hover:shadow-[0_24px_64px_rgba(184,151,94,0.18)] hover:border-[#B8975E]/60"
             >
               {/* Subtle Gold Light Sweep on Hover */}
               <GoldLightSweep trigger="hover" intensity="subtle" />
@@ -98,7 +98,7 @@ export function ContactSection() {
 
               <div className="relative z-10">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F5EEDC] border border-[#B8975E]/30 text-[#8E6D38] text-[9.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.2em] shadow-2xs mb-3.5">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F5EEDC] border border-[#B8975E]/30 text-[#8E6D38] text-[10.5px] sm:text-[11px] lg:text-[10px] font-sans font-bold uppercase tracking-[0.2em] shadow-2xs mb-3.5">
                   <svg
                     className="w-3.5 h-3.5 text-[#8E6D38]"
                     fill="none"
@@ -121,7 +121,7 @@ export function ContactSection() {
                   {contact.formattedPhone}
                 </p>
 
-                <p className="font-serif italic text-xs sm:text-sm text-[#5C5452] mt-2">
+                <p className="font-serif italic text-[13px] sm:text-sm lg:text-xs text-[#5C5452] mt-2">
                   Purulia District &bull; West Bengal &bull; Primary Phone &amp; WhatsApp
                 </p>
 
@@ -135,7 +135,7 @@ export function ContactSection() {
                 </div>
 
                 {/* Action Buttons: Phone & WhatsApp with Stage 3.2 Magnetic Interactions */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 max-w-md mx-auto">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto">
                   {/* Direct Call Link */}
                   <MagneticButton className="w-full sm:w-1/2">
                     <motion.a
@@ -143,7 +143,7 @@ export function ContactSection() {
                       whileHover={shouldReduceMotion ? undefined : { scale: 1.025, y: -1 }}
                       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                       aria-label={`Call wedding coordination desk at ${contact.formattedPhone}`}
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] border border-[#B8975E]/40 text-white font-sans font-semibold text-xs sm:text-[13px] tracking-[0.12em] uppercase shadow-md shadow-[#7B1D28]/20 hover:shadow-lg hover:shadow-[#7B1D28]/30 transition-shadow cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2"
+                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] border border-[#B8975E]/40 text-white font-sans font-semibold text-[12.5px] sm:text-[13px] lg:text-xs tracking-[0.12em] uppercase shadow-md shadow-[#7B1D28]/20 hover:shadow-lg hover:shadow-[#7B1D28]/30 transition-shadow cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2"
                     >
                       <svg
                         width="16"
@@ -171,7 +171,7 @@ export function ContactSection() {
                       whileHover={shouldReduceMotion ? undefined : { scale: 1.025, y: -1 }}
                       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                       aria-label="Send a message on WhatsApp to wedding coordination desk"
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-[#F4F9F5] text-[#1B4332] border border-[#2D6A4F]/40 hover:bg-[#1B4332] hover:text-white font-sans font-semibold text-xs sm:text-[13px] tracking-[0.12em] uppercase shadow-xs hover:shadow-md transition-all cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2D6A4F] focus-visible:ring-offset-2"
+                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-[#F4F9F5] text-[#1B4332] border border-[#2D6A4F]/40 hover:bg-[#1B4332] hover:text-white font-sans font-semibold text-[12.5px] sm:text-[13px] lg:text-xs tracking-[0.12em] uppercase shadow-xs hover:shadow-md transition-all cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2D6A4F] focus-visible:ring-offset-2"
                     >
                       <svg
                         width="16"

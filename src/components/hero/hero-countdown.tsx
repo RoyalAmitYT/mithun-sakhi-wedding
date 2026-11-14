@@ -273,7 +273,7 @@ export function HeroCountdown({ className = "" }: HeroCountdownProps) {
               {/* Heading: THE SACRED VOWS BEGIN IN flanked by thin horizontal gold lines */}
               <div className="flex items-center justify-center gap-1.5 sm:gap-2 pb-1 select-none">
                 <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-r from-transparent to-[#D4AF37]/80" />
-                <span className="text-[8px] sm:text-[9.5px] font-sans font-semibold uppercase tracking-[0.24em] text-[#E8C882] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                <span className="text-[9.5px] sm:text-[10px] lg:text-[9.5px] font-sans font-semibold uppercase tracking-[0.24em] text-[#E8C882] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                   The Sacred Vows Begin In
                 </span>
                 <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-l from-transparent to-[#D4AF37]/80" />
@@ -293,7 +293,7 @@ export function HeroCountdown({ className = "" }: HeroCountdownProps) {
                     shadowClass="drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]"
                     shouldReduceMotion={shouldReduceMotion}
                   />
-                  <span className="text-[7.5px] sm:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#D4AF37]/90 mt-1">
+                  <span className="text-[9px] sm:text-[9.5px] lg:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#D4AF37]/90 mt-1">
                     Days
                   </span>
                 </div>
@@ -313,7 +313,7 @@ export function HeroCountdown({ className = "" }: HeroCountdownProps) {
                     shadowClass="drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]"
                     shouldReduceMotion={shouldReduceMotion}
                   />
-                  <span className="text-[7.5px] sm:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#D4AF37]/90 mt-1">
+                  <span className="text-[9px] sm:text-[9.5px] lg:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#D4AF37]/90 mt-1">
                     Hours
                   </span>
                 </div>
@@ -333,7 +333,7 @@ export function HeroCountdown({ className = "" }: HeroCountdownProps) {
                     shadowClass="drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]"
                     shouldReduceMotion={shouldReduceMotion}
                   />
-                  <span className="text-[7.5px] sm:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#D4AF37]/90 mt-1">
+                  <span className="text-[9px] sm:text-[9.5px] lg:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#D4AF37]/90 mt-1">
                     Mins
                   </span>
                 </div>
@@ -353,14 +353,14 @@ export function HeroCountdown({ className = "" }: HeroCountdownProps) {
                     shadowClass="drop-shadow-[0_0_10px_rgba(230,57,70,0.55)]"
                     shouldReduceMotion={shouldReduceMotion}
                   />
-                  <span className="text-[7.5px] sm:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#E63946] mt-1">
+                  <span className="text-[9px] sm:text-[9.5px] lg:text-[8.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#E63946] mt-1">
                     Secs
                   </span>
                 </div>
               </div>
 
               {/* Authoritative Target Reference Footer Separated by Delicate Gold Line */}
-              <div className="pt-2 sm:pt-2.5 mt-1 border-t border-[#D4AF37]/35 flex items-center justify-between text-[7.5px] sm:text-[8.5px] font-sans tracking-[0.14em] uppercase select-none">
+              <div className="pt-2 sm:pt-2.5 mt-1 border-t border-[#D4AF37]/35 flex items-center justify-between text-[8.5px] sm:text-[9px] lg:text-[8.5px] font-sans tracking-[0.14em] uppercase select-none">
                 <span className="text-[#FFFDF8] font-medium whitespace-nowrap">
                   21 NOVEMBER 2026 · 11:00 PM IST
                 </span>

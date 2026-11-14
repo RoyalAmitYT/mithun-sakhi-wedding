@@ -113,7 +113,7 @@ export function CelebrationsOverviewSection() {
     <section
       id="celebrations"
       aria-labelledby="celebrations-title"
-      className="relative pt-16 sm:pt-20 md:pt-24 pb-28 sm:pb-36 lg:pb-40 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] scroll-mt-20 overflow-hidden"
+      className="relative pt-14 sm:pt-18 md:pt-20 lg:pt-24 pb-16 sm:pb-24 lg:pb-40 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] scroll-mt-20 overflow-hidden"
     >
       {/* Background Architectural Filigree & Side Mandalas */}
       <SectionHeaderFiligree color="#B8975E" opacity={0.16} />
@@ -128,7 +128,7 @@ export function CelebrationsOverviewSection() {
         {/* ================================================================ */}
         {/* SECTION HEADER: Matches Visual Reference Exactly                 */}
         {/* ================================================================ */}
-        <Reveal className="mb-10 sm:mb-12 text-center max-w-3xl mx-auto">
+        <Reveal className="mb-7 sm:mb-9 lg:mb-12 text-center max-w-3xl mx-auto">
           {/* Eyebrow: FOUR SACRED CEREMONIES */}
           <div className="flex items-center justify-center gap-2 mb-2.5 select-none">
             <span className="text-[7.5px] text-[#8E1B29]" aria-hidden="true">
@@ -202,7 +202,7 @@ export function CelebrationsOverviewSection() {
                       <span className="font-serif text-lg sm:text-[1.35rem] font-bold leading-none block drop-shadow-sm">
                         {c.dayNumber}
                       </span>
-                      <span className="text-[8.5px] font-sans font-bold tracking-[0.16em] uppercase block mt-0.5 text-white/95">
+                      <span className="text-[9.5px] font-sans font-bold tracking-[0.16em] uppercase block mt-0.5 text-white/95 lg:text-[8.5px]">
                         {c.month}
                       </span>
                     </motion.div>
@@ -266,7 +266,7 @@ export function CelebrationsOverviewSection() {
                     <div className="relative z-10">
                       {/* Ceremony Number & Confirmed Time */}
                       <div
-                        className="text-[10px] sm:text-[10.5px] font-sans font-bold uppercase tracking-[0.18em] mb-1.5 select-none"
+                        className="text-[10.5px] sm:text-[11px] lg:text-[10.5px] font-sans font-bold uppercase tracking-[0.18em] mb-1.5 select-none"
                         style={{ color: c.accentColor }}
                       >
                         <span>{c.ritualNumber}</span>
@@ -283,7 +283,7 @@ export function CelebrationsOverviewSection() {
                       </h3>
 
                       {/* Short Description */}
-                      <p className="text-xs sm:text-[13px] text-[#635B59] leading-relaxed mb-4">
+                      <p className="text-[13.5px] sm:text-sm lg:text-[13px] text-[#635B59] leading-relaxed mb-4">
                         {c.description}
                       </p>
                     </div>
@@ -291,7 +291,7 @@ export function CelebrationsOverviewSection() {
                     {/* Venue & Action Link */}
                     <div className="relative z-10">
                       {/* Venue with Color-Matched Pin Icon */}
-                      <div className="flex items-center gap-1.5 text-xs font-medium text-[#6B615F] mb-4">
+                      <div className="flex items-center gap-1.5 text-[12.5px] sm:text-[13px] lg:text-xs font-medium text-[#6B615F] mb-4">
                         <svg
                           width="14"
                           height="14"
@@ -309,7 +309,7 @@ export function CelebrationsOverviewSection() {
                       <div className="pt-3 border-t border-black/[0.06] text-center">
                         <Link
                           href={`#${c.id}`}
-                          className="inline-flex items-center justify-center gap-1.5 text-[10.5px] sm:text-[11px] font-sans font-bold uppercase tracking-[0.18em] group-hover:gap-2.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] rounded-[2px]"
+                          className="inline-flex items-center justify-center gap-1.5 text-[11px] sm:text-[11.5px] lg:text-[11px] font-sans font-bold uppercase tracking-[0.18em] group-hover:gap-2.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] rounded-[2px]"
                           style={{ color: c.accentColor }}
                         >
                           <span>View Ceremony</span>
@@ -328,7 +328,7 @@ export function CelebrationsOverviewSection() {
       {/* ================================================================ */}
       {/* Footnote: Required Temporary Media Disclaimer                    */}
       {/* ================================================================ */}
-      <div className="mt-8 sm:mt-10 text-center max-w-xl mx-auto px-4">
+      <div className="mt-6 sm:mt-8 lg:mt-10 text-center max-w-xl mx-auto px-4">
         <p className="text-[11px] text-[#8A8280] font-sans leading-relaxed">
           Illustrative preview imagery &bull; Official wedding photographs coming soon.
         </p>
@@ -337,7 +337,7 @@ export function CelebrationsOverviewSection() {
       {/* ================================================================ */}
       {/* Action Link: View Complete Ceremony Schedule                      */}
       {/* ================================================================ */}
-      <Reveal delay={0.2} className="mt-5 sm:mt-6 text-center">
+      <Reveal delay={0.2} className="mt-4 sm:mt-5 lg:mt-6 text-center">
         <MagneticButton>
           <Link
             href="#haldi"

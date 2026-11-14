@@ -349,14 +349,14 @@ function MilestoneRow({
             {/* Top Row: Chapter Kicker & Ceremony Date Badge */}
             <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1 select-none">
               <span
-                className="text-[9px] sm:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em]"
+                className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em]"
                 style={{ color: item.accentColor }}
               >
                 {item.badge}
               </span>
 
               {item.date && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[8.5px] sm:text-[9px] font-sans font-bold tracking-wider uppercase bg-[#FAF5E6] border border-[#B8975E]/40 text-[#8E1B29] shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9.5px] sm:text-[10px] lg:text-[9px] font-sans font-bold tracking-wider uppercase bg-[#FAF5E6] border border-[#B8975E]/40 text-[#8E1B29] shadow-2xs">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#8E1B29]" />
                   {item.date}
                 </span>
@@ -370,7 +370,7 @@ function MilestoneRow({
 
             {/* Ceremony Venue (if applicable) */}
             {item.venue && (
-              <div className="flex items-center gap-1.5 text-[10.5px] sm:text-[11.5px] font-sans font-medium text-[#6B5E55] mb-1 select-none">
+              <div className="flex items-center gap-1.5 text-[11px] sm:text-[12px] lg:text-[11.5px] font-sans font-medium text-[#6B5E55] mb-1 select-none">
                 <svg
                   className="w-3.5 h-3.5 shrink-0"
                   style={{ color: item.accentColor }}
@@ -391,7 +391,7 @@ function MilestoneRow({
             </div>
 
             {/* Milestone Description */}
-            <p className="font-sans text-[12px] sm:text-[12.5px] md:text-[13px] text-[#4A4036] leading-relaxed">
+            <p className="font-sans text-[13.5px] sm:text-[13.5px] md:text-[13px] text-[#4A4036] leading-relaxed">
               {item.description}
             </p>
           </div>
@@ -416,7 +416,7 @@ export function OurStorySection() {
     <section
       id="our-story"
       aria-labelledby="our-story-title"
-      className="relative pt-16 sm:pt-20 md:pt-24 pb-20 sm:pb-24 md:pb-28 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-20 overflow-hidden"
+      className="relative pt-14 sm:pt-18 md:pt-20 lg:pt-24 pb-16 sm:pb-20 md:pb-24 lg:pb-28 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-20 overflow-hidden"
     >
       {/* Background Section Filigree Linework & Side Mandalas */}
       <SectionHeaderFiligree color="#B8975E" opacity={0.16} />
@@ -431,7 +431,7 @@ export function OurStorySection() {
         {/* ================================================================ */}
         {/* PHASE 1: DUAL-TONE EDITORIAL HEADING                             */}
         {/* ================================================================ */}
-        <Reveal className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 md:mb-16">
+        <Reveal className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 lg:mb-16">
           {/* Eyebrow with Gold Diamonds */}
           <div className="flex items-center justify-center gap-2 mb-2 sm:mb-3 select-none">
             <span className="text-[9px] text-[#B8975E] rotate-45 font-bold">◆</span>
@@ -462,7 +462,7 @@ export function OurStorySection() {
         {/* ================================================================ */}
         {/* PROFILE CARDS WITH VENUE PATTERNS & RESTORED ARCH FRAME          */}
         {/* ================================================================ */}
-        <div className="relative max-w-5xl lg:max-w-6xl xl:max-w-[1180px] mx-auto mb-16 sm:mb-20 md:mb-22">
+        <div className="relative max-w-5xl lg:max-w-6xl xl:max-w-[1180px] mx-auto mb-12 sm:mb-16 md:mb-18 lg:mb-22">
           {/* Vertical Center Diamond Flourish between cards on Desktop */}
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0.7 }}
@@ -480,7 +480,7 @@ export function OurStorySection() {
           </motion.div>
 
           {/* Desktop Separation (gap-14 xl:gap-16) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-14 xl:gap-16 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-14 xl:gap-16 items-stretch">
             {/* ------------------------------------------------------------ */}
             {/* CARD 01: THE GROOM                                           */}
             {/* ------------------------------------------------------------ */}
@@ -521,7 +521,7 @@ export function OurStorySection() {
                     {/* Top Label */}
                     <div className="flex items-center justify-center gap-2 pb-2.5 sm:pb-3 border-b border-[#B8975E]/20 mb-4 sm:mb-5 select-none">
                       <span className="text-[8px] text-[#B8975E] rotate-45 font-bold">◆</span>
-                      <span className="text-[9.5px] sm:text-[10.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E]">
+                      <span className="text-[10px] sm:text-[10.5px] lg:text-[10.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E]">
                         THE GROOM
                       </span>
                       <span className="text-[8px] text-[#B8975E] rotate-45 font-bold">◆</span>
@@ -566,7 +566,7 @@ export function OurStorySection() {
                       <div className="flex-1 flex flex-col justify-between min-w-0 text-left w-full sm:w-auto">
                         <div>
                           {/* Eyebrow */}
-                          <span className="text-[9px] sm:text-[9.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E] block">
+                          <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E] block">
                             The Groom
                           </span>
 
@@ -585,13 +585,13 @@ export function OurStorySection() {
                           </div>
 
                           {/* Personal Introduction */}
-                          <p className="font-serif italic text-xs sm:text-[13px] text-[#5C5351] leading-relaxed my-2">
+                          <p className="font-serif italic text-[13.5px] sm:text-[13.5px] lg:text-[13px] text-[#5C5351] leading-relaxed my-2">
                             &ldquo;Rooted in family values and cherished traditions, Mithun carries forward the warmth of his family&apos;s heritage as he begins a beautiful new chapter of life.&rdquo;
                           </p>
 
                           {/* Parents Header Block */}
                           <div className="mt-3 pt-2.5 border-t border-[#B8975E]/20">
-                            <span className="text-[9px] sm:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E6D38] block mb-1">
+                            <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E6D38] block mb-1">
                               BELOVED PARENTS
                             </span>
                             <p className="font-serif text-base sm:text-[17px] font-medium text-[#292322] leading-snug">
@@ -612,10 +612,10 @@ export function OurStorySection() {
                               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                             </svg>
                             <div>
-                              <span className="font-sans font-semibold text-[#292322] block text-[11.5px] sm:text-xs">
+                              <span className="font-sans font-semibold text-[#292322] block text-[12px] sm:text-xs lg:text-[11.5px]">
                                 Chitmu &bull; Kotshila &bull; Purulia
                               </span>
-                              <span className="text-[10.5px] text-[#8A8280]">
+                              <span className="text-[11px] sm:text-[11.5px] lg:text-[10.5px] text-[#8A8280]">
                                 Family Residence &bull; PIN 723215
                               </span>
                             </div>
@@ -629,7 +629,7 @@ export function OurStorySection() {
                   <div
                     className="mt-4 pt-3 border-t border-[#B8975E]/20 text-center select-none"
                   >
-                    <p className="font-serif italic text-xs sm:text-[13px] text-[#6B615F]">
+                    <p className="font-serif italic text-[13px] sm:text-[13.5px] lg:text-[13px] text-[#6B615F]">
                       &ldquo;With ancestral blessings and the love of our kin, we celebrate this sacred union.&rdquo;
                     </p>
                   </div>
@@ -678,7 +678,7 @@ export function OurStorySection() {
                     {/* Top Label */}
                     <div className="flex items-center justify-center gap-2 pb-2.5 sm:pb-3 border-b border-[#8E1B29]/20 mb-4 sm:mb-5 select-none">
                       <span className="text-[8px] text-[#8E1B29] rotate-45 font-bold">◆</span>
-                      <span className="text-[9.5px] sm:text-[10.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29]">
+                      <span className="text-[10px] sm:text-[10.5px] lg:text-[10.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29]">
                         THE BRIDE
                       </span>
                       <span className="text-[8px] text-[#8E1B29] rotate-45 font-bold">◆</span>
@@ -723,7 +723,7 @@ export function OurStorySection() {
                       <div className="flex-1 flex flex-col justify-between min-w-0 text-left w-full sm:w-auto">
                         <div>
                           {/* Eyebrow */}
-                          <span className="text-[9px] sm:text-[9.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29] block">
+                          <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29] block">
                             The Bride
                           </span>
 
@@ -742,13 +742,13 @@ export function OurStorySection() {
                           </div>
 
                           {/* Personal Introduction */}
-                          <p className="font-serif italic text-xs sm:text-[13px] text-[#5C5351] leading-relaxed my-2">
+                          <p className="font-serif italic text-[13.5px] sm:text-[13.5px] lg:text-[13px] text-[#5C5351] leading-relaxed my-2">
                             &ldquo;Graceful in spirit and deeply connected to her family and traditions, Sakhi steps into a new journey filled with love, togetherness and beautiful possibilities.&rdquo;
                           </p>
 
                           {/* Parents Header Block */}
                           <div className="mt-3 pt-2.5 border-t border-[#8E1B29]/20">
-                            <span className="text-[9px] sm:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29] block mb-1">
+                            <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29] block mb-1">
                               BELOVED PARENTS
                             </span>
                             <p className="font-serif text-base sm:text-[17px] font-medium text-[#292322] leading-snug">
@@ -769,10 +769,10 @@ export function OurStorySection() {
                               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                             </svg>
                             <div>
-                              <span className="font-sans font-semibold text-[#292322] block text-[11.5px] sm:text-xs">
+                              <span className="font-sans font-semibold text-[#292322] block text-[12px] sm:text-xs lg:text-[11.5px]">
                                 Ghaghra &bull; Jaipur &bull; Purulia
                               </span>
-                              <span className="text-[10.5px] text-[#8A8280]">
+                              <span className="text-[11px] sm:text-[11.5px] lg:text-[10.5px] text-[#8A8280]">
                                 Family Residence &bull; PIN 723201
                               </span>
                             </div>
@@ -786,7 +786,7 @@ export function OurStorySection() {
                   <div
                     className="mt-4 pt-3 border-t border-[#8E1B29]/20 text-center select-none"
                   >
-                    <p className="font-serif italic text-xs sm:text-[13px] text-[#6B615F]">
+                    <p className="font-serif italic text-[13px] sm:text-[13.5px] lg:text-[13px] text-[#6B615F]">
                       &ldquo;May every step forward together bring timeless peace, joy, and prosperity.&rdquo;
                     </p>
                   </div>
@@ -802,10 +802,10 @@ export function OurStorySection() {
         {/* ================================================================ */}
         <div ref={timelineRef} className="relative max-w-4xl mx-auto">
           {/* Section Header: Dual-Tone Milestones of Our Bond */}
-          <Reveal threshold={0.01} className="text-center max-w-xl mx-auto mb-10 sm:mb-12 md:mb-14">
+          <Reveal threshold={0.01} className="text-center max-w-xl mx-auto mb-7 sm:mb-9 md:mb-11 lg:mb-14">
             <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2 select-none">
               <span className="text-[8px] text-[#B8975E] rotate-45 font-bold">◆</span>
-              <span className="text-[9.5px] sm:text-[10.5px] font-sans font-bold uppercase tracking-[0.24em] text-[#A67C1E]">
+              <span className="text-[10px] sm:text-[10.5px] lg:text-[10.5px] font-sans font-bold uppercase tracking-[0.24em] text-[#A67C1E]">
                 THE SACRED CHRONICLE
               </span>
               <span className="text-[8px] text-[#B8975E] rotate-45 font-bold">◆</span>
@@ -821,7 +821,7 @@ export function OurStorySection() {
             </h3>
 
             {/* Subtitle Updated for Six Chapters */}
-            <p className="font-sans text-xs sm:text-[13px] text-[#6B615F] mt-2 font-normal">
+            <p className="font-sans text-[13px] sm:text-[13.5px] lg:text-[13px] text-[#6B615F] mt-2 font-normal">
               Six chapters marking the sacred joining of two families, guided by timeless tradition.
             </p>
 
@@ -905,7 +905,7 @@ export function OurStorySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: luxuryEase }}
-              className="mt-10 sm:mt-12 md:mt-14 text-center select-none"
+              className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 text-center select-none"
             >
               {/* Animated Gold Symmetrical Divider */}
               <AnimatedDivider variant="gold" size="sm" className="mb-3 sm:mb-3.5" />

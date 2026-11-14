@@ -40,17 +40,17 @@ export function HeroSection() {
       id="hero"
       aria-labelledby="hero-title"
       style={{ transform: "translate3d(0, 0, 0)", willChange: "transform" }}
-      className="relative motion-safe:lg:sticky motion-safe:lg:top-0 motion-safe:lg:z-0 min-h-screen lg:h-screen lg:min-h-0 pt-24 sm:pt-28 lg:pt-[118px] pb-4 sm:pb-6 flex flex-col justify-between overflow-hidden bg-[#150409]"
+      className="relative motion-safe:lg:sticky motion-safe:lg:top-0 motion-safe:lg:z-0 min-h-screen lg:h-screen lg:min-h-0 pt-14 xs:pt-16 sm:pt-20 md:pt-24 lg:pt-[118px] pb-2 xs:pb-3 sm:pb-4 lg:pb-6 flex flex-col justify-between overflow-hidden bg-[#150409]"
     >
       {/* 1. Full-Bleed Cinematic Background Image & Sophisticated Layered Burgundy Overlays */}
       <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
         {/* Exact Hero Couple Photograph Preserved with Choreographed Initial Entrance & Parallax */}
         <motion.div
           suppressHydrationWarning
-          initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1.02 }}
+          initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0.9, scale: 1.025 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
-            duration: shouldReduceMotion ? 0 : 1.25,
+            duration: shouldReduceMotion ? 0 : 1.2,
             ease: luxuryEase,
           }}
           style={
@@ -88,7 +88,7 @@ export function HeroSection() {
               alt="Mithun and Sakhi - The Sacred Wedding Celebration"
               fetchPriority="high"
               decoding="sync"
-              className="w-full h-full object-cover object-[70%_28%] sm:object-[68%_25%] md:object-[68%_22%] lg:object-[68%_20%]"
+              className="w-full h-full object-cover object-[68%_20%] sm:object-[68%_22%] md:object-[68%_22%] lg:object-[68%_20%]"
             />
           </picture>
         </motion.div>
@@ -112,7 +112,7 @@ export function HeroSection() {
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.9, delay: 0.1, ease: luxuryEase }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.85, delay: 0.05, ease: luxuryEase }}
           className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#140307]/98 via-[#180309]/92 via-[#1E050D]/80 via-[#20060E]/50 via-[#18040A]/24 to-transparent w-full max-w-[68%]"
           aria-hidden="true"
         />
@@ -121,7 +121,7 @@ export function HeroSection() {
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.9, delay: 0.1, ease: luxuryEase }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.85, delay: 0.05, ease: luxuryEase }}
           className="absolute inset-0 block lg:hidden pointer-events-none"
           aria-hidden="true"
         >
@@ -147,7 +147,7 @@ export function HeroSection() {
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 1.1, delay: 0.35, ease: luxuryEase }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.9, delay: 0.2, ease: luxuryEase }}
           className="absolute bottom-0 inset-x-0 h-40 pointer-events-none overflow-hidden select-none z-0"
           aria-hidden="true"
         >
@@ -213,14 +213,14 @@ export function HeroSection() {
           <div className="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left">
             {/* Step 2A: Top Ornamental Lotus Blossom Motif */}
             <motion.div
-              initial={{ opacity: 1, y: 0 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.1, ease: luxuryEase }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 8, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: 0.08, ease: luxuryEase }}
               className="flex justify-center lg:justify-start mb-1 sm:mb-1.5"
               aria-hidden="true"
             >
               <svg
-                className="w-8 h-6 text-[#D4AF37]"
+                className="w-7 h-5 sm:w-8 sm:h-6 text-[#D4AF37]"
                 viewBox="0 0 28 20"
                 fill="none"
                 stroke="currentColor"
@@ -247,27 +247,27 @@ export function HeroSection() {
 
             {/* Step 2B: Ceremonial Eyebrow */}
             <motion.div
-              initial={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.15, ease: luxuryEase }}
-              className="mb-2 sm:mb-2.5"
+              transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: 0.12, ease: luxuryEase }}
+              className="mb-1.5 xs:mb-2 sm:mb-2.5"
             >
-              <div className="inline-flex items-center gap-2 sm:gap-2.5 select-none">
+              <div className="inline-flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 select-none">
                 <motion.span
                   initial={shouldReduceMotion ? { scaleX: 1 } : { scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: 0.38, ease: luxuryEase }}
-                  className="w-5 sm:w-8 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37] origin-right"
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.45, delay: 0.22, ease: luxuryEase }}
+                  className="w-4 xs:w-6 sm:w-8 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37] origin-right"
                   aria-hidden="true"
                 />
-                <span className="text-[10px] xs:text-[11px] sm:text-xs font-sans font-semibold tracking-[0.24em] uppercase text-[#D4AF37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
+                <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-sans font-semibold tracking-[0.22em] xs:tracking-[0.24em] uppercase text-[#D4AF37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
                   The Sacred Wedding Celebration
                 </span>
                 <motion.span
                   initial={shouldReduceMotion ? { scaleX: 1 } : { scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: 0.38, ease: luxuryEase }}
-                  className="w-5 sm:w-8 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37] origin-left"
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.45, delay: 0.22, ease: luxuryEase }}
+                  className="w-4 xs:w-6 sm:w-8 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37] origin-left"
                   aria-hidden="true"
                 />
               </div>
@@ -275,9 +275,9 @@ export function HeroSection() {
 
             {/* Step 3: Main Couple Branding — Mithun & Sakhi */}
             <motion.div
-              initial={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.6, ease: luxuryEase }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.65, delay: 0.16, ease: luxuryEase }}
               className="w-full relative"
             >
               {/* Cinematic Ambient Gold Radiance behind Couple Names */}
@@ -291,7 +291,7 @@ export function HeroSection() {
               />
               <h1
                 id="hero-title"
-                className="font-serif text-[clamp(2.15rem,7.8vw,3.4rem)] sm:text-[clamp(3.5rem,6.8vw,4.8rem)] md:text-[clamp(4.2rem,6.2vw,5.5rem)] lg:text-[4.85rem] xl:text-[5.5rem] 2xl:text-[6.2rem] font-normal tracking-tight text-[#FFFDF8] leading-[1.05] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] max-xs:whitespace-normal whitespace-nowrap"
+                className="font-serif text-[clamp(2.35rem,8.6vw,3.4rem)] sm:text-[clamp(3.5rem,6.8vw,4.8rem)] md:text-[clamp(4.2rem,6.2vw,5.5rem)] lg:text-[4.85rem] xl:text-[5.5rem] 2xl:text-[6.2rem] font-normal tracking-tight text-[#FFFDF8] leading-[1.05] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] max-xs:whitespace-normal whitespace-nowrap"
                 style={{
                   textShadow:
                     "0 2px 10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(212, 175, 55, 0.42), 0 0 50px rgba(184, 151, 94, 0.22)",
@@ -324,10 +324,10 @@ export function HeroSection() {
 
             {/* Step 4A: Romantic Dedication Message */}
             <motion.p
-              initial={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.18, ease: luxuryEase }}
-              className="font-serif italic text-[1.05rem] sm:text-[1.2rem] lg:text-[1.32rem] text-[#FFFDF8] mt-2 sm:mt-2.5 max-w-2xl leading-[1.6] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] tracking-wide"
+              transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: 0.22, ease: luxuryEase }}
+              className="font-serif italic text-[0.92rem] xs:text-[0.98rem] sm:text-[1.12rem] lg:text-[1.32rem] text-[#FFFDF8] mt-1.5 sm:mt-2.5 max-w-[340px] xs:max-w-md sm:max-w-xl lg:max-w-2xl leading-[1.48] sm:leading-[1.6] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] tracking-wide"
             >
               &ldquo;With our families&apos; blessings, two hearts begin a timeless journey&mdash;
               <br className="hidden sm:inline" />
@@ -338,140 +338,143 @@ export function HeroSection() {
             <motion.div
               initial={shouldReduceMotion ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0.7 }}
               animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.66, ease: luxuryEase }}
-              className="flex items-center justify-center lg:justify-start gap-2 my-3 sm:my-3.5 select-none origin-center"
+              transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: 0.28, ease: luxuryEase }}
+              className="flex items-center justify-center lg:justify-start gap-1.5 xs:gap-2 my-2.5 xs:my-3 sm:my-3.5 select-none origin-center"
               aria-hidden="true"
             >
-              <span className="w-12 sm:w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/80 to-[#D4AF37]" />
+              <span className="w-8 xs:w-12 sm:w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/80 to-[#D4AF37]" />
               <span className="text-[8px] text-[#D4AF37]">◆</span>
               <span className="text-[10px] text-[#D4AF37]">◇</span>
               <span className="text-[8px] text-[#D4AF37]">◆</span>
-              <span className="w-12 sm:w-20 h-[1px] bg-gradient-to-l from-transparent via-[#D4AF37]/80 to-[#D4AF37]" />
+              <span className="w-8 xs:w-12 sm:w-20 h-[1px] bg-gradient-to-l from-transparent via-[#D4AF37]/80 to-[#D4AF37]" />
             </motion.div>
 
-            {/* Step 5: Miniature Luxury Wedding Information Plaque (Regal Velvet Maroon Edition) */}
-            <motion.div
-              initial={{ opacity: 1, y: 0, scale: 1 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.22, ease: luxuryEase }}
-              className="w-full max-w-[440px] sm:max-w-[460px] relative mb-4 sm:mb-5 select-none group"
-            >
-              {/* Outer Architectural Plaque Frame with Refined Champagne-Gold Hairline Border */}
-              <div className="relative rounded-2xl p-[1px] sm:p-[1.5px] bg-gradient-to-b from-[#D4AF37]/45 via-[#B8975E]/20 to-[#D4AF37]/35 shadow-[0_12px_36px_rgba(0,0,0,0.65)] hover:shadow-[0_16px_44px_rgba(0,0,0,0.75)] transition-all duration-300 overflow-visible">
-                {/* Specular Corner Accents (Subtle Antique Gold Highlights) */}
-                <div className="absolute -top-[1px] -left-[1px] w-3.5 h-3.5 rounded-tl-xl border-t border-l border-[#FFE8A3]/60 opacity-60 pointer-events-none z-20" aria-hidden="true" />
-                <div className="absolute -top-[1px] -right-[1px] w-3.5 h-3.5 rounded-tr-xl border-t border-r border-[#FFE8A3]/60 opacity-60 pointer-events-none z-20" aria-hidden="true" />
-                <div className="absolute -bottom-[1px] -left-[1px] w-3.5 h-3.5 rounded-bl-xl border-b border-l border-[#FFE8A3]/50 opacity-50 pointer-events-none z-20" aria-hidden="true" />
-                <div className="absolute -bottom-[1px] -right-[1px] w-3.5 h-3.5 rounded-br-xl border-b border-r border-[#FFE8A3]/50 opacity-50 pointer-events-none z-20" aria-hidden="true" />
+            {/* Step 5 & 7B: Responsive Dual-Plaque Dais (Side-by-Side on Tablet, Stacked on Mobile, Left-Aligned on Desktop) */}
+            <div className="w-full flex flex-col md:flex-row items-center md:items-stretch justify-center lg:justify-start gap-3 xs:gap-3.5 md:gap-5 lg:gap-0 mb-3.5 sm:mb-4 lg:mb-5">
+              {/* Step 5: Miniature Luxury Wedding Information Plaque (Regal Velvet Maroon Edition) */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.32, ease: luxuryEase }}
+                className="w-full max-w-[410px] xs:max-w-[440px] md:max-w-[360px] lg:max-w-[460px] relative select-none group flex flex-col justify-center"
+              >
+                {/* Outer Architectural Plaque Frame with Refined Champagne-Gold Hairline Border */}
+                <div className="relative rounded-2xl p-[1px] sm:p-[1.5px] bg-gradient-to-b from-[#D4AF37]/45 via-[#B8975E]/20 to-[#D4AF37]/35 shadow-[0_12px_36px_rgba(0,0,0,0.65)] hover:shadow-[0_16px_44px_rgba(0,0,0,0.75)] transition-all duration-300 overflow-visible">
+                  {/* Specular Corner Accents (Subtle Antique Gold Highlights) */}
+                  <div className="absolute -top-[1px] -left-[1px] w-3.5 h-3.5 rounded-tl-xl border-t border-l border-[#FFE8A3]/60 opacity-60 pointer-events-none z-20" aria-hidden="true" />
+                  <div className="absolute -top-[1px] -right-[1px] w-3.5 h-3.5 rounded-tr-xl border-t border-r border-[#FFE8A3]/60 opacity-60 pointer-events-none z-20" aria-hidden="true" />
+                  <div className="absolute -bottom-[1px] -left-[1px] w-3.5 h-3.5 rounded-bl-xl border-b border-l border-[#FFE8A3]/50 opacity-50 pointer-events-none z-20" aria-hidden="true" />
+                  <div className="absolute -bottom-[1px] -right-[1px] w-3.5 h-3.5 rounded-br-xl border-b border-r border-[#FFE8A3]/50 opacity-50 pointer-events-none z-20" aria-hidden="true" />
 
-                {/* Top Center Ornamental Jewel Crest */}
-                <div
-                  className="absolute -top-[4px] left-1/2 -translate-x-1/2 flex items-center gap-1 z-30 pointer-events-none select-none whitespace-nowrap opacity-75"
-                  aria-hidden="true"
-                >
-                  <span className="w-5 sm:w-8 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
-                  <div className="relative w-2.5 h-2.5 rotate-45 border border-[#D4AF37]/80 bg-[#1E060C] flex items-center justify-center">
-                    <span className="w-1 h-1 bg-[#FFE8A3]" />
+                  {/* Top Center Ornamental Jewel Crest */}
+                  <div
+                    className="absolute -top-[4px] left-1/2 -translate-x-1/2 flex items-center gap-1 z-30 pointer-events-none select-none whitespace-nowrap opacity-75"
+                    aria-hidden="true"
+                  >
+                    <span className="w-5 sm:w-8 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
+                    <div className="relative w-2.5 h-2.5 rotate-45 border border-[#D4AF37]/80 bg-[#1E060C] flex items-center justify-center">
+                      <span className="w-1 h-1 bg-[#FFE8A3]" />
+                    </div>
+                    <span className="w-5 sm:w-8 h-[1px] bg-gradient-to-l from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
                   </div>
-                  <span className="w-5 sm:w-8 h-[1px] bg-gradient-to-l from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
+
+                  {/* Inner Plaque: Deep Regal Velvet Maroon Glass Surface */}
+                  <div
+                    style={{
+                      background: "linear-gradient(135deg, rgba(30, 7, 13, 0.90) 0%, rgba(20, 5, 9, 0.93) 50%, rgba(13, 3, 6, 0.95) 100%)",
+                      backdropFilter: "blur(20px) saturate(140%)",
+                      WebkitBackdropFilter: "blur(20px) saturate(140%)",
+                      boxShadow: "inset 0 1px 1px rgba(255, 235, 175, 0.12), inset 0 -1px 1px rgba(0, 0, 0, 0.4)",
+                    }}
+                    className="relative rounded-[15px] px-3.5 py-2.5 sm:px-4.5 sm:py-3 overflow-hidden border border-[#D4AF37]/25"
+                  >
+                    {/* Subtle Isolated Glass Reflection */}
+                    <GlassReflection intensity="subtle" />
+
+                    {/* Inner Delicate Framing Stroke */}
+                    <div className="absolute inset-1 sm:inset-1.5 rounded-[10px] border border-[#D4AF37]/15 pointer-events-none" aria-hidden="true" />
+
+                    {/* Main Content Grid: Date Area (Left) | Architectural Divider | Location Area (Right) */}
+                    <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] gap-1.5 sm:gap-2 items-center">
+                      {/* LEFT: Date Block */}
+                      <div className="flex flex-col items-center sm:items-start text-center sm:text-left px-0.5 sm:px-1.5">
+                        <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1 text-[9.5px] xs:text-[10px] sm:text-[10.5px] lg:text-[8px] font-sans font-bold uppercase tracking-[0.18em] sm:tracking-[0.24em] text-[#E8C882] whitespace-nowrap">
+                          <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#E8C882] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <span>Auspicious Dates</span>
+                        </div>
+                        <div className="font-serif text-[1.3rem] xs:text-[1.58rem] sm:text-[1.98rem] font-normal text-[#FFFDF9] tracking-tight leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                          19 &ndash; 22
+                        </div>
+                        <div className="text-[9px] xs:text-[9.5px] sm:text-[10.5px] lg:text-[9.5px] font-sans uppercase tracking-[0.16em] sm:tracking-[0.22em] text-[#E5C388] font-bold mt-0.5 sm:mt-1 whitespace-nowrap">
+                          November 2026
+                        </div>
+                      </div>
+
+                      {/* CENTER: Architectural Divider with Diamond Ornament */}
+                      <div className="flex flex-col items-center justify-center h-9 sm:h-11 px-1 sm:px-1.5 select-none opacity-85" aria-hidden="true">
+                        <span className="w-[1px] h-2.5 sm:h-3 bg-gradient-to-b from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
+                        <div className="my-0.5 sm:my-1 w-1.5 h-1.5 sm:w-1.5 sm:h-1.5 rotate-45 border border-[#FFE8A3] bg-[#420E18] flex items-center justify-center shadow-[0_0_4px_rgba(212,175,55,0.8)]">
+                          <span className="w-0.5 h-0.5 bg-[#FFE8A3]" />
+                        </div>
+                        <span className="w-[1px] h-2.5 sm:h-3 bg-gradient-to-t from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
+                      </div>
+
+                      {/* RIGHT: Location Block */}
+                      <div className="flex flex-col items-center sm:items-start text-center sm:text-left px-0.5 sm:px-1.5">
+                        <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1 text-[9.5px] xs:text-[10px] sm:text-[10.5px] lg:text-[8px] font-sans font-bold uppercase tracking-[0.18em] sm:tracking-[0.24em] text-[#E8C882] whitespace-nowrap">
+                          <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#E8C882] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          <span>Celebration Venues</span>
+                        </div>
+                        <div className="font-serif text-[1.3rem] xs:text-[1.58rem] sm:text-[1.98rem] font-normal text-[#FFFDF9] tracking-tight leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                          Purulia,
+                        </div>
+                        <div className="text-[9px] xs:text-[9.5px] sm:text-[10.5px] lg:text-[9.5px] font-sans uppercase tracking-[0.16em] sm:tracking-[0.22em] text-[#E5C388] font-bold mt-0.5 sm:mt-1 whitespace-nowrap">
+                          West Bengal, India
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Supporting Ceremony Strip with Integrated Filigree Capsule */}
+                    <div className="relative z-10 mt-1.5 sm:mt-2 pt-1.5 sm:pt-2 border-t border-[#D4AF37]/20 flex items-center justify-center select-none">
+                      <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-0.5 rounded-full bg-[#140306]/80 border border-[#D4AF37]/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06)]">
+                        <span className="text-[6.5px] sm:text-[7px] lg:text-[6.5px] text-[#D4AF37]" aria-hidden="true">◆</span>
+                        <span className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] lg:text-[8.5px] font-sans font-semibold uppercase tracking-[0.16em] sm:tracking-[0.20em] text-[#FFF9F0] drop-shadow-sm whitespace-nowrap">
+                          Haldi <span className="text-[#D4AF37] mx-0.5 sm:mx-1">·</span> Mehndi <span className="text-[#D4AF37] mx-0.5 sm:mx-1">·</span> Wedding <span className="text-[#D4AF37] mx-0.5 sm:mx-1">·</span> Reception
+                        </span>
+                        <span className="text-[6.5px] sm:text-[7px] lg:text-[6.5px] text-[#D4AF37]" aria-hidden="true">◆</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
 
-                {/* Inner Plaque: Deep Regal Velvet Maroon Glass Surface */}
-                <div
-                  style={{
-                    background: "linear-gradient(135deg, rgba(30, 7, 13, 0.90) 0%, rgba(20, 5, 9, 0.93) 50%, rgba(13, 3, 6, 0.95) 100%)",
-                    backdropFilter: "blur(20px) saturate(140%)",
-                    WebkitBackdropFilter: "blur(20px) saturate(140%)",
-                    boxShadow: "inset 0 1px 1px rgba(255, 235, 175, 0.12), inset 0 -1px 1px rgba(0, 0, 0, 0.4)",
-                  }}
-                  className="relative rounded-[15px] px-3.5 py-2.5 sm:px-4.5 sm:py-3 overflow-hidden border border-[#D4AF37]/25"
-                >
-                  {/* Subtle Isolated Glass Reflection */}
-                  <GlassReflection intensity="subtle" />
-
-                  {/* Inner Delicate Framing Stroke */}
-                  <div className="absolute inset-1 sm:inset-1.5 rounded-[10px] border border-[#D4AF37]/15 pointer-events-none" aria-hidden="true" />
-
-                  {/* Main Content Grid: Date Area (Left) | Architectural Divider | Location Area (Right) */}
-                  <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] gap-1.5 sm:gap-2 items-center">
-                    {/* LEFT: Date Block */}
-                    <div className="flex flex-col items-center sm:items-start text-center sm:text-left px-0.5 sm:px-1.5">
-                      <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1 text-[7px] xs:text-[7.5px] sm:text-[8px] font-sans font-bold uppercase tracking-[0.18em] sm:tracking-[0.24em] text-[#E8C882] whitespace-nowrap">
-                        <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#E8C882] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span>Auspicious Dates</span>
-                      </div>
-                      <div className="font-serif text-[1.3rem] xs:text-[1.58rem] sm:text-[1.98rem] font-normal text-[#FFFDF9] tracking-tight leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-                        19 &ndash; 22
-                      </div>
-                      <div className="text-[7.5px] xs:text-[8px] sm:text-[9.5px] font-sans uppercase tracking-[0.16em] sm:tracking-[0.22em] text-[#E5C388] font-bold mt-0.5 sm:mt-1 whitespace-nowrap">
-                        November 2026
-                      </div>
-                    </div>
-
-                    {/* CENTER: Architectural Divider with Diamond Ornament */}
-                    <div className="flex flex-col items-center justify-center h-9 sm:h-11 px-1 sm:px-1.5 select-none opacity-85" aria-hidden="true">
-                      <span className="w-[1px] h-2.5 sm:h-3 bg-gradient-to-b from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
-                      <div className="my-0.5 sm:my-1 w-1.5 h-1.5 sm:w-1.5 sm:h-1.5 rotate-45 border border-[#FFE8A3] bg-[#420E18] flex items-center justify-center shadow-[0_0_4px_rgba(212,175,55,0.8)]">
-                        <span className="w-0.5 h-0.5 bg-[#FFE8A3]" />
-                      </div>
-                      <span className="w-[1px] h-2.5 sm:h-3 bg-gradient-to-t from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
-                    </div>
-
-                    {/* RIGHT: Location Block */}
-                    <div className="flex flex-col items-center sm:items-start text-center sm:text-left px-0.5 sm:px-1.5">
-                      <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1 text-[7px] xs:text-[7.5px] sm:text-[8px] font-sans font-bold uppercase tracking-[0.18em] sm:tracking-[0.24em] text-[#E8C882] whitespace-nowrap">
-                        <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#E8C882] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span>Celebration Venues</span>
-                      </div>
-                      <div className="font-serif text-[1.3rem] xs:text-[1.58rem] sm:text-[1.98rem] font-normal text-[#FFFDF9] tracking-tight leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-                        Purulia,
-                      </div>
-                      <div className="text-[7.5px] xs:text-[8px] sm:text-[9.5px] font-sans uppercase tracking-[0.16em] sm:tracking-[0.22em] text-[#E5C388] font-bold mt-0.5 sm:mt-1 whitespace-nowrap">
-                        West Bengal, India
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Supporting Ceremony Strip with Integrated Filigree Capsule */}
-                  <div className="relative z-10 mt-1.5 sm:mt-2 pt-1.5 sm:pt-2 border-t border-[#D4AF37]/20 flex items-center justify-center select-none">
-                    <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-0.5 rounded-full bg-[#140306]/80 border border-[#D4AF37]/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06)]">
-                      <span className="text-[5.5px] sm:text-[6.5px] text-[#D4AF37]" aria-hidden="true">◆</span>
-                      <span className="text-[7px] xs:text-[7.5px] sm:text-[8.5px] font-sans font-semibold uppercase tracking-[0.16em] sm:tracking-[0.20em] text-[#FFF9F0] drop-shadow-sm whitespace-nowrap">
-                        Haldi <span className="text-[#D4AF37] mx-0.5 sm:mx-1">·</span> Mehndi <span className="text-[#D4AF37] mx-0.5 sm:mx-1">·</span> Wedding <span className="text-[#D4AF37] mx-0.5 sm:mx-1">·</span> Reception
-                      </span>
-                      <span className="text-[5.5px] sm:text-[6.5px] text-[#D4AF37]" aria-hidden="true">◆</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Step 7B: Mobile-Only Integrated Countdown */}
-            <motion.div
-              initial={{ opacity: 1, y: 0 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.25, ease: luxuryEase }}
-              className="w-full max-w-[340px] mb-5 sm:mb-6 block lg:hidden"
-            >
-              <HeroCountdown />
-            </motion.div>
+              {/* Step 7B: Mobile/Tablet Integrated Countdown */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.36, ease: luxuryEase }}
+                className="w-full max-w-[340px] md:max-w-[340px] block lg:hidden flex items-center justify-center"
+              >
+                <HeroCountdown className="w-full !mx-0" />
+              </motion.div>
+            </div>
 
             {/* Step 6: CTA Buttons with Micro-Interactions & Magnetic Hover */}
             <motion.div
-              initial={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: 0.28, ease: luxuryEase }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 w-full sm:w-auto self-center lg:self-start"
+              transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: 0.42, ease: luxuryEase }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 xs:gap-3.5 sm:gap-4 w-full sm:w-auto self-center lg:self-start"
             >
               <MagneticButton className="w-full sm:w-auto">
                 <Link
                   href={narrative.primaryCtaHref}
-                  className="group w-full sm:w-auto min-w-[210px] sm:min-w-[230px] h-12 sm:h-[50px] px-6 sm:px-8 rounded-full bg-gradient-to-r from-[#7D1525] via-[#8E1B29] to-[#6A1220] hover:from-[#8E1B29] hover:via-[#9E2030] hover:to-[#7D1525] text-white border border-[#E8929E]/40 shadow-[0_8px_24px_rgba(142,27,41,0.38),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_12px_28px_rgba(142,27,41,0.52),0_0_20px_rgba(232,146,158,0.28)] flex items-center justify-center gap-2 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer"
+                  className="group w-full sm:w-auto min-w-[190px] xs:min-w-[210px] sm:min-w-[230px] h-11 xs:h-12 sm:h-[50px] px-5 xs:px-6 sm:px-8 rounded-full bg-gradient-to-r from-[#7D1525] via-[#8E1B29] to-[#6A1220] hover:from-[#8E1B29] hover:via-[#9E2030] hover:to-[#7D1525] text-white border border-[#E8929E]/40 shadow-[0_8px_24px_rgba(142,27,41,0.38),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_12px_28px_rgba(142,27,41,0.52),0_0_20px_rgba(232,146,158,0.28)] flex items-center justify-center gap-2 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer"
                 >
                   <span>{narrative.primaryCtaText.replace(" ↓", "")}</span>
                   <span className="text-sm font-normal group-hover:translate-x-1.5 transition-transform duration-300" aria-hidden="true">&rarr;</span>
@@ -481,7 +484,7 @@ export function HeroSection() {
               <MagneticButton className="w-full sm:w-auto">
                 <Link
                   href={narrative.secondaryCtaHref}
-                  className="group w-full sm:w-auto min-w-[200px] sm:min-w-[220px] h-12 sm:h-[50px] px-6 sm:px-8 rounded-full bg-gradient-to-r from-[#22070F]/85 via-[#300B16]/90 to-[#22070F]/85 hover:from-[#300B16] hover:via-[#420F1F] hover:to-[#300B16] text-[#FFFDF8] border border-[#D4AF37]/65 hover:border-[#FFE8A3] shadow-[0_8px_24px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.22)] hover:shadow-[0_12px_28px_rgba(212,175,55,0.25),0_0_16px_rgba(255,232,163,0.18)] flex items-center justify-center gap-2.5 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer backdrop-blur-md"
+                  className="group w-full sm:w-auto min-w-[180px] xs:min-w-[200px] sm:min-w-[220px] h-11 xs:h-12 sm:h-[50px] px-5 xs:px-6 sm:px-8 rounded-full bg-gradient-to-r from-[#22070F]/85 via-[#300B16]/90 to-[#22070F]/85 hover:from-[#300B16] hover:via-[#420F1F] hover:to-[#300B16] text-[#FFFDF8] border border-[#D4AF37]/65 hover:border-[#FFE8A3] shadow-[0_8px_24px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.22)] hover:shadow-[0_12px_28px_rgba(212,175,55,0.25),0_0_16px_rgba(255,232,163,0.18)] flex items-center justify-center gap-2.5 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer backdrop-blur-md"
                 >
                   <svg
                     className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shrink-0"
@@ -506,9 +509,9 @@ export function HeroSection() {
 
           {/* Step 7A: Right Column: Liquid-Glass Ceremonial Plaque in Upper-Right (4 cols on desktop) */}
           <motion.div
-            initial={{ opacity: 1, y: 0, scale: 1 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 0.7, delay: 0.22, ease: luxuryEase }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 0.36, ease: luxuryEase }}
             className="hidden lg:flex lg:col-span-4 flex-col justify-start items-end w-full lg:pt-0"
           >
             <HeroCountdown className="w-full max-w-[340px] xl:max-w-[360px] lg:mr-0 lg:ml-auto" />
@@ -518,10 +521,10 @@ export function HeroSection() {
 
       {/* Step 8: Base of Hero: Scroll Indicator */}
       <motion.div
-        initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+        initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: 1.05, ease: luxuryEase }}
-        className="relative z-10 text-center mt-3 sm:mt-4 pb-2"
+        transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: 0.55, ease: luxuryEase }}
+        className="relative z-10 text-center mt-2 xs:mt-3 sm:mt-4 pb-1 xs:pb-2"
       >
         <ScrollIndicator />
       </motion.div>

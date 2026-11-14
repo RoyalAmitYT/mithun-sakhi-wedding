@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { Container } from "@/components/ui/container";
 import { isMemoriesModeActive } from "@/lib/lifecycle";
+import { useMotionReduced, MOTION_EASINGS } from "@/lib/motion";
 import {
   CardCornerBrackets,
 } from "@/components/ui/decorative-surfaces";
@@ -379,6 +380,8 @@ function LotusTopOrnament() {
  * Follows the minimalist luxury wedding RSVP design reference 1:1.
  */
 export function RsvpPreviewSection() {
+  const shouldReduceMotion = useMotionReduced();
+  const luxuryEase = MOTION_EASINGS.luxury as [number, number, number, number];
   const isMemories = useSyncExternalStore(
     emptySubscribe,
     () => isMemoriesModeActive(),
@@ -389,7 +392,7 @@ export function RsvpPreviewSection() {
     <section
       id="rsvp"
       aria-labelledby="rsvp-title"
-      className="relative py-20 sm:py-28 md:py-32 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
+      className="relative py-14 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
     >
       {/* 1. Indian Mandap Archway & Hanging Floral Framing (Top Left & Top Right) */}
       <IndianMandapArchway isRight={false} />
@@ -404,11 +407,11 @@ export function RsvpPreviewSection() {
         {/* SECTION HEADING                                                     */}
         {/* ==================================================================== */}
         <motion.div
-          initial={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center max-w-2xl mx-auto mb-10 sm:mb-12"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.65, ease: luxuryEase }}
+          className="text-center max-w-2xl mx-auto mb-7 sm:mb-9 lg:mb-12"
         >
           {/* Centered Eyebrow: GUEST RSVP & ATTENDANCE */}
           <div className="flex items-center justify-center gap-2 mb-2 sm:mb-2.5 select-none">
@@ -453,17 +456,21 @@ export function RsvpPreviewSection() {
         {/* SINGLE CENTRAL RSVP CARD                                             */}
         {/* ==================================================================== */}
         <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative max-w-[680px] mx-auto mt-6 sm:mt-8"
+          initial={
+            shouldReduceMotion
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 18, scale: 0.985 }
+          }
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.75, delay: 0.08, ease: luxuryEase }}
+          className="relative max-w-[680px] mx-auto mt-4 sm:mt-6 lg:mt-8"
         >
           {/* Small Ornamental Lotus Blossom at top center */}
           <LotusTopOrnament />
 
           {/* Card Body */}
-          <div className="relative rounded-[24px] sm:rounded-[28px] bg-gradient-to-b from-[#FFFDF9] to-[#FFF9F0] border border-[#B8975E]/40 p-6 sm:p-8 md:p-10 shadow-[0_16px_40px_-12px_rgba(184,151,94,0.18),0_4px_16px_-4px_rgba(41,35,34,0.06)] overflow-hidden">
+          <div className="relative rounded-[24px] sm:rounded-[28px] bg-gradient-to-b from-[#FFFDF9] to-[#FFF9F0] border border-[#B8975E]/40 p-5 sm:p-7 lg:p-10 shadow-[0_16px_40px_-12px_rgba(184,151,94,0.18),0_4px_16px_-4px_rgba(41,35,34,0.06)] overflow-hidden">
             {/* Architectural Corner Brackets */}
             <CardCornerBrackets color="#B8975E" size={18} />
 
@@ -527,7 +534,7 @@ export function RsvpPreviewSection() {
                 <h3 className="font-serif text-2xl sm:text-[28px] md:text-3xl font-normal text-[#292322] mt-0.5 leading-snug">
                   {isMemories ? "Attendance Concluded" : "Are You Joining Us?"}
                 </h3>
-                <p className="font-sans text-xs sm:text-[14px] text-[#5C5452] mt-1.5 leading-relaxed">
+                <p className="font-sans text-[13.5px] sm:text-[14px] lg:text-xs text-[#5C5452] mt-1.5 leading-relaxed">
                   {isMemories
                     ? "Ceremony attendance confirmations have concluded. Thank you for your warm love and blessings."
                     : "We would be honoured to celebrate these special moments with you. Let us know which ceremonies you'll be joining."}
@@ -536,7 +543,7 @@ export function RsvpPreviewSection() {
             </div>
 
             {/* Lower Content: Action Buttons */}
-            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 mt-6 sm:mt-7 pt-1">
+            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-5 sm:mt-6 lg:mt-7 pt-1">
               {/* PRIMARY BUTTON: Submit Your RSVP */}
               <MagneticButton className="flex-1 sm:flex-[1.2] w-full">
                 <Link

@@ -46,7 +46,7 @@ export function InvitationPreviewClient({ settings }: InvitationPreviewClientPro
     <section
       id="invitation"
       aria-labelledby="invitation-title"
-      className="relative py-20 sm:py-28 md:py-32 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
+      className="relative py-14 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
     >
       {/* Background Architectural Corner Filigree & Side Mandalas */}
       <SectionHeaderFiligree color="#B8975E" opacity={0.18} />
@@ -61,7 +61,7 @@ export function InvitationPreviewClient({ settings }: InvitationPreviewClientPro
         {/* ================================================================ */}
         {/* SECTION HEADING LOCKUP                                          */}
         {/* ================================================================ */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-7 sm:mb-10 lg:mb-14">
           {/* Eyebrow with Gold Diamond Accents */}
           <Reveal preset="luxury" direction="up" distance={10} threshold={0.15}>
             <div className="flex items-center justify-center gap-2 mb-2 select-none">
@@ -143,10 +143,10 @@ export function InvitationPreviewClient({ settings }: InvitationPreviewClientPro
         {/* ACTION CONTROLS & OFFICIAL NOTICE                                */}
         {/* ================================================================ */}
         <Reveal preset="luxury" direction="up" distance={14} delay={0.28} threshold={0.15}>
-          <div className="mt-8 sm:mt-10 text-center space-y-4">
+          <div className="mt-6 sm:mt-8 lg:mt-10 text-center space-y-3.5 sm:space-y-4">
             <InvitationActionButtons variant="preview" />
 
-            <p className="font-serif italic text-xs text-[#8A8280] max-w-lg mx-auto leading-relaxed pt-1">
+            <p className="font-serif italic text-[12.5px] sm:text-xs text-[#8A8280] max-w-lg mx-auto leading-relaxed pt-1">
               Official digital wedding invitation card for Mithun &amp; Sakhi &bull; 19–22 November 2026 &bull; Purulia, West Bengal
             </p>
           </div>

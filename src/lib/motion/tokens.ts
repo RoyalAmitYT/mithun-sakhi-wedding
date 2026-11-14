@@ -17,6 +17,8 @@ export const MOTION_DURATIONS = {
   editorial: 0.72,
   /** Major visual transitions: hero elements, page transitions, backdrop fades (650–900ms) */
   transition: 0.80,
+  /** Cinematic reveals: signature hero elements, full ceremony stages (850–1050ms) */
+  cinematic: 0.95,
 } as const;
 
 export type MotionDurationKey = keyof typeof MOTION_DURATIONS;
@@ -25,6 +27,8 @@ export type MotionDurationKey = keyof typeof MOTION_DURATIONS;
 export const MOTION_EASINGS = {
   /** Luxury ease-out: editorial elegance, gentle deceleration, signature royal feel */
   luxury: [0.22, 1, 0.36, 1] as const,
+  /** Cinematic ease-out: hyper-refined luxury deceleration curve for signature story reveals */
+  cinematic: [0.19, 1.0, 0.22, 1.0] as const,
   /** Gentle ease-in-out: continuous, natural, organic flow */
   gentle: [0.25, 0.1, 0.25, 1] as const,
   /** Snappy ease-out: responsive UI controls, interactive feedback, crisp navigation */

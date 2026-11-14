@@ -456,7 +456,7 @@ export function PublicRsvpForm() {
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-sm sm:text-base text-[#292322] placeholder:text-[#8A8280]/70 transition-all shadow-2xs"
+                    className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-base text-[#292322] placeholder:text-[#8A8280]/70 transition-all shadow-2xs"
                   />
                 </div>
 
@@ -476,7 +476,7 @@ export function PublicRsvpForm() {
                       value={mobile}
                       onChange={(e) => setMobile(e.target.value)}
                       placeholder="+91 98765 43210"
-                      className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-sm sm:text-base text-[#292322] placeholder:text-[#8A8280]/70 transition-all shadow-2xs"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-base text-[#292322] placeholder:text-[#8A8280]/70 transition-all shadow-2xs"
                     />
                   </div>
 
@@ -493,7 +493,7 @@ export function PublicRsvpForm() {
                         id="guest-relation"
                         value={relationship}
                         onChange={(e) => setRelationship(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-sm sm:text-base text-[#292322] transition-all shadow-2xs appearance-none cursor-pointer"
+                        className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-base text-[#292322] transition-all shadow-2xs appearance-none cursor-pointer"
                       >
                         <option value="">Select relationship</option>
                         <option value="Family">Family</option>
@@ -525,7 +525,7 @@ export function PublicRsvpForm() {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="City, State or Full Residential Address"
-                    className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-sm sm:text-base text-[#292322] placeholder:text-[#8A8280]/70 transition-all shadow-2xs"
+                    className="w-full px-4 py-3 rounded-xl bg-white border border-[#B8975E]/40 focus:border-[#A52232] focus:ring-2 focus:ring-[#A52232]/20 focus:outline-none font-sans text-base text-[#292322] placeholder:text-[#8A8280]/70 transition-all shadow-2xs"
                   />
                 </div>
 
@@ -630,10 +630,10 @@ export function PublicRsvpForm() {
                               role="radio"
                               aria-checked={isAttending}
                               onClick={() => toggleCeremony(c.id, true)}
-                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-semibold active:scale-95 transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
                                 isAttending
                                   ? "bg-gradient-to-r from-[#7D1525] to-[#9B1E30] text-white shadow-xs"
-                                  : "text-[#5C5452] hover:text-[#292322]"
+                                  : "text-[#5C5452] hover:text-[#292322] active:bg-[#EAE2D2]"
                               }`}
                             >
                               {isAttending && (
@@ -657,10 +657,10 @@ export function PublicRsvpForm() {
                               role="radio"
                               aria-checked={!isAttending}
                               onClick={() => toggleCeremony(c.id, false)}
-                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-medium active:scale-95 transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
                                 !isAttending
                                   ? "bg-white text-[#292322] border border-gray-300 shadow-xs font-semibold"
-                                  : "text-[#5C5452] hover:text-[#292322]"
+                                  : "text-[#5C5452] hover:text-[#292322] active:bg-[#EAE2D2]"
                               }`}
                             >
                               <span>No</span>
@@ -678,7 +678,7 @@ export function PublicRsvpForm() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-13 sm:h-14 px-6 rounded-xl bg-gradient-to-r from-[#7D1525] via-[#9B1E30] to-[#6A1220] hover:brightness-110 active:scale-[0.99] disabled:opacity-60 disabled:pointer-events-none text-white border border-[#D4AF37]/50 shadow-[0_8px_24px_rgba(155,30,48,0.32)] font-sans font-semibold text-base flex items-center justify-center gap-3 transition-all duration-200 cursor-pointer"
+                  className="w-full h-13 sm:h-14 px-6 rounded-xl bg-gradient-to-r from-[#7D1525] via-[#9B1E30] to-[#6A1220] hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none text-white border border-[#D4AF37]/50 shadow-[0_8px_24px_rgba(155,30,48,0.32)] font-sans font-semibold text-base flex items-center justify-center gap-3 transition-all duration-150 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>

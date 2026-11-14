@@ -120,7 +120,7 @@ function SquarePhotoCard({
       type="button"
       onClick={onClick}
       aria-label={`View photograph: ${photo.title}`}
-      className="group relative aspect-square w-[160px] sm:w-[210px] md:w-[250px] shrink-0 rounded-2xl overflow-hidden border border-[#B8975E]/30 bg-[#292322]/5 shadow-xs hover:shadow-md hover:border-[#B8975E]/70 transition-colors duration-300 text-left cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#B8975E]/60 select-none block"
+      className="group relative aspect-square w-[160px] sm:w-[210px] md:w-[250px] shrink-0 rounded-2xl overflow-hidden border border-[#B8975E]/30 bg-[#292322]/5 shadow-xs hover:shadow-md hover:border-[#B8975E]/70 active:scale-[0.98] transition-all duration-200 text-left cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#B8975E]/60 select-none block"
     >
       <GoldLightSweep trigger="hover" intensity="subtle" />
       <Image
@@ -134,10 +134,10 @@ function SquarePhotoCard({
       {/* Subtle bottom gradient vignette for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-2.5 sm:right-3.5 text-white pointer-events-none">
-        <span className="text-[8.5px] sm:text-[9.5px] uppercase font-sans font-semibold tracking-wider text-[#FFFCF6]/90 block drop-shadow-xs truncate">
+        <span className="text-[9.5px] sm:text-[10px] lg:text-[9.5px] uppercase font-sans font-semibold tracking-wider text-[#FFFCF6]/90 block drop-shadow-xs truncate">
           {photo.category}
         </span>
-        <p className="font-serif text-xs sm:text-sm font-medium text-white truncate drop-shadow-sm mt-0.5">
+        <p className="font-serif text-[13px] sm:text-sm lg:text-xs font-medium text-white truncate drop-shadow-sm mt-0.5">
           {photo.title}
         </p>
       </div>
@@ -314,7 +314,7 @@ export function GalleryPreviewClient({
     <section
       id="gallery"
       aria-labelledby="gallery-title"
-      className="relative pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-24 md:pb-28 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
+      className="relative pt-16 sm:pt-22 md:pt-26 lg:pt-32 pb-14 sm:pb-18 md:pb-22 lg:pb-28 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
     >
       {/* Background Architectural Corner Filigree */}
       <SectionHeaderFiligree color="#B8975E" opacity={0.18} />
@@ -327,7 +327,7 @@ export function GalleryPreviewClient({
         {/* ==================================================================== */}
         {/* 1. SECTION HEADER                                                    */}
         {/* ==================================================================== */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 lg:mb-10">
           {/* Eyebrow */}
           <Reveal preset="luxury" direction="up" distance={10} threshold={0.15}>
             <div className="flex items-center justify-center gap-2 mb-2.5 select-none">
@@ -412,7 +412,7 @@ export function GalleryPreviewClient({
               </div>
 
               {/* Panel Description */}
-              <p className="font-serif italic text-xs sm:text-sm text-[#5C5452] mt-2">
+              <p className="font-serif italic text-[13px] sm:text-sm lg:text-xs text-[#5C5452] mt-2">
                 A special selection of memories from our celebrations. Explore the complete collection in the Gallery.
               </p>
             </div>
@@ -523,7 +523,7 @@ export function GalleryPreviewClient({
       {/* ==================================================================== */}
       <Container size="wide" className="relative z-10 px-4 sm:px-6 lg:px-8">
         <Reveal preset="luxury" direction="up" distance={14} delay={0.28} threshold={0.15}>
-          <div className="mt-10 sm:mt-12">
+          <div className="mt-7 sm:mt-9 lg:mt-12">
             <div className="flex items-center justify-center gap-3 sm:gap-6 select-none">
               {/* Left Ornament */}
               <div className="flex items-center gap-2" aria-hidden="true">
@@ -577,7 +577,7 @@ export function GalleryPreviewClient({
             </div>
 
             {/* Dynamic Footnote Message */}
-            <p className="font-sans text-[11px] sm:text-xs text-[#8A8280] text-center tracking-wide mt-5">
+            <p className="font-sans text-[11.5px] sm:text-xs lg:text-[11px] text-[#8A8280] text-center tracking-wide mt-5">
               {isReal ? (
                 <span>Real moments from Mithun &amp; Sakhi&rsquo;s celebrations.</span>
               ) : isError ? (
@@ -644,7 +644,7 @@ export function GalleryPreviewClient({
                       <button
                         type="button"
                         onClick={() => setSelectedPhotoIndex(null)}
-                        className="w-8 h-8 rounded-full bg-[#292322]/10 hover:bg-[#292322]/20 text-[#292322] flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                        className="w-8 h-8 rounded-full bg-[#292322]/10 hover:bg-[#292322]/20 active:scale-90 text-[#292322] flex items-center justify-center transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                         aria-label="Close photo preview"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -699,7 +699,7 @@ export function GalleryPreviewClient({
                               : null
                           )
                         }
-                        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 text-white flex items-center justify-center transition-all border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 hover:scale-105 active:scale-90 text-white flex items-center justify-center transition-all duration-150 border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                         aria-label="Previous photograph"
                       >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -719,7 +719,7 @@ export function GalleryPreviewClient({
                               : null
                           )
                         }
-                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 text-white flex items-center justify-center transition-all border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 hover:scale-105 active:scale-90 text-white flex items-center justify-center transition-all duration-150 border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                         aria-label="Next photograph"
                       >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

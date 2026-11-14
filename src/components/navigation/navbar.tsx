@@ -416,7 +416,7 @@ export function Navbar() {
                 </span>
                 <span
                   className={`
-                    text-[9px] sm:text-[10px] font-sans uppercase tracking-[0.16em] sm:tracking-[0.18em] hidden sm:block transition-colors
+                    text-[10px] sm:text-[10.5px] lg:text-[10px] font-sans uppercase tracking-[0.16em] sm:tracking-[0.18em] hidden sm:block transition-colors
                     ${isDarkSurface ? "text-white/70" : "text-[#8A8280]"}
                   `}
                 >
@@ -512,7 +512,7 @@ export function Navbar() {
                 </Link>
               </div>
 
-              {/* Mobile Hamburger Toggle (minimum 44x44px touch target) */}
+              {/* Mobile Hamburger Toggle (Refined Touch Target 44–48px with Haptic-Like Active State) */}
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(true)}
@@ -520,13 +520,13 @@ export function Navbar() {
                 aria-controls="mobile-navigation-drawer"
                 aria-label="Open navigation menu"
                 className={`
-                  lg:hidden p-2 rounded-[2px] transition-colors
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]
-                  min-h-[44px] min-w-[44px] flex items-center justify-center
+                  lg:hidden w-11 h-11 sm:w-12 sm:h-12 min-h-[44px] min-w-[44px] rounded-lg transition-all duration-200
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2
+                  flex items-center justify-center cursor-pointer active:scale-95
                   ${
                     isDarkSurface
-                      ? "text-white hover:bg-white/10"
-                      : "text-[#292322] hover:bg-[rgba(184,151,94,0.1)]"
+                      ? "text-[#FFFDF8] bg-black/40 hover:bg-black/60 active:bg-black/75 border border-[#D4AF37]/35 shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+                      : "text-[#292322] bg-white/80 hover:bg-white active:bg-[#F7F1E6] border border-[rgba(184,151,94,0.35)] shadow-xs"
                   }
                 `}
               >
@@ -536,7 +536,7 @@ export function Navbar() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="1.75"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"

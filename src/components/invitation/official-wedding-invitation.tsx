@@ -177,13 +177,13 @@ export function OfficialWeddingInvitation({
                 M·S
               </span>
             </span>
-            <span className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.24em] text-[#6B111E]">
+            <span className="text-[9px] xs:text-[9.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.24em] text-[#6B111E]">
               Wedding Invitation
             </span>
           </div>
 
           {/* Right: Location & Year Metadata */}
-          <div className="flex items-center gap-1.5 text-[7px] xs:text-[8px] sm:text-[9.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#7A6250]">
+          <div className="flex items-center gap-1.5 text-[8.5px] xs:text-[9px] sm:text-[9.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#7A6250]">
             <span>Purulia, WB</span>
             <span className="text-[#B8975E]/60">&bull;</span>
             <span>2026</span>
@@ -212,7 +212,7 @@ export function OfficialWeddingInvitation({
         {/* Eyebrow Kicker with Gold Star Diamonds */}
         <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-0.5">
           <span className="text-[7.5px] sm:text-[9.5px] text-[#B8975E] select-none" aria-hidden="true">✦ ✦</span>
-          <span className="text-[7.5px] xs:text-[8.5px] sm:text-[10.5px] md:text-[11.5px] font-sans font-bold uppercase tracking-[0.26em] text-[#6B111E]">
+          <span className="text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] font-sans font-bold uppercase tracking-[0.26em] text-[#6B111E]">
             {headlineText}
           </span>
           <span className="text-[7.5px] sm:text-[9.5px] text-[#B8975E] select-none" aria-hidden="true">✦ ✦</span>
@@ -311,12 +311,12 @@ export function OfficialWeddingInvitation({
           <div className="grid grid-cols-[1fr_auto_1fr] items-center text-center gap-2 sm:gap-4 relative z-10">
             {/* Groom's Parents */}
             <div>
-              <span className="text-[8px] xs:text-[9px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
+              <span className="text-[9px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
                 ✦ GROOM&apos;S PARENTS ✦
               </span>
-              <p className="font-serif text-[12px] xs:text-[13px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
+              <p className="font-serif text-[13px] xs:text-[14px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
                 Mr. Kenaram Gorain<br />
-                <span className="font-medium text-[#8F6C34] text-[10px] xs:text-[11px] sm:text-[14px] md:text-[15px] font-serif italic">&amp;</span> Ms. Savita Gorian
+                <span className="font-medium text-[#8F6C34] text-[11px] xs:text-[12px] sm:text-[14px] md:text-[15px] font-serif italic">&amp;</span> Ms. Savita Gorian
               </p>
             </div>
 
@@ -329,12 +329,12 @@ export function OfficialWeddingInvitation({
 
             {/* Bride's Parents */}
             <div>
-              <span className="text-[8px] xs:text-[9px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
+              <span className="text-[9px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
                 ✦ BRIDE&apos;S PARENTS ✦
               </span>
-              <p className="font-serif text-[12px] xs:text-[13px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
+              <p className="font-serif text-[13px] xs:text-[14px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
                 Mr. Upen Gorain<br />
-                <span className="font-medium text-[#8F6C34] text-[10px] xs:text-[11px] sm:text-[14px] md:text-[15px] font-serif italic">&amp;</span> Ms. Kokila Gorain
+                <span className="font-medium text-[#8F6C34] text-[11px] xs:text-[12px] sm:text-[14px] md:text-[15px] font-serif italic">&amp;</span> Ms. Kokila Gorain
               </p>
             </div>
           </div>
@@ -352,7 +352,7 @@ export function OfficialWeddingInvitation({
           </span>
           <span className="w-10 sm:w-20 h-[1.5px] bg-gradient-to-l from-transparent to-[#B8975E]" aria-hidden="true" />
         </div>
-        <span className="text-[8.5px] xs:text-[10px] sm:text-[12px] md:text-[13px] font-sans font-bold tracking-[0.28em] uppercase text-[#5A4232] block mt-0.5">
+        <span className="text-[9.5px] xs:text-[10px] sm:text-[12px] md:text-[13px] font-sans font-bold tracking-[0.28em] uppercase text-[#5A4232] block mt-0.5">
           PURULIA, WEST BENGAL
         </span>
       </div>
@@ -449,7 +449,7 @@ export function OfficialWeddingInvitation({
 
             {/* Right Information Area */}
             <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[7px] xs:text-[8px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap">
+              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap">
                 19 NOVEMBER &bull; 9:00 AM IST
               </div>
               <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#421804] leading-tight">
@@ -542,7 +542,7 @@ export function OfficialWeddingInvitation({
 
             {/* Right Information Area */}
             <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[7px] xs:text-[8px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#14532D] leading-none mb-0.5 whitespace-nowrap">
+              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#14532D] leading-none mb-0.5 whitespace-nowrap">
                 20 NOVEMBER &bull; 9:00 AM IST
               </div>
               <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#082B14] leading-tight">
@@ -632,7 +632,7 @@ export function OfficialWeddingInvitation({
 
             {/* Right Information Area */}
             <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[7px] xs:text-[8px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap">
+              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap">
                 21 NOVEMBER &bull; 11:00 PM IST
               </div>
               <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#48070F] leading-tight">
@@ -729,7 +729,7 @@ export function OfficialWeddingInvitation({
 
             {/* Right Information Area */}
             <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[7px] xs:text-[8px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#4C1D54] leading-none mb-0.5 whitespace-nowrap">
+              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#4C1D54] leading-none mb-0.5 whitespace-nowrap">
                 22 NOVEMBER &bull; 5:00 PM IST
               </div>
               <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#330938] leading-tight">
@@ -790,7 +790,7 @@ export function OfficialWeddingInvitation({
               </svg>
             </div>
 
-            <p className="font-serif italic text-[7.5px] xs:text-[8.5px] sm:text-[10.5px] md:text-[11.5px] text-[#302120] leading-snug">
+            <p className="font-serif italic text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] text-[#302120] leading-snug">
               Ceremony schedule, venues, directions, RSVP and more.
             </p>
           </div>

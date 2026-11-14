@@ -33,10 +33,10 @@ export function WishesPreviewSkeleton() {
     <section
       id="wishes"
       aria-labelledby="wishes-title"
-      className="relative pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-24 md:pb-28 bg-[#FFFCF6] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
+      className="relative pt-16 sm:pt-22 md:pt-26 lg:pt-32 pb-14 sm:pb-18 md:pb-22 lg:pb-28 bg-[#FFFCF6] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
     >
       <Container size="wide" className="px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 animate-pulse">
+        <div className="text-center max-w-3xl mx-auto mb-7 sm:mb-9 lg:mb-12 animate-pulse">
           <div className="h-4 w-48 bg-[#B8975E]/20 mx-auto rounded-full mb-3" />
           <div className="h-10 w-72 bg-[#B8975E]/25 mx-auto rounded-md mb-3" />
           <div className="h-4 w-96 bg-[#B8975E]/15 mx-auto rounded-md" />
@@ -120,7 +120,7 @@ export function WishesPreviewWall({ initialWishes = [] }: WishesPreviewWallProps
       ref={sectionRef}
       id="wishes"
       aria-labelledby="wishes-title"
-      className="relative pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-24 md:pb-28 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
+      className="relative pt-16 sm:pt-22 md:pt-26 lg:pt-32 pb-14 sm:pb-18 md:pb-22 lg:pb-28 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
     >
       {/* Background Architectural Corner Filigree */}
       <SectionHeaderFiligree color="#B8975E" opacity={0.18} />
@@ -133,7 +133,7 @@ export function WishesPreviewWall({ initialWishes = [] }: WishesPreviewWallProps
         {/* ==================================================================== */}
         {/* 1. SECTION HEADER                                                    */}
         {/* ==================================================================== */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-7 sm:mb-9 lg:mb-12">
           {/* Eyebrow */}
           <Reveal preset="luxury" direction="up" distance={10} threshold={0.15}>
             <div className="flex items-center justify-center gap-2 mb-2.5 select-none">
@@ -370,7 +370,7 @@ export function WishesPreviewWall({ initialWishes = [] }: WishesPreviewWallProps
         {/* 4. DUAL ACTION BUTTONS (WRITE A BLESSING + VIEW ALL BLESSINGS)       */}
         {/* ==================================================================== */}
         <Reveal preset="luxury" direction="up" distance={14} delay={0.28} threshold={0.15}>
-          <div className="mt-10 sm:mt-12 text-center select-none">
+          <div className="mt-7 sm:mt-9 lg:mt-12 text-center select-none">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-full px-2">
               {/* Button 1: Write a Blessing (Primary Burgundy Pill) */}
               <MagneticButton className="w-full sm:w-auto">
