@@ -401,7 +401,7 @@ export function VenuesSection() {
                       shadow-[0_8px_24px_rgba(164,118,46,0.32),inset_0_1px_0_rgba(255,255,255,0.35)]
                       hover:shadow-[0_12px_28px_rgba(164,118,46,0.45),0_0_20px_rgba(255,227,150,0.25)]
                       flex items-center justify-center gap-2 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em]
-                      transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97]
+                      transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.964] md:active:scale-[0.97]
                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2
                     `}
                   >
@@ -630,7 +630,7 @@ export function VenuesSection() {
                       shadow-[0_8px_24px_rgba(142,27,41,0.32),inset_0_1px_0_rgba(255,255,255,0.35)]
                       hover:shadow-[0_12px_28px_rgba(142,27,41,0.45),0_0_20px_rgba(232,146,158,0.25)]
                       flex items-center justify-center gap-2 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em]
-                      transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97]
+                      transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.964] md:active:scale-[0.97]
                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8E1B29] focus-visible:ring-offset-2
                     `}
                   >

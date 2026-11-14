@@ -167,7 +167,7 @@ export function MobileDrawer({
                 type="button"
                 onClick={onClose}
                 aria-label="Close navigation menu"
-                className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-lg text-[#292322] hover:text-[#A52232] hover:bg-[#F7F1E6] border border-[rgba(184,151,94,0.3)] bg-white/90 active:scale-95 transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-lg text-[#292322] hover:text-[#A52232] hover:bg-[#F7F1E6] border border-[rgba(184,151,94,0.3)] bg-white/90 active:scale-[0.94] md:active:scale-95 transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
               >
                 <svg
                   width="20"
@@ -224,7 +224,7 @@ export function MobileDrawer({
                       onClick={(e) => handleMobileNavClick(e, link)}
                       className={`
                         flex items-center justify-between px-4 py-3 rounded-lg min-h-[48px]
-                        transition-all duration-200 active:scale-[0.985]
+                        transition-all duration-200 active:scale-[0.982] md:active:scale-[0.985]
                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]
                         ${
                           isActive
@@ -262,7 +262,7 @@ export function MobileDrawer({
                 <Button
                   variant="primary"
                   size="md"
-                  className={`w-full justify-center h-12 min-h-[48px] rounded-full text-xs font-bold uppercase tracking-[0.16em] bg-gradient-to-r from-[#7D1525] via-[#8E1B29] to-[#6A1220] text-white border border-[#E8929E]/40 shadow-md transition-all active:scale-[0.98] ${
+                  className={`w-full justify-center h-12 min-h-[48px] rounded-full text-xs font-bold uppercase tracking-[0.16em] bg-gradient-to-r from-[#7D1525] via-[#8E1B29] to-[#6A1220] text-white border border-[#E8929E]/40 shadow-md transition-all active:scale-[0.976] md:active:scale-[0.98] ${
                     isRsvpActive
                       ? "ring-2 ring-[#D4AF37] shadow-[0_0_18px_rgba(212,175,55,0.4)]"
                       : ""

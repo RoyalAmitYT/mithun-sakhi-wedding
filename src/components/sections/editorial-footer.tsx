@@ -20,7 +20,7 @@ export function EditorialFooter() {
   return (
     <footer
       role="contentinfo"
-      className="relative -mt-px pt-12 sm:pt-16 lg:pt-20 pb-28 xs:pb-32 sm:pb-32 lg:pb-20 bg-gradient-to-b from-[#FAF5EB] via-[#FAF5EB] to-[#F5EEDC] border-t border-[rgba(184,151,94,0.2)] text-center text-xs text-[#5C5452] overflow-hidden"
+      className="relative -mt-px pt-12 sm:pt-16 lg:pt-20 pb-28 sm:pb-24 lg:pb-20 bg-gradient-to-b from-[#FAF5EB] via-[#FAF5EB] to-[#F5EEDC] border-t border-[rgba(184,151,94,0.2)] text-center text-xs text-[#5C5452] pb-[max(6.5rem,calc(env(safe-area-inset-bottom)+4.5rem))] overflow-hidden"
     >
       <SectionHeaderFiligree color="#B8975E" opacity={0.14} />
       <Container size="editorial" className="relative z-10">
@@ -60,108 +60,10 @@ export function EditorialFooter() {
 
           <OrnamentalDivider variant="gold" size="sm" className="my-4 sm:my-6" />
 
-          {/* Mobile & Tablet Editorial Navigation Groups (< 1024px) */}
-          <nav
-            aria-label="Footer Mobile Navigation"
-            className="w-full max-w-2xl mx-auto my-3 sm:my-4 block lg:hidden"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-center sm:text-left">
-              {/* Group 1: The Sacred Journey */}
-              <div className="p-3 sm:p-3.5 rounded-xl bg-white/60 border border-[rgba(184,151,94,0.2)] shadow-2xs">
-                <span className="text-[10.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#A52232] flex items-center justify-center sm:justify-start gap-1.5 mb-2">
-                  <span className="w-1.5 h-1.5 rotate-45 bg-[#D4AF37]" aria-hidden="true" />
-                  The Journey
-                </span>
-                <div className="flex flex-col gap-0.5">
-                  <Link
-                    href={isHome ? "#top" : "/"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    href={isHome ? "#our-story" : "/#our-story"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Our Story
-                  </Link>
-                  <Link
-                    href={isHome ? "#celebrations" : "/#celebrations"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Celebrations
-                  </Link>
-                  <Link
-                    href={isHome ? "#events" : "/#events"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Events &amp; Schedule
-                  </Link>
-                </div>
-              </div>
-
-              {/* Group 2: Guest Experience */}
-              <div className="p-3 sm:p-3.5 rounded-xl bg-white/60 border border-[rgba(184,151,94,0.2)] shadow-2xs">
-                <span className="text-[10.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#A52232] flex items-center justify-center sm:justify-start gap-1.5 mb-2">
-                  <span className="w-1.5 h-1.5 rotate-45 bg-[#D4AF37]" aria-hidden="true" />
-                  Guest Guide
-                </span>
-                <div className="flex flex-col gap-0.5">
-                  <Link
-                    href={isHome ? "#venues" : "/#venues"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Wedding Venues
-                  </Link>
-                  <Link
-                    href={isHome ? "#invitation" : "/#invitation"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Official Invitation
-                  </Link>
-                  <Link
-                    href="/gallery"
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Memories Gallery
-                  </Link>
-                </div>
-              </div>
-
-              {/* Group 3: Attendance & Wishes */}
-              <div className="p-3 sm:p-3.5 rounded-xl bg-white/60 border border-[rgba(184,151,94,0.2)] shadow-2xs">
-                <span className="text-[10.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#A52232] flex items-center justify-center sm:justify-start gap-1.5 mb-2">
-                  <span className="w-1.5 h-1.5 rotate-45 bg-[#D4AF37]" aria-hidden="true" />
-                  RSVP &amp; Wishes
-                </span>
-                <div className="flex flex-col gap-0.5">
-                  <Link
-                    href={isHome ? "#wishes" : "/#wishes"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Wishes Wall
-                  </Link>
-                  <Link
-                    href={isHome ? "#rsvp" : "/#rsvp"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-[#7D1525] hover:text-[#9E2030] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Confirm RSVP &rarr;
-                  </Link>
-                  <Link
-                    href={isHome ? "#contact" : "/#contact"}
-                    className="min-h-[44px] flex items-center justify-center sm:justify-start px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] hover:text-[#B8975E] active:scale-[0.98] transition-colors rounded-sm"
-                  >
-                    Contact Desk
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </nav>
-
-          {/* Desktop Quick Navigation Links (100% Frozen & Bit-for-Bit Preserved) */}
+          {/* Quick In-Page Navigation Links */}
           <nav
             aria-label="Footer Quick Navigation"
-            className="hidden lg:flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-6 text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] my-2"
+            className="flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-6 text-[11.5px] sm:text-xs font-semibold uppercase tracking-[0.12em] text-[#292322] my-2"
           >
             <Link
               href={isHome ? "#top" : "/"}
@@ -219,35 +121,8 @@ export function EditorialFooter() {
             </Link>
           </nav>
 
-          {/* Mobile & Tablet Parents & Hospitality Card (< 1024px) */}
-          <div className="w-full max-w-xl mx-auto my-5 p-4 sm:p-5 rounded-2xl bg-white/70 border border-[rgba(184,151,94,0.3)] shadow-2xs block lg:hidden">
-            <span className="text-[10px] sm:text-[10.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#A52232] block mb-1">
-              Divine Blessings &amp; Hospitality
-            </span>
-            <p className="font-serif text-sm sm:text-base text-[#292322] leading-snug">
-              Hosted with immense pride &amp; love by
-            </p>
-            <p className="font-serif italic text-xs sm:text-sm text-[#5C5452] mt-1 leading-relaxed">
-              Mr. Kenaram Gorain &amp; Mrs. Savita Gorain<br />
-              Mr. Upen Gorain &amp; Mrs. Kokila Gorain
-            </p>
-            <div className="mt-3 pt-3 border-t border-[rgba(184,151,94,0.2)] flex flex-col sm:flex-row items-center justify-center gap-2">
-              <span className="text-xs text-[#8A8280]">Guest Hospitality Desk:</span>
-              <a
-                href={contact.telHref}
-                className="min-h-[44px] inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#150409] text-[#FFE8A3] hover:text-white border border-[#D4AF37]/50 active:scale-95 transition-all text-xs font-semibold"
-                aria-label={`Call hospitality desk at ${contact.formattedPhone}`}
-              >
-                <svg className="w-3.5 h-3.5 text-[#D4AF37]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                <span>{contact.formattedPhone}</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Desktop Parents Acknowledgement (100% Frozen & Bit-for-Bit Preserved) */}
-          <div className="hidden lg:block mt-6 pt-5 border-t border-[rgba(184,151,94,0.15)] max-w-xl text-[12px] sm:text-xs lg:text-[11px] text-[#8A8280] leading-relaxed">
+          {/* Parents Acknowledgement */}
+          <div className="mt-6 pt-5 border-t border-[rgba(184,151,94,0.15)] max-w-xl text-[12px] sm:text-xs lg:text-[11px] text-[#8A8280] leading-relaxed">
             <p>
               Hosted with pride and love by Mr. Kenaram Gorain &amp; Ms. Savita Gorian, and Mr. Upen Gorain &amp; Ms. Kokila Gorain.
             </p>

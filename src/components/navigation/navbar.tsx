@@ -522,7 +522,7 @@ export function Navbar() {
                 className={`
                   lg:hidden w-11 h-11 sm:w-12 sm:h-12 min-h-[44px] min-w-[44px] rounded-lg transition-all duration-200
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2
-                  flex items-center justify-center cursor-pointer active:scale-95
+                  flex items-center justify-center cursor-pointer active:scale-[0.94] md:active:scale-95
                   ${
                     isDarkSurface
                       ? "text-[#FFFDF8] bg-black/40 hover:bg-black/60 active:bg-black/75 border border-[#D4AF37]/35 shadow-[0_2px_10px_rgba(0,0,0,0.5)]"

@@ -143,7 +143,7 @@ export function ContactSection() {
                       whileHover={shouldReduceMotion ? undefined : { scale: 1.025, y: -1 }}
                       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                       aria-label={`Call wedding coordination desk at ${contact.formattedPhone}`}
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] border border-[#B8975E]/40 text-white font-sans font-semibold text-[12.5px] sm:text-[13px] lg:text-xs tracking-[0.12em] uppercase shadow-md shadow-[#7B1D28]/20 hover:shadow-lg hover:shadow-[#7B1D28]/30 transition-shadow cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2"
+                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] border border-[#B8975E]/40 text-white font-sans font-semibold text-[12.5px] sm:text-[13px] lg:text-xs tracking-[0.12em] uppercase shadow-md shadow-[#7B1D28]/20 hover:shadow-lg hover:shadow-[#7B1D28]/30 transition-all active:scale-[0.976] md:active:scale-100 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2"
                     >
                       <svg
                         width="16"
@@ -171,7 +171,7 @@ export function ContactSection() {
                       whileHover={shouldReduceMotion ? undefined : { scale: 1.025, y: -1 }}
                       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                       aria-label="Send a message on WhatsApp to wedding coordination desk"
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-[#F4F9F5] text-[#1B4332] border border-[#2D6A4F]/40 hover:bg-[#1B4332] hover:text-white font-sans font-semibold text-[12.5px] sm:text-[13px] lg:text-xs tracking-[0.12em] uppercase shadow-xs hover:shadow-md transition-all cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2D6A4F] focus-visible:ring-offset-2"
+                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-full bg-[#F4F9F5] text-[#1B4332] border border-[#2D6A4F]/40 hover:bg-[#1B4332] hover:text-white font-sans font-semibold text-[12.5px] sm:text-[13px] lg:text-xs tracking-[0.12em] uppercase shadow-xs hover:shadow-md transition-all active:scale-[0.976] md:active:scale-100 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2D6A4F] focus-visible:ring-offset-2"
                     >
                       <svg
                         width="16"

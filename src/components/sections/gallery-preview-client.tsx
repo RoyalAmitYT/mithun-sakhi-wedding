@@ -120,7 +120,7 @@ function SquarePhotoCard({
       type="button"
       onClick={onClick}
       aria-label={`View photograph: ${photo.title}`}
-      className="group relative aspect-square w-[160px] sm:w-[210px] md:w-[250px] shrink-0 rounded-2xl overflow-hidden border border-[#B8975E]/30 bg-[#292322]/5 shadow-xs hover:shadow-md hover:border-[#B8975E]/70 active:scale-[0.98] transition-all duration-200 text-left cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#B8975E]/60 select-none block"
+      className="group relative aspect-square w-[160px] sm:w-[210px] md:w-[250px] shrink-0 rounded-2xl overflow-hidden border border-[#B8975E]/30 bg-[#292322]/5 shadow-xs hover:shadow-md hover:border-[#B8975E]/70 active:scale-[0.976] md:active:scale-100 transition-all duration-200 text-left cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#B8975E]/60 select-none block"
     >
       <GoldLightSweep trigger="hover" intensity="subtle" />
       <Image
@@ -644,7 +644,7 @@ export function GalleryPreviewClient({
                       <button
                         type="button"
                         onClick={() => setSelectedPhotoIndex(null)}
-                        className="w-8 h-8 rounded-full bg-[#292322]/10 hover:bg-[#292322]/20 active:scale-90 text-[#292322] flex items-center justify-center transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                        className="w-8 h-8 rounded-full bg-[#292322]/10 hover:bg-[#292322]/20 active:scale-[0.88] md:active:scale-100 text-[#292322] flex items-center justify-center transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                         aria-label="Close photo preview"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -699,7 +699,7 @@ export function GalleryPreviewClient({
                               : null
                           )
                         }
-                        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 hover:scale-105 active:scale-90 text-white flex items-center justify-center transition-all duration-150 border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 active:scale-[0.88] md:active:scale-100 text-white flex items-center justify-center transition-all duration-150 border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                         aria-label="Previous photograph"
                       >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -719,7 +719,7 @@ export function GalleryPreviewClient({
                               : null
                           )
                         }
-                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 hover:scale-105 active:scale-90 text-white flex items-center justify-center transition-all duration-150 border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
+                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 hover:bg-black/80 active:scale-[0.88] md:active:scale-100 text-white flex items-center justify-center transition-all duration-150 border border-white/25 cursor-pointer shadow-xl backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
                         aria-label="Next photograph"
                       >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

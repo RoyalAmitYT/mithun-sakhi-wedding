@@ -551,7 +551,7 @@ export function PublicRsvpForm() {
                         onClick={() => setGuestCount((c) => Math.max(1, c - 1))}
                         disabled={guestCount <= 1}
                         aria-label="Decrease guest count"
-                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-[#B8975E]/45 bg-[#FFFDF9] hover:bg-[#F7F1E6] active:scale-95 disabled:opacity-35 disabled:pointer-events-none flex items-center justify-center text-xl font-bold text-[#292322] transition-all cursor-pointer shadow-2xs"
+                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-[#B8975E]/45 bg-[#FFFDF9] hover:bg-[#F7F1E6] active:scale-[0.94] md:active:scale-95 disabled:opacity-35 disabled:pointer-events-none flex items-center justify-center text-xl font-bold text-[#292322] transition-all cursor-pointer shadow-2xs"
                       >
                         &minus;
                       </button>
@@ -574,7 +574,7 @@ export function PublicRsvpForm() {
                         onClick={() => setGuestCount((c) => Math.min(50, c + 1))}
                         disabled={guestCount >= 50}
                         aria-label="Increase guest count"
-                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-[#B8975E]/45 bg-[#FFFDF9] hover:bg-[#F7F1E6] active:scale-95 disabled:opacity-35 disabled:pointer-events-none flex items-center justify-center text-xl font-bold text-[#292322] transition-all cursor-pointer shadow-2xs"
+                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-[#B8975E]/45 bg-[#FFFDF9] hover:bg-[#F7F1E6] active:scale-[0.94] md:active:scale-95 disabled:opacity-35 disabled:pointer-events-none flex items-center justify-center text-xl font-bold text-[#292322] transition-all cursor-pointer shadow-2xs"
                       >
                         +
                       </button>
@@ -630,7 +630,7 @@ export function PublicRsvpForm() {
                               role="radio"
                               aria-checked={isAttending}
                               onClick={() => toggleCeremony(c.id, true)}
-                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-semibold active:scale-95 transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
+                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-semibold active:scale-[0.94] md:active:scale-100 transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
                                 isAttending
                                   ? "bg-gradient-to-r from-[#7D1525] to-[#9B1E30] text-white shadow-xs"
                                   : "text-[#5C5452] hover:text-[#292322] active:bg-[#EAE2D2]"
@@ -657,7 +657,7 @@ export function PublicRsvpForm() {
                               role="radio"
                               aria-checked={!isAttending}
                               onClick={() => toggleCeremony(c.id, false)}
-                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-medium active:scale-95 transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
+                              className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-sans font-medium active:scale-[0.94] md:active:scale-100 transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
                                 !isAttending
                                   ? "bg-white text-[#292322] border border-gray-300 shadow-xs font-semibold"
                                   : "text-[#5C5452] hover:text-[#292322] active:bg-[#EAE2D2]"
@@ -678,7 +678,7 @@ export function PublicRsvpForm() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-13 sm:h-14 px-6 rounded-xl bg-gradient-to-r from-[#7D1525] via-[#9B1E30] to-[#6A1220] hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none text-white border border-[#D4AF37]/50 shadow-[0_8px_24px_rgba(155,30,48,0.32)] font-sans font-semibold text-base flex items-center justify-center gap-3 transition-all duration-150 cursor-pointer"
+                  className="w-full h-13 sm:h-14 px-6 rounded-xl bg-gradient-to-r from-[#7D1525] via-[#9B1E30] to-[#6A1220] hover:brightness-110 active:scale-[0.976] md:active:scale-[0.99] disabled:opacity-60 disabled:pointer-events-none text-white border border-[#D4AF37]/50 shadow-[0_8px_24px_rgba(155,30,48,0.32)] font-sans font-semibold text-base flex items-center justify-center gap-3 transition-all duration-150 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>

@@ -168,7 +168,7 @@ function WishSubmissionModalDialog({
           type="button"
           onClick={onClose}
           aria-label="Close dialog"
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 rounded-full bg-white/80 border border-[#B8975E]/30 flex items-center justify-center text-[#292322] hover:bg-white hover:text-[#7B1D28] active:scale-90 transition-all duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B8975E] cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 rounded-full bg-white/80 border border-[#B8975E]/30 flex items-center justify-center text-[#292322] hover:bg-white hover:text-[#7B1D28] active:scale-[0.88] md:active:scale-100 transition-all duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B8975E] cursor-pointer"
         >
           <svg
             className="w-4 h-4"
@@ -245,7 +245,7 @@ function WishSubmissionModalDialog({
             <button
               type="button"
               onClick={onClose}
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] text-white font-sans text-xs sm:text-[13px] font-semibold tracking-[0.14em] uppercase shadow-md shadow-[#7B1D28]/30 hover:shadow-lg hover:shadow-[#7B1D28]/40 active:scale-[0.98] transition-all duration-150 cursor-pointer"
+              className="px-8 py-3 rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] text-white font-sans text-xs sm:text-[13px] font-semibold tracking-[0.14em] uppercase shadow-md shadow-[#7B1D28]/30 hover:shadow-lg hover:shadow-[#7B1D28]/40 active:scale-[0.976] md:active:scale-100 transition-all duration-150 cursor-pointer"
             >
               CLOSE
             </button>
@@ -380,7 +380,7 @@ function WishSubmissionModalDialog({
                   type="button"
                   onClick={onClose}
                   disabled={isPending}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-[#B8975E]/30 bg-white/60 text-[#292322] font-sans text-xs font-semibold tracking-wider uppercase hover:bg-white active:scale-95 transition-all duration-150 cursor-pointer disabled:opacity-50"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-[#B8975E]/30 bg-white/60 text-[#292322] font-sans text-xs font-semibold tracking-wider uppercase hover:bg-white active:scale-[0.94] md:active:scale-100 transition-all duration-150 cursor-pointer disabled:opacity-50"
                 >
                   CANCEL
                 </button>
@@ -388,7 +388,7 @@ function WishSubmissionModalDialog({
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full sm:w-auto px-7 py-2.5 rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] text-white font-sans text-xs font-semibold tracking-[0.14em] uppercase shadow-md shadow-[#7B1D28]/25 hover:shadow-lg hover:shadow-[#7B1D28]/35 active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full sm:w-auto px-7 py-2.5 rounded-full bg-gradient-to-r from-[#7B1D28] via-[#8C1E2B] to-[#68141F] text-white font-sans text-xs font-semibold tracking-[0.14em] uppercase shadow-md shadow-[#7B1D28]/25 hover:shadow-lg hover:shadow-[#7B1D28]/35 active:scale-[0.976] md:active:scale-100 transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {isPending ? (
                     <>
