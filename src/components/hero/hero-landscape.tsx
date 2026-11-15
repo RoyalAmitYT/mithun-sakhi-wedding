@@ -37,8 +37,7 @@ export function HeroLandscape() {
 
   return (
     <div
-      style={{ transform: "translate3d(0, 0, 0)", willChange: "transform" }}
-      className="relative motion-safe:lg:sticky motion-safe:lg:top-0 motion-safe:lg:z-0 min-h-screen lg:h-screen lg:min-h-0 pt-14 xs:pt-16 sm:pt-20 md:pt-24 lg:pt-[118px] pb-2 xs:pb-3 sm:pb-4 lg:pb-6 flex flex-col justify-between overflow-hidden bg-[#150409]"
+      className="relative w-full h-full min-h-screen lg:h-screen lg:min-h-0 pt-14 xs:pt-16 sm:pt-20 md:pt-24 lg:pt-[118px] pb-2 xs:pb-3 sm:pb-4 lg:pb-6 flex flex-col justify-between overflow-hidden bg-[#150409]"
     >
       {/* 1. Full-Bleed Cinematic Background Image & Sophisticated Layered Burgundy Overlays */}
       <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">

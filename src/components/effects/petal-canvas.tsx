@@ -72,8 +72,9 @@ export const PetalCanvas: React.FC<PetalCanvasProps> = ({
       if (!ctx) return;
 
       let animationFrameId: number;
+      const isTouchOrMobile = window.innerWidth < 1024;
       const isMobile = window.innerWidth < 768;
-      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.2 : 1.5);
+      const dpr = Math.min(window.devicePixelRatio || 1, isTouchOrMobile ? 1.2 : 1.5);
 
       let width = window.innerWidth;
       let height = window.innerHeight;
@@ -105,16 +106,21 @@ export const PetalCanvas: React.FC<PetalCanvasProps> = ({
       };
 
       window.addEventListener('resize', handleResize, { passive: true });
-      if (!isMobile) {
+      if (!isTouchOrMobile) {
         window.addEventListener('mousemove', handleMouseMove, { passive: true });
       }
 
       // Exact original baseline colors: Rose red, marigold orange, golden yellow
       const colors = ['#C43A48', '#E68A00', '#F2B705', '#8E162D', '#D97706'];
 
-      // 1. Floral Heart Petals (exact original density & configuration)
+      // 1. Floral Heart Petals (exact original density & configuration, optimized for touch screens)
       const petalCount =
-        maxPetals ?? (isMobile ? 7 : Math.min(24, Math.floor(window.innerWidth / 50)));
+        maxPetals ??
+        (isMobile
+          ? 7
+          : isTouchOrMobile
+          ? 11
+          : Math.min(24, Math.floor(window.innerWidth / 50)));
 
       const petals: Petal[] = Array.from({ length: petalCount }, () => ({
         x: Math.random() * width,
@@ -132,7 +138,12 @@ export const PetalCanvas: React.FC<PetalCanvasProps> = ({
 
       // 2. Floating Golden Dust Embers
       const sparkleCount =
-        maxEmbers ?? (isMobile ? 8 : Math.min(26, Math.floor(window.innerWidth / 40)));
+        maxEmbers ??
+        (isMobile
+          ? 8
+          : isTouchOrMobile
+          ? 12
+          : Math.min(26, Math.floor(window.innerWidth / 40)));
 
       const sparkles: GoldSparkle[] = Array.from({ length: sparkleCount }, () => ({
         x: Math.random() * width,
@@ -247,7 +258,7 @@ export const PetalCanvas: React.FC<PetalCanvasProps> = ({
 
       cleanup = () => {
         window.removeEventListener('resize', handleResize);
-        if (!isMobile) {
+        if (!isTouchOrMobile) {
           window.removeEventListener('mousemove', handleMouseMove);
         }
         document.removeEventListener('visibilitychange', handleVisibilityChange);

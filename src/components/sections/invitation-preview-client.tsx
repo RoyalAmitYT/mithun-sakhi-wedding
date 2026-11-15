@@ -140,6 +140,34 @@ export function InvitationPreviewClient({ settings }: InvitationPreviewClientPro
         </motion.div>
 
         {/* ================================================================ */}
+        {/* DEDICATED CANONICAL INVITATION CARD FOR EXPORT & DOWNLOADS        */}
+        {/* Decoupled from viewport; guarantees identical output on all devices */}
+        {/* ================================================================ */}
+        <div
+          id="canonical-export-invitation-container"
+          aria-hidden="true"
+          className="pointer-events-none select-none"
+          style={{
+            position: "fixed",
+            left: "-9999px",
+            top: "0",
+            width: "672px",
+            height: "840px",
+            overflow: "hidden",
+            zIndex: -999,
+          }}
+        >
+          <OfficialWeddingInvitation
+            id="canonical-export-invitation-card"
+            layout="canonical"
+            variant="preview"
+            canonicalUrl={canonicalUrl}
+            headlineText={headlineText}
+            introText={introText}
+          />
+        </div>
+
+        {/* ================================================================ */}
         {/* ACTION CONTROLS & OFFICIAL NOTICE                                */}
         {/* ================================================================ */}
         <Reveal preset="luxury" direction="up" distance={14} delay={0.28} threshold={0.15}>

@@ -46,14 +46,14 @@ export function HeroSection() {
     <section
       id="hero"
       aria-label="Mithun and Sakhi Wedding Celebration"
-      className="relative w-full overflow-hidden bg-[#150409]"
+      className="relative motion-safe:lg:sticky motion-safe:lg:top-0 motion-safe:lg:z-0 min-h-screen lg:h-screen lg:min-h-0 w-full overflow-hidden bg-[#150409]"
     >
       {/* =========================================================================
           VARIANT 1: ORIGINAL APPROVED HORIZONTAL / LANDSCAPE HERO
           Active on: Desktop, Laptop, Landscape Tablet, Landscape Mobile
           ========================================================================= */}
       <div
-        className="hero-landscape-variant w-full"
+        className="hero-landscape-variant w-full h-full"
         aria-hidden={isPortrait}
         inert={isPortrait}
       >
@@ -65,7 +65,7 @@ export function HeroSection() {
           Active on: Portrait Mobile (390, 430), Portrait Tablet (768)
           ========================================================================= */}
       <div
-        className="hero-portrait-variant w-full"
+        className="hero-portrait-variant w-full h-full"
         aria-hidden={!isPortrait}
         inert={!isPortrait}
       >

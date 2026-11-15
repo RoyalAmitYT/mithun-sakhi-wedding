@@ -111,8 +111,7 @@ export default function HomePage({
 
         {/* Cinematic Scroll-Reveal Container: Incoming Opaque Champagne-White Content Layer */}
         <div
-          style={{ transform: "translate3d(0, 0, 0)", willChange: "transform" }}
-          className="relative z-10 bg-[#FFFCF6] shadow-[0_-24px_48px_rgba(0,0,0,0.35)]"
+          className="relative z-10 bg-[#FFFCF6] shadow-[0_-24px_48px_rgba(0,0,0,0.35)] lg:[will-change:transform] lg:[transform:translate3d(0,0,0)]"
         >
           {/* Section B: Our Story & Journey (Mithun & Sakhi, Parents, Milestones) */}
           <OurStorySection />
@@ -126,8 +125,7 @@ export default function HomePage({
 
         {/* Lower Content Layer: Curtain Sliding Over Ceremony Sections (Desktop Only Stacked Curtain) */}
         <div
-          style={{ transform: "translate3d(0, 0, 0)", willChange: "transform" }}
-          className="relative z-20 lg:-mt-[100svh] bg-[#FFFCF6] shadow-[0_-24px_48px_rgba(0,0,0,0.35)]"
+          className="relative z-20 lg:-mt-[100svh] bg-[#FFFCF6] shadow-[0_-24px_48px_rgba(0,0,0,0.35)] lg:[will-change:transform] lg:[transform:translate3d(0,0,0)]"
         >
           {/* Section E: Venues & Google Maps Navigation */}
           <VenuesSection />

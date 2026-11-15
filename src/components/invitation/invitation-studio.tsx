@@ -172,6 +172,31 @@ export function InvitationStudio({ initialSettings }: InvitationStudioProps = {}
           introText={initialSettings?.intro_text || undefined}
         />
       </div>
+
+      {/* Dedicated Canonical Invitation Card for Export & Downloads */}
+      <div
+        id="canonical-export-invitation-container"
+        aria-hidden="true"
+        className="pointer-events-none select-none"
+        style={{
+          position: "fixed",
+          left: "-9999px",
+          top: "0",
+          width: "672px",
+          height: "840px",
+          overflow: "hidden",
+          zIndex: -999,
+        }}
+      >
+        <OfficialWeddingInvitation
+          id="canonical-export-invitation-card"
+          layout="canonical"
+          variant="full"
+          canonicalUrl={initialSettings?.qr_code_target_url || undefined}
+          headlineText={initialSettings?.headline_text || undefined}
+          introText={initialSettings?.intro_text || undefined}
+        />
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { generateQrSvg } from "@/lib/qr-code";
 export interface OfficialWeddingInvitationProps {
   id?: string;
   variant?: "full" | "preview";
+  layout?: "responsive" | "canonical";
   className?: string;
   canonicalUrl?: string;
   headlineText?: string;
@@ -16,6 +17,7 @@ export interface OfficialWeddingInvitationProps {
 export function OfficialWeddingInvitation({
   id = "official-wedding-invitation-card",
   variant = "full",
+  layout = "responsive",
   className = "",
   canonicalUrl = "https://mithun-sakhi-wedding.vercel.app/#invitation",
   headlineText = "WITH THE DIVINE BLESSINGS OF OUR FAMILIES",
@@ -24,6 +26,7 @@ export function OfficialWeddingInvitation({
 }: OfficialWeddingInvitationProps) {
   const customMessage = rawBlessingMessage || introText;
   const isPreview = variant === "preview";
+  const isCanonical = layout === "canonical";
 
   const qrSvgMarkup = useMemo(() => {
     return generateQrSvg(canonicalUrl, {
@@ -37,19 +40,35 @@ export function OfficialWeddingInvitation({
   return (
     <article
       id={id}
-      data-testid="official-wedding-invitation-card"
+      data-testid={isCanonical ? "canonical-export-invitation-card" : "official-wedding-invitation-card"}
       aria-label="Official Digital Wedding Invitation — Mithun Gorain and Sakhi Gorain"
+      style={
+        isCanonical
+          ? {
+              width: 672,
+              height: 840,
+              minWidth: 672,
+              minHeight: 840,
+              maxWidth: 672,
+              maxHeight: 840,
+            }
+          : undefined
+      }
       className={`
         relative mx-auto select-text overflow-hidden
-        sm:aspect-[4/5] w-full
-        ${isPreview ? "max-w-[620px] sm:max-w-[680px] md:max-w-[730px]" : "max-w-[640px] sm:max-w-[700px] md:max-w-[750px]"}
+        ${
+          isCanonical
+            ? "w-[672px] h-[840px] max-w-[672px] min-w-[672px] aspect-[4/5] rounded-3xl p-4 flex flex-col justify-between gap-0"
+            : `sm:aspect-[4/5] w-full ${
+                isPreview
+                  ? "max-w-[620px] sm:max-w-[680px] md:max-w-[730px]"
+                  : "max-w-[640px] sm:max-w-[700px] md:max-w-[750px]"
+              } rounded-2xl sm:rounded-3xl p-3 xs:p-3.5 sm:p-3.5 md:p-4 flex flex-col justify-between gap-2.5 sm:gap-0`
+        }
         bg-gradient-to-b from-[#FAF6EE] via-[#F8F3E6] to-[#F4ECE0]
         border border-[rgba(184,151,94,0.45)]
         text-[#292322] transition-all duration-300
-        rounded-2xl sm:rounded-3xl
         shadow-[0_25px_60px_-15px_rgba(45,15,20,0.20),0_0_0_1px_rgba(255,255,255,0.85)_inset]
-        p-3 xs:p-3.5 sm:p-3.5 md:p-4
-        flex flex-col justify-between gap-2.5 sm:gap-0
         print:shadow-none print:m-auto
         ${className}
       `}
@@ -77,12 +96,20 @@ export function OfficialWeddingInvitation({
 
       {/* Inset Precision-Metered Outer Gallery Frame */}
       <div
-        className="absolute inset-2 sm:inset-3 rounded-xl sm:rounded-2xl border border-[rgba(184,151,94,0.4)] pointer-events-none z-0"
+        className={
+          isCanonical
+            ? "absolute inset-3 rounded-2xl border border-[rgba(184,151,94,0.4)] pointer-events-none z-0"
+            : "absolute inset-2 sm:inset-3 rounded-xl sm:rounded-2xl border border-[rgba(184,151,94,0.4)] pointer-events-none z-0"
+        }
         aria-hidden="true"
       />
       {/* Inset Precision-Metered Inner Hairline Frame */}
       <div
-        className="absolute inset-[11px] sm:inset-[16px] rounded-lg sm:rounded-xl border border-[rgba(184,151,94,0.22)] pointer-events-none z-0"
+        className={
+          isCanonical
+            ? "absolute inset-[16px] rounded-xl border border-[rgba(184,151,94,0.22)] pointer-events-none z-0"
+            : "absolute inset-[11px] sm:inset-[16px] rounded-lg sm:rounded-xl border border-[rgba(184,151,94,0.22)] pointer-events-none z-0"
+        }
         aria-hidden="true"
       />
 
@@ -116,12 +143,26 @@ export function OfficialWeddingInvitation({
       />
 
       {/* Architectural Corner L-Brackets (Top-Right & Bottom-Left) */}
-      <div className="absolute top-3.5 right-3.5 sm:top-4.5 sm:right-4.5 w-4 h-4 pointer-events-none z-10" aria-hidden="true">
+      <div
+        className={
+          isCanonical
+            ? "absolute top-4.5 right-4.5 w-4 h-4 pointer-events-none z-10"
+            : "absolute top-3.5 right-3.5 sm:top-4.5 sm:right-4.5 w-4 h-4 pointer-events-none z-10"
+        }
+        aria-hidden="true"
+      >
         <span className="absolute top-0 right-0 w-4 h-[1.5px] bg-[#B8975E]/85" />
         <span className="absolute top-0 right-0 h-4 w-[1.5px] bg-[#B8975E]/85" />
         <span className="absolute top-1.5 right-1.5 w-1 h-1 rounded-full bg-[#B8975E]/60" />
       </div>
-      <div className="absolute bottom-3.5 left-3.5 sm:bottom-4.5 sm:left-4.5 w-4 h-4 pointer-events-none z-10" aria-hidden="true">
+      <div
+        className={
+          isCanonical
+            ? "absolute bottom-4.5 left-4.5 w-4 h-4 pointer-events-none z-10"
+            : "absolute bottom-3.5 left-3.5 sm:bottom-4.5 sm:left-4.5 w-4 h-4 pointer-events-none z-10"
+        }
+        aria-hidden="true"
+      >
         <span className="absolute bottom-0 left-0 w-4 h-[1.5px] bg-[#B8975E]/85" />
         <span className="absolute bottom-0 left-0 h-4 w-[1.5px] bg-[#B8975E]/85" />
         <span className="absolute bottom-1.5 left-1.5 w-1 h-1 rounded-full bg-[#B8975E]/60" />
@@ -142,48 +183,60 @@ export function OfficialWeddingInvitation({
       {/* =================================================================== */}
 
       {/* Upper-Left Burgundy Fabric Corner Overlay (Real Transparent WebP) */}
-      <div className="absolute top-0 left-0 w-[29.3%] aspect-[1032/851] pointer-events-none z-20 select-none overflow-hidden rounded-tl-2xl sm:rounded-tl-3xl drop-shadow-[2px_3px_10px_rgba(30,4,8,0.45)]">
+      <div
+        className={
+          isCanonical
+            ? "absolute top-0 left-0 w-[29.3%] aspect-[1032/851] pointer-events-none z-20 select-none overflow-hidden rounded-tl-3xl drop-shadow-[2px_3px_10px_rgba(30,4,8,0.45)]"
+            : "absolute top-0 left-0 w-[29.3%] aspect-[1032/851] pointer-events-none z-20 select-none overflow-hidden rounded-tl-2xl sm:rounded-tl-3xl drop-shadow-[2px_3px_10px_rgba(30,4,8,0.45)]"
+        }
+      >
         <img
           src="/images/invitationcard-topleft-display.webp"
           data-export-src="/images/invitationcard-topleftcorner-overlay.webp"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-contain object-top-left"
-          loading="lazy"
+          loading={isCanonical ? "eager" : "lazy"}
         />
       </div>
 
       {/* Lower-Right Burgundy Fabric Corner Overlay (Real Transparent WebP) */}
-      <div className="absolute bottom-0 right-0 w-[34.4%] aspect-[1100/733] pointer-events-none z-20 select-none overflow-hidden rounded-br-2xl sm:rounded-br-3xl drop-shadow-[-2px_-3px_10px_rgba(30,4,8,0.45)]">
+      <div
+        className={
+          isCanonical
+            ? "absolute bottom-0 right-0 w-[34.4%] aspect-[1100/733] pointer-events-none z-20 select-none overflow-hidden rounded-br-3xl drop-shadow-[-2px_-3px_10px_rgba(30,4,8,0.45)]"
+            : "absolute bottom-0 right-0 w-[34.4%] aspect-[1100/733] pointer-events-none z-20 select-none overflow-hidden rounded-br-2xl sm:rounded-br-3xl drop-shadow-[-2px_-3px_10px_rgba(30,4,8,0.45)]"
+        }
+      >
         <img
           src="/images/invitationcard-bottomright-display.webp"
           data-export-src="/images/invitationcard-bottomrightcorner-overlay.webp"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-contain object-bottom-right"
-          loading="lazy"
+          loading={isCanonical ? "eager" : "lazy"}
         />
       </div>
 
       {/* =================================================================== */}
       {/* 3. TOP HEADER BAR: M&S MONOGRAM, TITLE & PURULIA METADATA           */}
       {/* =================================================================== */}
-      <div className="relative z-10 w-full pt-0.5 sm:pt-1">
-        <header className="flex items-center justify-between pb-1 sm:pb-1.5 pl-[29%] pr-5 sm:pr-2">
+      <div className={`relative z-10 w-full ${isCanonical ? "pt-1" : "pt-0.5 sm:pt-1"}`}>
+        <header className={`flex items-center justify-between pl-[29%] ${isCanonical ? "pb-1.5 pr-2" : "pb-1 sm:pb-1.5 pr-5 sm:pr-2"}`}>
           {/* Left: Navbar Brand Seal Logo & Title */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <span className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-[3px] border border-[rgba(184,151,94,0.4)] bg-white/80 text-[#B8975E] shadow-xs shrink-0">
-              <span className="font-serif text-[10px] xs:text-xs sm:text-sm font-semibold tracking-tighter">
+          <div className={`flex items-center ${isCanonical ? "gap-2" : "gap-1.5 sm:gap-2"}`}>
+            <span className={`flex items-center justify-center rounded-[3px] border border-[rgba(184,151,94,0.4)] bg-white/80 text-[#B8975E] shadow-xs shrink-0 ${isCanonical ? "w-8 h-8" : "w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8"}`}>
+              <span className={`font-serif font-semibold tracking-tighter ${isCanonical ? "text-sm" : "text-[10px] xs:text-xs sm:text-sm"}`}>
                 M·S
               </span>
             </span>
-            <span className="text-[9px] xs:text-[9.5px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.24em] text-[#6B111E]">
+            <span className={`font-sans font-bold uppercase tracking-[0.24em] text-[#6B111E] ${isCanonical ? "text-[10px]" : "text-[9px] xs:text-[9.5px] sm:text-[10px]"}`}>
               Wedding Invitation
             </span>
           </div>
 
           {/* Right: Location & Year Metadata */}
-          <div className="flex items-center gap-1.5 text-[8.5px] xs:text-[9px] sm:text-[9.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#7A6250]">
+          <div className={`flex items-center gap-1.5 font-sans font-semibold uppercase tracking-[0.2em] text-[#7A6250] ${isCanonical ? "text-[9.5px]" : "text-[8.5px] xs:text-[9px] sm:text-[9.5px]"}`}>
             <span>Purulia, WB</span>
             <span className="text-[#B8975E]/60">&bull;</span>
             <span>2026</span>
@@ -191,7 +244,7 @@ export function OfficialWeddingInvitation({
         </header>
 
         {/* Separator Hairline with Centered 5-Petal Gold Lotus Crest */}
-        <div className="relative flex items-center justify-center my-0.5 sm:my-1 select-none" aria-hidden="true">
+        <div className={`relative flex items-center justify-center select-none ${isCanonical ? "my-1" : "my-0.5 sm:my-1"}`} aria-hidden="true">
           <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#B8975E]/45 to-transparent" />
           <div className="absolute bg-[#FAF6EE] px-2.5">
             <svg width="24" height="13" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,28 +261,28 @@ export function OfficialWeddingInvitation({
       {/* =================================================================== */}
       {/* 4. DIVINE BLESSING & COUPLE BRANDING (MITHUN & SAKHI)               */}
       {/* =================================================================== */}
-      <div className="relative z-10 text-center my-0.5 sm:my-1">
+      <div className={`relative z-10 text-center ${isCanonical ? "my-1" : "my-0.5 sm:my-1"}`}>
         {/* Eyebrow Kicker with Gold Star Diamonds */}
         <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-0.5">
-          <span className="text-[7.5px] sm:text-[9.5px] text-[#B8975E] select-none" aria-hidden="true">✦ ✦</span>
-          <span className="text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] font-sans font-bold uppercase tracking-[0.26em] text-[#6B111E]">
+          <span className={`${isCanonical ? "text-[9.5px]" : "text-[7.5px] sm:text-[9.5px]"} text-[#B8975E] select-none`} aria-hidden="true">✦ ✦</span>
+          <span className={`font-sans font-bold uppercase tracking-[0.26em] text-[#6B111E] ${isCanonical ? "text-[11.5px]" : "text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px]"}`}>
             {headlineText}
           </span>
-          <span className="text-[7.5px] sm:text-[9.5px] text-[#B8975E] select-none" aria-hidden="true">✦ ✦</span>
+          <span className={`${isCanonical ? "text-[9.5px]" : "text-[7.5px] sm:text-[9.5px]"} text-[#B8975E] select-none`} aria-hidden="true">✦ ✦</span>
         </div>
 
         {/* Main Couple Branding — Dominant Luxury Display Typography (Increased Prominence) */}
-        <h1 className="font-serif text-[40px] xs:text-[48px] sm:text-[66px] md:text-[76px] font-normal text-[#42070D] tracking-tight leading-none my-0.5 drop-shadow-[0_2px_4px_rgba(66,7,13,0.12)]">
+        <h1 className={`font-serif font-normal text-[#42070D] tracking-tight leading-none my-0.5 drop-shadow-[0_2px_4px_rgba(66,7,13,0.12)] ${isCanonical ? "text-[76px]" : "text-[40px] xs:text-[48px] sm:text-[66px] md:text-[76px]"}`}>
           <span className="inline-block">Mithun</span>
-          <span className="font-light italic text-[#B8975E] text-[32px] xs:text-[40px] sm:text-[56px] md:text-[64px] mx-2 sm:mx-3 align-baseline">
+          <span className={`font-light italic text-[#B8975E] align-baseline ${isCanonical ? "text-[64px] mx-3" : "text-[32px] xs:text-[40px] sm:text-[56px] md:text-[64px] mx-2 sm:mx-3"}`}>
             &amp;
           </span>
           <span className="inline-block">Sakhi</span>
         </h1>
 
         {/* Divider A: Symmetrical Gold Hairline with Refined 3-Petal Lotus Crest & Calligraphic Scrolls */}
-        <div className="flex items-center justify-center my-0.5 sm:my-1 select-none text-[#B8975E]" aria-hidden="true">
-          <div className="w-16 xs:w-24 sm:w-36 h-[1px] bg-gradient-to-r from-transparent to-[#B8975E]/70" />
+        <div className={`flex items-center justify-center select-none text-[#B8975E] ${isCanonical ? "my-1" : "my-0.5 sm:my-1"}`} aria-hidden="true">
+          <div className={`h-[1px] bg-gradient-to-r from-transparent to-[#B8975E]/70 ${isCanonical ? "w-36" : "w-16 xs:w-24 sm:w-36"}`} />
           <svg width="68" height="22" viewBox="0 0 68 22" fill="none" className="mx-2 shrink-0">
             <path d="M34 2 C32 6, 31 11, 34 15 C37 11, 36 6, 34 2 Z" fill="#B8975E" />
             <path d="M32.5 7 C28.5 8, 25.5 11, 24.5 14 C28 15, 30.5 13, 32.5 7 Z" fill="#B8975E" opacity="0.9" />
@@ -238,12 +291,12 @@ export function OfficialWeddingInvitation({
             <path d="M34 15 C39 17.5, 47 17.5, 52 12 C57 6.5, 63 11, 68 14" stroke="#B8975E" strokeWidth="1.2" strokeLinecap="round" fill="none" />
             <circle cx="34" cy="15.5" r="1.2" fill="#B8975E" />
           </svg>
-          <div className="w-16 xs:w-24 sm:w-36 h-[1px] bg-gradient-to-l from-transparent to-[#B8975E]/70" />
+          <div className={`h-[1px] bg-gradient-to-l from-transparent to-[#B8975E]/70 ${isCanonical ? "w-36" : "w-16 xs:w-24 sm:w-36"}`} />
         </div>
 
         {/* Prominent Central Invitation Message (Exactly Two Lines with explicit <br /> and +25% size) */}
-        <div className="relative px-2 sm:px-4 my-0.5 sm:my-1 max-w-[560px] sm:max-w-[620px] mx-auto text-center">
-          <p className="font-serif italic text-[14.5px] xs:text-[16.5px] sm:text-[20px] md:text-[22px] text-[#38060E] leading-[1.36] sm:leading-[1.40] select-text font-normal px-2">
+        <div className={`relative mx-auto text-center ${isCanonical ? "px-4 my-1 max-w-[620px]" : "px-2 sm:px-4 my-0.5 sm:my-1 max-w-[560px] sm:max-w-[620px]"}`}>
+          <p className={`font-serif italic text-[#38060E] select-text font-normal px-2 ${isCanonical ? "text-[22px] leading-[1.40]" : "text-[14.5px] xs:text-[16.5px] sm:text-[20px] md:text-[22px] leading-[1.36] sm:leading-[1.40]"}`}>
             {customMessage ? (
               customMessage.includes("\n") ? (
                 customMessage.split("\n").map((line, i, arr) => (
@@ -265,28 +318,28 @@ export function OfficialWeddingInvitation({
         </div>
 
         {/* Divider B: Symmetrical Gold Hairline with Refined 4-Point Star Diamond & Accent Diamonds */}
-        <div className="flex items-center justify-center my-0.5 sm:my-1 select-none text-[#B8975E]" aria-hidden="true">
-          <div className="w-20 xs:w-28 sm:w-44 h-[1px] bg-gradient-to-r from-transparent to-[#B8975E]/70" />
+        <div className={`flex items-center justify-center select-none text-[#B8975E] ${isCanonical ? "my-1" : "my-0.5 sm:my-1"}`} aria-hidden="true">
+          <div className={`h-[1px] bg-gradient-to-r from-transparent to-[#B8975E]/70 ${isCanonical ? "w-44" : "w-20 xs:w-28 sm:w-44"}`} />
           <svg width="48" height="18" viewBox="0 0 48 18" fill="none" className="mx-2 shrink-0">
             <path d="M24 1 L28.5 9 L24 17 L19.5 9 Z" stroke="#B8975E" strokeWidth="1.2" fill="none" />
             <path d="M24 4 L26.5 9 L24 14 L21.5 9 Z" fill="#B8975E" />
             <path d="M10 9 L12.5 6.5 L15 9 L12.5 11.5 Z" stroke="#B8975E" strokeWidth="1" fill="none" />
             <path d="M33 9 L35.5 6.5 L38 9 L35.5 11.5 Z" stroke="#B8975E" strokeWidth="1" fill="none" />
           </svg>
-          <div className="w-20 xs:w-28 sm:w-44 h-[1px] bg-gradient-to-l from-transparent to-[#B8975E]/70" />
+          <div className={`h-[1px] bg-gradient-to-l from-transparent to-[#B8975E]/70 ${isCanonical ? "w-44" : "w-20 xs:w-28 sm:w-44"}`} />
         </div>
       </div>
 
       {/* =================================================================== */}
       {/* 5. PARENTS' INFORMATION PANEL (ORNATE ARCHITECTURAL PLAQUE)         */}
       {/* =================================================================== */}
-      <div className="relative z-10 my-0.5 sm:my-1 px-1 sm:px-2">
-        <div className="relative rounded-2xl border border-[#B8975E]/50 bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EB]/95 to-[#FFFDF9] shadow-[0_4px_16px_rgba(184,151,94,0.12)] py-1.5 sm:py-2 px-3 sm:px-5">
+      <div className={`relative z-10 ${isCanonical ? "my-1 px-2" : "my-0.5 sm:my-1 px-1 sm:px-2"}`}>
+        <div className={`relative rounded-2xl border border-[#B8975E]/50 bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EB]/95 to-[#FFFDF9] shadow-[0_4px_16px_rgba(184,151,94,0.12)] ${isCanonical ? "py-2 px-5" : "py-1.5 sm:py-2 px-3 sm:px-5"}`}>
           {/* Inner hairline border */}
           <div className="absolute inset-[3px] rounded-xl border border-[#B8975E]/20 pointer-events-none" />
 
           {/* Left Decorative Botanical Laurel Sprig SVG */}
-          <div className="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 pointer-events-none select-none text-[#B8975E]" aria-hidden="true">
+          <div className={`absolute top-1/2 -translate-y-1/2 pointer-events-none select-none text-[#B8975E] ${isCanonical ? "-left-4" : "-left-3 sm:-left-4"}`} aria-hidden="true">
             <svg width="18" height="36" viewBox="0 0 18 36" fill="currentColor">
               <path d="M9 0 C7 6, 2 11, 0 18 C5 16, 8 11, 9 0 Z" />
               <path d="M9 9 C11 14, 16 16, 18 21 C13 21, 10 16, 9 9 Z" />
@@ -297,7 +350,7 @@ export function OfficialWeddingInvitation({
           </div>
 
           {/* Right Decorative Botanical Laurel Sprig SVG */}
-          <div className="absolute -right-3 sm:-right-4 top-1/2 -translate-y-1/2 pointer-events-none select-none text-[#B8975E] scale-x-[-1]" aria-hidden="true">
+          <div className={`absolute top-1/2 -translate-y-1/2 pointer-events-none select-none text-[#B8975E] scale-x-[-1] ${isCanonical ? "-right-4" : "-right-3 sm:-right-4"}`} aria-hidden="true">
             <svg width="18" height="36" viewBox="0 0 18 36" fill="currentColor">
               <path d="M9 0 C7 6, 2 11, 0 18 C5 16, 8 11, 9 0 Z" />
               <path d="M9 9 C11 14, 16 16, 18 21 C13 21, 10 16, 9 9 Z" />
@@ -308,33 +361,33 @@ export function OfficialWeddingInvitation({
           </div>
 
           {/* Interior Two Balanced Columns */}
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center text-center gap-2 sm:gap-4 relative z-10">
+          <div className={`grid grid-cols-[1fr_auto_1fr] items-center text-center relative z-10 ${isCanonical ? "gap-4" : "gap-2 sm:gap-4"}`}>
             {/* Groom's Parents */}
             <div>
-              <span className="text-[9px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
+              <span className={`font-sans font-extrabold uppercase text-[#6B111E] block whitespace-nowrap ${isCanonical ? "text-[11.5px] tracking-[0.22em] mb-1" : "text-[9px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] tracking-[0.12em] sm:tracking-[0.22em] mb-0.5 sm:mb-1"}`}>
                 ✦ GROOM&apos;S PARENTS ✦
               </span>
-              <p className="font-serif text-[13px] xs:text-[14px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
+              <p className={`font-serif text-[#1A1110] font-bold leading-tight tracking-[0.025em] ${isCanonical ? "text-[17.5px]" : "text-[13px] xs:text-[14px] sm:text-[16px] md:text-[17.5px]"}`}>
                 Mr. Kenaram Gorain<br />
-                <span className="font-medium text-[#8F6C34] text-[11px] xs:text-[12px] sm:text-[14px] md:text-[15px] font-serif italic">&amp;</span> Ms. Savita Gorian
+                <span className={`font-medium text-[#8F6C34] font-serif italic ${isCanonical ? "text-[15px]" : "text-[11px] xs:text-[12px] sm:text-[14px] md:text-[15px]"}`}>&amp;</span> Ms. Savita Gorian
               </p>
             </div>
 
             {/* Center Vertical Divider with Rotated Gold Diamond */}
             <div className="flex flex-col items-center justify-center select-none px-1" aria-hidden="true">
-              <span className="w-[1px] h-4 sm:h-6 bg-[#B8975E]/70" />
+              <span className={`w-[1px] bg-[#B8975E]/70 ${isCanonical ? "h-6" : "h-4 sm:h-6"}`} />
               <span className="w-2.5 h-2.5 rotate-45 border border-[#B8975E] bg-[#FFFDF9] my-0.5 shadow-2xs" />
-              <span className="w-[1px] h-4 sm:h-6 bg-[#B8975E]/70" />
+              <span className={`w-[1px] bg-[#B8975E]/70 ${isCanonical ? "h-6" : "h-4 sm:h-6"}`} />
             </div>
 
             {/* Bride's Parents */}
             <div>
-              <span className="text-[9px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] font-sans font-extrabold uppercase tracking-[0.12em] sm:tracking-[0.22em] text-[#6B111E] block mb-0.5 sm:mb-1 whitespace-nowrap">
+              <span className={`font-sans font-extrabold uppercase text-[#6B111E] block whitespace-nowrap ${isCanonical ? "text-[11.5px] tracking-[0.22em] mb-1" : "text-[9px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] tracking-[0.12em] sm:tracking-[0.22em] mb-0.5 sm:mb-1"}`}>
                 ✦ BRIDE&apos;S PARENTS ✦
               </span>
-              <p className="font-serif text-[13px] xs:text-[14px] sm:text-[16px] md:text-[17.5px] text-[#1A1110] font-bold leading-tight tracking-[0.025em]">
+              <p className={`font-serif text-[#1A1110] font-bold leading-tight tracking-[0.025em] ${isCanonical ? "text-[17.5px]" : "text-[13px] xs:text-[14px] sm:text-[16px] md:text-[17.5px]"}`}>
                 Mr. Upen Gorain<br />
-                <span className="font-medium text-[#8F6C34] text-[11px] xs:text-[12px] sm:text-[14px] md:text-[15px] font-serif italic">&amp;</span> Ms. Kokila Gorain
+                <span className={`font-medium text-[#8F6C34] font-serif italic ${isCanonical ? "text-[15px]" : "text-[11px] xs:text-[12px] sm:text-[14px] md:text-[15px]"}`}>&amp;</span> Ms. Kokila Gorain
               </p>
             </div>
           </div>
@@ -344,15 +397,15 @@ export function OfficialWeddingInvitation({
       {/* =================================================================== */}
       {/* 6. WEDDING DATE & LOCATION PLAQUE                                  */}
       {/* =================================================================== */}
-      <div className="relative z-10 text-center my-0 sm:my-0.5">
-        <div className="inline-flex items-center gap-2 sm:gap-3">
-          <span className="w-10 sm:w-20 h-[1.5px] bg-gradient-to-r from-transparent to-[#B8975E]" aria-hidden="true" />
-          <span className="font-serif text-[14px] xs:text-[16px] sm:text-[20px] md:text-[23px] font-bold tracking-[0.24em] text-[#4A0A10]">
+      <div className={`relative z-10 text-center ${isCanonical ? "my-0.5" : "my-0 sm:my-0.5"}`}>
+        <div className={`inline-flex items-center ${isCanonical ? "gap-3" : "gap-2 sm:gap-3"}`}>
+          <span className={`h-[1.5px] bg-gradient-to-r from-transparent to-[#B8975E] ${isCanonical ? "w-20" : "w-10 sm:w-20"}`} aria-hidden="true" />
+          <span className={`font-serif font-bold tracking-[0.24em] text-[#4A0A10] ${isCanonical ? "text-[23px]" : "text-[14px] xs:text-[16px] sm:text-[20px] md:text-[23px]"}`}>
             19 – 22 NOVEMBER 2026
           </span>
-          <span className="w-10 sm:w-20 h-[1.5px] bg-gradient-to-l from-transparent to-[#B8975E]" aria-hidden="true" />
+          <span className={`h-[1.5px] bg-gradient-to-l from-transparent to-[#B8975E] ${isCanonical ? "w-20" : "w-10 sm:w-20"}`} aria-hidden="true" />
         </div>
-        <span className="text-[9.5px] xs:text-[10px] sm:text-[12px] md:text-[13px] font-sans font-bold tracking-[0.28em] uppercase text-[#5A4232] block mt-0.5">
+        <span className={`font-sans font-bold tracking-[0.28em] uppercase text-[#5A4232] block mt-0.5 ${isCanonical ? "text-[13px]" : "text-[9.5px] xs:text-[10px] sm:text-[12px] md:text-[13px]"}`}>
           PURULIA, WEST BENGAL
         </span>
       </div>
@@ -361,10 +414,10 @@ export function OfficialWeddingInvitation({
       {/* 7. FOUR PHOTOGRAPHIC CEREMONY CARDS (SWEEPING CURVED DIAGONAL EDGE) */}
       {/* =================================================================== */}
       <div className="relative z-10 my-0.5">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className={`grid gap-2 ${isCanonical ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-2"}`}>
 
           {/* CARD 1: HALDI CEREMONY */}
-          <div className="relative flex rounded-xl sm:rounded-2xl border border-[#E5C788]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#FFFDF7] via-[#FFFBF2] to-[#FFF8E7] min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]">
+          <div className={`relative flex border border-[#E5C788]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#FFFDF7] via-[#FFFBF2] to-[#FFF8E7] ${isCanonical ? "rounded-2xl min-h-[84px] h-[84px]" : "rounded-xl sm:rounded-2xl min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]"}`}>
             {/* Photographic Area with Sweeping Curved Diagonal Crescent Clip */}
             <div
               className="absolute inset-0 w-full h-full pointer-events-none z-0"
@@ -375,7 +428,7 @@ export function OfficialWeddingInvitation({
                 data-export-src="/images/invitationcard-haldi-image.webp"
                 alt="Haldi Ceremony"
                 className="w-[50%] h-full object-cover object-center"
-                loading="lazy"
+                loading={isCanonical ? "eager" : "lazy"}
               />
             </div>
 
@@ -426,7 +479,7 @@ export function OfficialWeddingInvitation({
             {/* Turmeric-Gold Rich Mandala & Botanical Background Texture */}
             <svg
               viewBox="0 0 80 80"
-              className="absolute -bottom-2 -right-2 w-20 h-20 sm:w-24 sm:h-24 pointer-events-none opacity-[0.22] text-[#D4A347] z-0"
+              className={`absolute -bottom-2 -right-2 pointer-events-none opacity-[0.22] text-[#D4A347] z-0 ${isCanonical ? "w-24 h-24" : "w-20 h-20 sm:w-24 sm:h-24"}`}
               aria-hidden="true"
             >
               <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="0.8" fill="none" />
@@ -448,21 +501,21 @@ export function OfficialWeddingInvitation({
             </svg>
 
             {/* Right Information Area */}
-            <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap">
+            <div className={`flex-1 pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10 ${isCanonical ? "pl-[40%]" : "pl-[39%] xs:pl-[39%] sm:pl-[40%]"}`}>
+              <div className={`font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap ${isCanonical ? "text-[10px]" : "text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px]"}`}>
                 19 NOVEMBER &bull; 9:00 AM IST
               </div>
-              <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#421804] leading-tight">
+              <div className={`font-serif font-bold text-[#421804] leading-tight ${isCanonical ? "text-[18.5px]" : "text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px]"}`}>
                 Haldi Ceremony
               </div>
-              <p className="font-serif italic text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px] text-[#36221A] leading-[1.28] mt-0.5 select-text">
+              <p className={`font-serif italic text-[#36221A] leading-[1.28] mt-0.5 select-text ${isCanonical ? "text-[13px]" : "text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px]"}`}>
                 The sacred turmeric blessing marking a joyous new beginning.
               </p>
             </div>
           </div>
 
           {/* CARD 2: MEHNDI CEREMONY */}
-          <div className="relative flex rounded-xl sm:rounded-2xl border border-[#8FB89E]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#F8FAF9] via-[#F2F7F4] to-[#EEF6F0] min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]">
+          <div className={`relative flex border border-[#8FB89E]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#F8FAF9] via-[#F2F7F4] to-[#EEF6F0] ${isCanonical ? "rounded-2xl min-h-[84px] h-[84px]" : "rounded-xl sm:rounded-2xl min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]"}`}>
             {/* Photographic Area with Sweeping Curved Diagonal Crescent Clip */}
             <div
               className="absolute inset-0 w-full h-full pointer-events-none z-0"
@@ -473,7 +526,7 @@ export function OfficialWeddingInvitation({
                 data-export-src="/images/invitationcard-mehndi-image.webp"
                 alt="Mehndi Ceremony"
                 className="w-[50%] h-full object-cover object-[25%_center]"
-                loading="lazy"
+                loading={isCanonical ? "eager" : "lazy"}
               />
             </div>
 
@@ -524,7 +577,7 @@ export function OfficialWeddingInvitation({
             {/* Botanical Sage-Green Rich Mandala & Vine Texture */}
             <svg
               viewBox="0 0 80 80"
-              className="absolute -bottom-2 -right-2 w-20 h-20 sm:w-24 sm:h-24 pointer-events-none opacity-[0.20] text-[#2E7D4E] z-0"
+              className={`absolute -bottom-2 -right-2 pointer-events-none opacity-[0.20] text-[#2E7D4E] z-0 ${isCanonical ? "w-24 h-24" : "w-20 h-20 sm:w-24 sm:h-24"}`}
               aria-hidden="true"
             >
               <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="0.8" fill="none" />
@@ -541,21 +594,21 @@ export function OfficialWeddingInvitation({
             </svg>
 
             {/* Right Information Area */}
-            <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#14532D] leading-none mb-0.5 whitespace-nowrap">
+            <div className={`flex-1 pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10 ${isCanonical ? "pl-[40%]" : "pl-[39%] xs:pl-[39%] sm:pl-[40%]"}`}>
+              <div className={`font-sans font-extrabold uppercase tracking-wider text-[#14532D] leading-none mb-0.5 whitespace-nowrap ${isCanonical ? "text-[10px]" : "text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px]"}`}>
                 20 NOVEMBER &bull; 9:00 AM IST
               </div>
-              <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#082B14] leading-tight">
+              <div className={`font-serif font-bold text-[#082B14] leading-tight ${isCanonical ? "text-[18.5px]" : "text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px]"}`}>
                 Mehndi Ceremony
               </div>
-              <p className="font-serif italic text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px] text-[#203326] leading-[1.28] mt-0.5 select-text">
+              <p className={`font-serif italic text-[#203326] leading-[1.28] mt-0.5 select-text ${isCanonical ? "text-[13px]" : "text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px]"}`}>
                 A vibrant celebration of henna, music and togetherness.
               </p>
             </div>
           </div>
 
           {/* CARD 3: THE SACRED WEDDING */}
-          <div className="relative flex rounded-xl sm:rounded-2xl border border-[#D68F99]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#FCF8F9] via-[#FAF1F3] to-[#F9EEF1] min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]">
+          <div className={`relative flex border border-[#D68F99]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#FCF8F9] via-[#FAF1F3] to-[#F9EEF1] ${isCanonical ? "rounded-2xl min-h-[84px] h-[84px]" : "rounded-xl sm:rounded-2xl min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]"}`}>
             {/* Photographic Area with Sweeping Curved Diagonal Crescent Clip */}
             <div
               className="absolute inset-0 w-full h-full pointer-events-none z-0"
@@ -566,7 +619,7 @@ export function OfficialWeddingInvitation({
                 data-export-src="/images/invitationcard-wedding-image.webp"
                 alt="The Sacred Wedding"
                 className="w-[50%] h-full object-cover object-center"
-                loading="lazy"
+                loading={isCanonical ? "eager" : "lazy"}
               />
             </div>
 
@@ -617,7 +670,7 @@ export function OfficialWeddingInvitation({
             {/* Rich Rose & Burgundy Filigree Mandala Texture */}
             <svg
               viewBox="0 0 80 80"
-              className="absolute -bottom-2 -right-2 w-20 h-20 sm:w-24 sm:h-24 pointer-events-none opacity-[0.22] text-[#A8283B] z-0"
+              className={`absolute -bottom-2 -right-2 pointer-events-none opacity-[0.22] text-[#A8283B] z-0 ${isCanonical ? "w-24 h-24" : "w-20 h-20 sm:w-24 sm:h-24"}`}
               aria-hidden="true"
             >
               <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="0.8" fill="none" />
@@ -631,21 +684,21 @@ export function OfficialWeddingInvitation({
             </svg>
 
             {/* Right Information Area */}
-            <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap">
+            <div className={`flex-1 pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10 ${isCanonical ? "pl-[40%]" : "pl-[39%] xs:pl-[39%] sm:pl-[40%]"}`}>
+              <div className={`font-sans font-extrabold uppercase tracking-wider text-[#8A151B] leading-none mb-0.5 whitespace-nowrap ${isCanonical ? "text-[10px]" : "text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px]"}`}>
                 21 NOVEMBER &bull; 11:00 PM IST
               </div>
-              <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#48070F] leading-tight">
+              <div className={`font-serif font-bold text-[#48070F] leading-tight ${isCanonical ? "text-[18.5px]" : "text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px]"}`}>
                 The Sacred Wedding
               </div>
-              <p className="font-serif italic text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px] text-[#381F23] leading-[1.28] mt-0.5 select-text">
+              <p className={`font-serif italic text-[#381F23] leading-[1.28] mt-0.5 select-text ${isCanonical ? "text-[13px]" : "text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px]"}`}>
                 The sacred Vedic marriage ceremony uniting two hearts for a lifetime.
               </p>
             </div>
           </div>
 
           {/* CARD 4: RECEPTION */}
-          <div className="relative flex rounded-xl sm:rounded-2xl border border-[#B58FB8]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#FAF7FB] via-[#F6F0F8] to-[#F3EDF7] min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]">
+          <div className={`relative flex border border-[#B58FB8]/80 overflow-hidden shadow-xs bg-gradient-to-r from-[#FAF7FB] via-[#F6F0F8] to-[#F3EDF7] ${isCanonical ? "rounded-2xl min-h-[84px] h-[84px]" : "rounded-xl sm:rounded-2xl min-h-[58px] xs:min-h-[66px] sm:min-h-[78px] md:min-h-[84px]"}`}>
             {/* Photographic Area with Sweeping Curved Diagonal Crescent Clip */}
             <div
               className="absolute inset-0 w-full h-full pointer-events-none z-0"
@@ -656,7 +709,7 @@ export function OfficialWeddingInvitation({
                 data-export-src="/images/invitationcard-reception-image.webp"
                 alt="Reception Ceremony"
                 className="w-[50%] h-full object-cover object-[20%_center]"
-                loading="lazy"
+                loading={isCanonical ? "eager" : "lazy"}
               />
             </div>
 
@@ -707,7 +760,7 @@ export function OfficialWeddingInvitation({
             {/* Dusty-Rose & Champagne Medallion Texture */}
             <svg
               viewBox="0 0 80 80"
-              className="absolute -bottom-2 -right-2 w-20 h-20 sm:w-24 sm:h-24 pointer-events-none opacity-[0.20] text-[#8A3D82] z-0"
+              className={`absolute -bottom-2 -right-2 pointer-events-none opacity-[0.20] text-[#8A3D82] z-0 ${isCanonical ? "w-24 h-24" : "w-20 h-20 sm:w-24 sm:h-24"}`}
               aria-hidden="true"
             >
               <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="0.8" fill="none" />
@@ -728,14 +781,14 @@ export function OfficialWeddingInvitation({
             </svg>
 
             {/* Right Information Area */}
-            <div className="flex-1 pl-[39%] xs:pl-[39%] sm:pl-[40%] pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10">
-              <div className="text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#4C1D54] leading-none mb-0.5 whitespace-nowrap">
+            <div className={`flex-1 pr-2 sm:pr-3 py-1 xs:py-1.5 sm:py-2 flex flex-col justify-center min-w-0 relative z-10 ${isCanonical ? "pl-[40%]" : "pl-[39%] xs:pl-[39%] sm:pl-[40%]"}`}>
+              <div className={`font-sans font-extrabold uppercase tracking-wider text-[#4C1D54] leading-none mb-0.5 whitespace-nowrap ${isCanonical ? "text-[10px]" : "text-[8.5px] xs:text-[9px] sm:text-[9.5px] md:text-[10px]"}`}>
                 22 NOVEMBER &bull; 5:00 PM IST
               </div>
-              <div className="font-serif font-bold text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px] text-[#330938] leading-tight">
+              <div className={`font-serif font-bold text-[#330938] leading-tight ${isCanonical ? "text-[18.5px]" : "text-[13px] xs:text-[14.5px] sm:text-[17px] md:text-[18.5px]"}`}>
                 Reception
               </div>
-              <p className="font-serif italic text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px] text-[#301E33] leading-[1.28] mt-0.5 select-text">
+              <p className={`font-serif italic text-[#301E33] leading-[1.28] mt-0.5 select-text ${isCanonical ? "text-[13px]" : "text-[9.5px] xs:text-[10.5px] sm:text-[12px] md:text-[13px]"}`}>
                 A grand celebration banquet with family, friends and heartfelt blessings.
               </p>
             </div>
@@ -747,9 +800,9 @@ export function OfficialWeddingInvitation({
       {/* =================================================================== */}
       {/* 8. BOTTOM QR CODE SECTION: SINGLE-LINE DESKTOP HEADING             */}
       {/* =================================================================== */}
-      <div className="relative z-10 w-full pt-0.5 sm:pt-1">
+      <div className={`relative z-10 w-full ${isCanonical ? "pt-1" : "pt-0.5 sm:pt-1"}`}>
         {/* Divider C: Refined Horizontal Champagne-Gold Line with Central Diamond & Dot Flourish */}
-        <div className="flex items-center justify-center mb-1 sm:mb-1.5 select-none text-[#B8975E]" aria-hidden="true">
+        <div className={`flex items-center justify-center select-none text-[#B8975E] ${isCanonical ? "mb-1.5" : "mb-1 sm:mb-1.5"}`} aria-hidden="true">
           <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#B8975E]/50 to-transparent" />
           <svg width="44" height="14" viewBox="0 0 44 14" fill="none" className="mx-2 shrink-0">
             {/* Center horizontal diamond */}
@@ -766,11 +819,11 @@ export function OfficialWeddingInvitation({
         </div>
 
         {/* Balanced Two-Column Footer — High Contrast & Elevated Readability */}
-        <footer className="flex items-center gap-2.5 sm:gap-4 pb-0.5 sm:pb-1 pl-3 xs:pl-5 sm:pl-7 pr-[28%] sm:pr-[30%] md:pr-[32%]">
+        <footer className={`flex items-center ${isCanonical ? "gap-4 pb-1 pl-7 pr-[32%]" : "gap-2.5 sm:gap-4 pb-0.5 sm:pb-1 pl-3 xs:pl-5 sm:pl-7 pr-[28%] sm:pr-[30%] md:pr-[32%]"}`}>
           {/* LEFT: Square Dynamic Vector QR Code in Crisp White Tile with Gold Double Border */}
-          <div className="shrink-0 p-1 sm:p-1.5 bg-white rounded-xl border border-[#B8975E]/80 shadow-[0_2px_8px_rgba(184,151,94,0.18)] flex items-center justify-center">
+          <div className={`shrink-0 bg-white rounded-xl border border-[#B8975E]/80 shadow-[0_2px_8px_rgba(184,151,94,0.18)] flex items-center justify-center ${isCanonical ? "p-1.5" : "p-1 sm:p-1.5"}`}>
             <div
-              className="w-[44px] h-[44px] xs:w-[50px] xs:h-[50px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px] aspect-square [&>svg]:w-full [&>svg]:h-full flex items-center justify-center overflow-hidden"
+              className={`aspect-square [&>svg]:w-full [&>svg]:h-full flex items-center justify-center overflow-hidden ${isCanonical ? "w-[66px] h-[66px]" : "w-[44px] h-[44px] xs:w-[50px] xs:h-[50px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px]"}`}
               dangerouslySetInnerHTML={{ __html: qrSvgMarkup }}
               aria-label={`Scannable QR Code linking to ${canonicalUrl}`}
               role="img"
@@ -778,19 +831,19 @@ export function OfficialWeddingInvitation({
           </div>
 
           {/* RIGHT: Bracketed Details Column (Single-Line Desktop Heading) */}
-          <div className="flex-1 min-w-0 border-l-[1.5px] border-[#B8975E]/70 pl-2.5 sm:pl-3.5 text-left">
-            <div className="text-[10px] xs:text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[17.5px] font-serif font-bold uppercase tracking-[0.06em] text-[#4A0A10] sm:whitespace-nowrap leading-tight">
+          <div className={`flex-1 min-w-0 border-l-[1.5px] border-[#B8975E]/70 text-left ${isCanonical ? "pl-3.5" : "pl-2.5 sm:pl-3.5"}`}>
+            <div className={`font-serif font-bold uppercase tracking-[0.06em] text-[#4A0A10] leading-tight ${isCanonical ? "text-[17.5px] whitespace-nowrap" : "text-[10px] xs:text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[17.5px] sm:whitespace-nowrap"}`}>
               SCAN FOR COMPLETE WEDDING DETAILS
             </div>
 
             {/* Loop Flourish */}
-            <div className="my-0.5 sm:my-1 select-none" aria-hidden="true">
+            <div className={`select-none ${isCanonical ? "my-1" : "my-0.5 sm:my-1"}`} aria-hidden="true">
               <svg width="34" height="6" viewBox="0 0 40 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 3 C10 3, 15 1, 20 3 C25 5, 30 3, 40 3" stroke="#B8975E" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
               </svg>
             </div>
 
-            <p className="font-serif italic text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px] text-[#302120] leading-snug">
+            <p className={`font-serif italic text-[#302120] leading-snug ${isCanonical ? "text-[11.5px]" : "text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] md:text-[11.5px]"}`}>
               Ceremony schedule, venues, directions, RSVP and more.
             </p>
           </div>

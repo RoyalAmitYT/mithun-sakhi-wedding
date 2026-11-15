@@ -232,8 +232,12 @@ export function Navbar() {
         window.innerHeight + scrollY >=
         document.documentElement.scrollHeight - 60;
 
+      const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+
       if (isAtBottom) {
-        setHomeActiveSection((prev) => (prev !== "hospitality" ? "hospitality" : prev));
+        if (isDesktop || isMobileMenuOpen) {
+          setHomeActiveSection((prev) => (prev !== "hospitality" ? "hospitality" : prev));
+        }
       } else {
         // Pure numerical comparison (zero DOM layout access, zero layout thrash!)
         let current = "home";
@@ -242,7 +246,9 @@ export function Navbar() {
             current = sectionTops[i].id;
           }
         }
-        setHomeActiveSection((prev) => (prev !== current ? current : prev));
+        if (isDesktop || isMobileMenuOpen) {
+          setHomeActiveSection((prev) => (prev !== current ? current : prev));
+        }
       }
 
       ticking = false;
@@ -280,7 +286,7 @@ export function Navbar() {
       window.removeEventListener("resize", onResizeOrChange);
       window.removeEventListener("hashchange", onResizeOrChange);
     };
-  }, [isHome]);
+  }, [isHome, isMobileMenuOpen]);
 
   // Handle direct hash URL landing and cross-route hash navigation on homepage
   useEffect(() => {
@@ -515,7 +521,31 @@ export function Navbar() {
               {/* Mobile Hamburger Toggle (Refined Touch Target 44–48px with Haptic-Like Active State) */}
               <button
                 type="button"
-                onClick={() => setIsMobileMenuOpen(true)}
+                onClick={() => {
+                  if (isHome) {
+                    const scrollY = window.scrollY;
+                    const ids = [
+                      "our-story",
+                      "celebrations",
+                      "events",
+                      "venues",
+                      "invitation",
+                      "gallery",
+                      "wishes",
+                      "rsvp",
+                      "hospitality",
+                    ];
+                    let current = "home";
+                    for (const id of ids) {
+                      const el = document.getElementById(id);
+                      if (el && scrollY >= el.getBoundingClientRect().top + window.scrollY - 160) {
+                        current = id;
+                      }
+                    }
+                    setHomeActiveSection(current);
+                  }
+                  setIsMobileMenuOpen(true);
+                }}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-navigation-drawer"
                 aria-label="Open navigation menu"

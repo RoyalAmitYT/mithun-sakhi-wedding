@@ -47,6 +47,10 @@ export function FloatingMusicPlayer() {
     const setupObservers = () => {
       let scrollingActive = false;
       const handleScroll = () => {
+        // Skip scroll state updates on mobile/tablet (<1024px) to preserve buttery-smooth native touch gestures;
+        // keep desktop scroll-dimming intact for luxury wheel experience
+        if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+
         if (!scrollingActive) {
           scrollingActive = true;
           setIsScrolling(true);

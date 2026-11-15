@@ -35,13 +35,12 @@ export function HeroPortrait() {
   const { scrollY } = useScroll();
   const bgParallaxY = useTransform(scrollY, [0, 900], [0, 90]);
   const contentOpacity = useTransform(scrollY, [0, 500, 950], [1, 0.94, 0.45]);
-  const contentScale = useTransform(scrollY, [0, 950], [1, 0.985]);
 
   const luxuryEase = MOTION_EASINGS.luxury as [number, number, number, number];
 
   return (
     <div
-      className="relative w-full min-h-[100dvh] pt-14 xs:pt-16 sm:pt-20 md:pt-24 pb-24 xs:pb-28 sm:pb-32 flex flex-col justify-between overflow-hidden bg-[#150409]"
+      className="relative w-full min-h-[100dvh] pt-10 xs:pt-14 sm:pt-20 md:pt-24 pb-20 xs:pb-24 sm:pb-32 flex flex-col justify-between overflow-hidden bg-[#150409]"
     >
       {/* =========================================================================
           1. FULL-BLEED CINEMATIC BACKGROUND IMAGE & ATMOSPHERIC VIGNETTES
@@ -111,15 +110,14 @@ export function HeroPortrait() {
             ? undefined
             : {
                 opacity: contentOpacity,
-                scale: contentScale,
                 transform: "translate3d(0, 0, 0)",
-                willChange: "opacity, transform",
+                willChange: "opacity",
               }
         }
         className="relative z-20 w-full max-w-[540px] mx-auto px-4 xs:px-5 sm:px-6 md:px-8 mt-auto flex flex-col items-center text-center"
       >
         {/* Top Spacer on mobile: Preserves visibility of Mithun kissing Sakhi's forehead */}
-        <div className="w-full h-8 xs:h-12 sm:h-16 shrink-0 pointer-events-none" aria-hidden="true" />
+        <div className="w-full h-2.5 xs:h-8 sm:h-14 shrink-0 pointer-events-none" aria-hidden="true" />
 
         {/* -------------------------------------------------------------
             2A. TOP ORNAMENTAL LOTUS BLOSSOM MOTIF
@@ -185,7 +183,9 @@ export function HeroPortrait() {
         </motion.div>
 
         {/* -------------------------------------------------------------
-            2C. MAIN COUPLE CALLIGRAPHIC BRANDING — "Mithun & Sakhi"
+            2C. MAIN COUPLE SIGNATURE BRANDING — "Mithun & Sakhi"
+            Reuses exact signature desktop serif font (Cormorant Garamond)
+            with luminous champagne-gold & amber highlight treatment.
             ------------------------------------------------------------- */}
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
@@ -202,17 +202,17 @@ export function HeroPortrait() {
             variant="gold"
             position="center"
             size="lg"
-            opacity={0.38}
+            opacity={0.42}
             pulse={true}
             className="-z-10"
           />
 
           <h1
             id="hero-title-portrait"
-            className="font-script text-[clamp(2.85rem,10.5vw,4.5rem)] sm:text-[clamp(4.2rem,8.2vw,5.6rem)] font-normal tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#FFFDF8] via-[#FFE8A3] to-[#E5C158] leading-[1.08] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] select-none px-2 py-0.5"
+            className="font-serif text-[clamp(2.55rem,9.2vw,3.75rem)] sm:text-[clamp(3.7rem,7.5vw,4.8rem)] font-normal tracking-tight text-[#FFFDF8] leading-[1.06] drop-shadow-[0_4px_20px_rgba(0,0,0,0.92)] select-none px-2 py-0.5 whitespace-nowrap"
             style={{
               textShadow:
-                "0 2px 10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(229, 193, 88, 0.45), 0 0 50px rgba(212, 175, 55, 0.25)",
+                "0 2px 10px rgba(0, 0, 0, 0.95), 0 0 24px rgba(229, 193, 88, 0.42), 0 0 48px rgba(212, 175, 55, 0.22)",
             }}
           >
             {narrative.isMemories ? (
@@ -223,7 +223,19 @@ export function HeroPortrait() {
                 </span>
               </>
             ) : (
-              <>Mithun &amp; Sakhi</>
+              <>
+                <span className="drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">Mithun</span>{" "}
+                <span
+                  className="font-light italic text-[#E5C158] text-[0.88em] inline-block mx-1 xs:mx-1.5"
+                  style={{
+                    textShadow:
+                      "0 2px 8px rgba(0, 0, 0, 0.9), 0 0 26px rgba(229, 193, 88, 0.75), 0 0 50px rgba(212, 175, 55, 0.35)",
+                  }}
+                >
+                  &amp;
+                </span>{" "}
+                <span className="drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">Sakhi</span>
+              </>
             )}
           </h1>
 
@@ -242,7 +254,7 @@ export function HeroPortrait() {
             delay: 0.22,
             ease: luxuryEase,
           }}
-          className="font-serif italic text-[0.84rem] xs:text-[0.92rem] sm:text-[1.05rem] text-[#FFFDF8] mt-1.5 xs:mt-2 max-w-[340px] xs:max-w-[400px] sm:max-w-xl leading-[1.45] xs:leading-[1.5] drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] tracking-wide"
+          className="font-serif italic text-[0.84rem] xs:text-[0.92rem] sm:text-[1.05rem] text-[#FFFDF8] mt-1 xs:mt-1.5 sm:mt-2 max-w-[340px] xs:max-w-[400px] sm:max-w-xl leading-[1.45] xs:leading-[1.5] drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] tracking-wide"
         >
           &ldquo;With our families&apos; blessings, two hearts begin a timeless
           <br className="inline" />
@@ -260,7 +272,7 @@ export function HeroPortrait() {
             delay: 0.26,
             ease: luxuryEase,
           }}
-          className="flex items-center justify-center my-1.5 xs:my-2 sm:my-2.5 select-none origin-center"
+          className="flex items-center justify-center my-1 xs:my-1.5 sm:my-2.5 select-none origin-center"
           aria-hidden="true"
         >
           <CenterFiligree className="w-28 xs:w-32 sm:w-40 h-3.5 text-[#D4AF37] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]" />
@@ -281,7 +293,7 @@ export function HeroPortrait() {
             delay: 0.3,
             ease: luxuryEase,
           }}
-          className="w-full max-w-[340px] xs:max-w-[370px] sm:max-w-[400px] relative select-none group mb-2.5 xs:mb-3"
+          className="w-full max-w-[340px] xs:max-w-[370px] sm:max-w-[400px] relative select-none group mb-2 xs:mb-2.5 sm:mb-3"
         >
           {/* Outer Plaque Frame with Champagne-Gold Hairline Border */}
           <div className="relative rounded-2xl p-[1px] bg-gradient-to-b from-[#E5C158]/55 via-[#D4AF37]/30 to-[#E5C158]/45 shadow-[0_8px_32px_rgba(0,0,0,0.7)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.8)] transition-all duration-300">
@@ -421,13 +433,13 @@ export function HeroPortrait() {
             delay: 0.34,
             ease: luxuryEase,
           }}
-          className="w-full max-w-[340px] xs:max-w-[370px] sm:max-w-[400px] flex items-center justify-center mb-2.5 xs:mb-3"
+          className="w-full max-w-[340px] xs:max-w-[370px] sm:max-w-[400px] flex items-center justify-center mb-2 xs:mb-2.5 sm:mb-3"
         >
           <HeroCountdownPortrait className="w-full !mx-0" />
         </motion.div>
 
         {/* -------------------------------------------------------------
-            2H. CTA BUTTONS (Side-by-side velvet crimson & translucent gold)
+            2H. CTA BUTTONS (Stacked full-width velvet crimson & translucent gold)
             ------------------------------------------------------------- */}
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
@@ -437,17 +449,17 @@ export function HeroPortrait() {
             delay: 0.4,
             ease: luxuryEase,
           }}
-          className="flex flex-row items-center justify-center gap-2 xs:gap-2.5 sm:gap-3.5 w-full max-w-[340px] xs:max-w-[370px] sm:max-w-[420px] mb-3 xs:mb-3.5"
+          className="flex flex-col items-stretch gap-2 xs:gap-2.5 sm:gap-3 w-full max-w-[340px] xs:max-w-[370px] sm:max-w-[400px] mb-2 xs:mb-2.5 sm:mb-3"
         >
-          {/* Primary CTA: EXPLORE CELEBRATIONS */}
-          <MagneticButton className="flex-1">
+          {/* Row 1: Primary CTA — EXPLORE CELEBRATIONS */}
+          <MagneticButton className="w-full">
             <Link
               href={narrative.primaryCtaHref}
-              className="group w-full h-10 xs:h-11 sm:h-12 px-3 xs:px-4 sm:px-6 rounded-full bg-gradient-to-r from-[#7D1525] via-[#A81E32] to-[#7D1525] hover:from-[#8E1B29] hover:via-[#B82238] hover:to-[#8E1B29] text-white border border-[#FFE8A3]/60 shadow-[0_6px_20px_rgba(168,30,50,0.42),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_10px_26px_rgba(168,30,50,0.55),0_0_18px_rgba(255,232,163,0.3)] flex items-center justify-center gap-1.5 xs:gap-2 text-[10px] xs:text-[11px] sm:text-xs font-sans font-bold uppercase tracking-[0.14em] xs:tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer whitespace-nowrap"
+              className="group w-full h-11 xs:h-12 px-6 rounded-full bg-gradient-to-r from-[#7D1525] via-[#8E1B29] to-[#6A1220] hover:from-[#8E1B29] hover:via-[#9E2030] hover:to-[#7D1525] text-white border border-[#FFE8A3]/60 shadow-[0_6px_20px_rgba(142,27,41,0.38),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_10px_26px_rgba(142,27,41,0.52),0_0_18px_rgba(255,232,163,0.28)] flex items-center justify-center gap-2 text-[11px] xs:text-xs font-sans font-bold uppercase tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer whitespace-nowrap"
             >
               <span>{narrative.primaryCtaText.replace(" ↓", "")}</span>
               <span
-                className="text-xs sm:text-sm font-normal group-hover:translate-x-1 transition-transform duration-300"
+                className="text-sm font-normal group-hover:translate-x-1.5 transition-transform duration-300"
                 aria-hidden="true"
               >
                 &rarr;
@@ -455,11 +467,11 @@ export function HeroPortrait() {
             </Link>
           </MagneticButton>
 
-          {/* Secondary CTA: VIEW INVITATION */}
-          <MagneticButton className="flex-1">
+          {/* Row 2: Secondary CTA — VIEW INVITATION */}
+          <MagneticButton className="w-full">
             <Link
               href={narrative.secondaryCtaHref}
-              className="group w-full h-10 xs:h-11 sm:h-12 px-3 xs:px-4 sm:px-6 rounded-full bg-[#1F060D]/85 hover:bg-[#2B0812]/90 text-[#FFFDF8] border border-[#D4AF37]/70 hover:border-[#FFE8A3] shadow-[0_6px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.18)] hover:shadow-[0_10px_26px_rgba(212,175,55,0.25),0_0_16px_rgba(255,232,163,0.2)] flex items-center justify-center gap-1.5 xs:gap-2 text-[10px] xs:text-[11px] sm:text-xs font-sans font-bold uppercase tracking-[0.14em] xs:tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer backdrop-blur-md whitespace-nowrap"
+              className="group w-full h-11 xs:h-12 px-6 rounded-full bg-gradient-to-r from-[#22070F]/85 via-[#300B16]/90 to-[#22070F]/85 hover:from-[#300B16] hover:via-[#420F1F] hover:to-[#300B16] text-[#FFFDF8] border border-[#D4AF37]/65 hover:border-[#FFE8A3] shadow-[0_6px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18)] hover:shadow-[0_10px_26px_rgba(212,175,55,0.25),0_0_16px_rgba(255,232,163,0.18)] flex items-center justify-center gap-2 text-[11px] xs:text-xs font-sans font-bold uppercase tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer backdrop-blur-md whitespace-nowrap"
             >
               <svg
                 className="w-3.5 h-3.5 text-[#E5C158] group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shrink-0"
@@ -477,7 +489,7 @@ export function HeroPortrait() {
               </svg>
               <span>{narrative.secondaryCtaText}</span>
               <span
-                className="text-xs sm:text-sm font-normal text-[#E5C158] group-hover:translate-x-1 transition-transform duration-300"
+                className="text-sm font-normal text-[#E5C158] group-hover:translate-x-1.5 transition-transform duration-300"
                 aria-hidden="true"
               >
                 &rarr;

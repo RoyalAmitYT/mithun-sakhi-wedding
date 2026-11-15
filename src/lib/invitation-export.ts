@@ -65,13 +65,17 @@ async function prepareElementForCapture(cardElement: HTMLElement): Promise<void>
   const images = Array.from(cardElement.querySelectorAll<HTMLImageElement>("img"));
   await Promise.all(
     images.map(async (img) => {
+      img.loading = "eager";
       const exportSrc = img.getAttribute("data-export-src");
       if (exportSrc && !img.src.includes(exportSrc)) {
         img.src = exportSrc;
       }
       if (img.complete && img.naturalWidth > 0) return;
       try {
-        await img.decode();
+        await Promise.race([
+          img.decode(),
+          new Promise((resolve) => setTimeout(resolve, 1500)),
+        ]);
       } catch {
         // Fallback or already decoded
       }
@@ -93,30 +97,31 @@ export async function captureCanonicalInvitationDataUrl(
     throw new Error("Window is not available for DOM capture.");
   }
 
-  const cardElement = document.querySelector<HTMLElement>("#official-wedding-invitation-card");
+  // Priority 1: Dedicated Canonical Export element (fixed 672 × 840 desktop spec)
+  // Priority 2: Fallback to visible #official-wedding-invitation-card
+  const canonicalCard = document.querySelector<HTMLElement>("#canonical-export-invitation-card");
+  const cardElement = canonicalCard || document.querySelector<HTMLElement>("#official-wedding-invitation-card");
   if (!cardElement) {
-    throw new Error("Official invitation card element (#official-wedding-invitation-card) not found.");
+    throw new Error("Official invitation card element not found.");
   }
 
   await prepareElementForCapture(cardElement);
   const pixelRatio = options.pixelRatio || options.scale || 2.5;
   const htmlToImage = await getHtmlToImage();
 
-  // On desktop and tablet (window.innerWidth >= 640), the live card is rendered
-  // at the canonical width (~672px × 840px). Capture it directly from the live DOM.
-  if (window.innerWidth >= 640) {
+  // If dedicated canonical card is present or on desktop viewports, capture directly from live DOM
+  if (canonicalCard || window.innerWidth >= 640) {
     return await htmlToImage.toPng(cardElement, {
       pixelRatio,
       backgroundColor: "transparent",
       cacheBust: true,
       skipFonts: false,
+      width: 672,
+      height: 840,
     });
   }
 
-  // On mobile viewports (window.innerWidth < 640), small screens cause narrow-width
-  // word wrapping in headers or ceremony cards. To ensure the exported invitation
-  // decree ALWAYS maintains the majestic, canonical 672 × 840 layout proportions
-  // across every device, we capture it inside a dedicated off-screen 672 × 840 container.
+  // Emergency fallback if dedicated canonical card is missing on mobile
   return await captureInCanonicalIframe(cardElement, pixelRatio);
 }
 
@@ -131,25 +136,32 @@ export async function captureCanonicalInvitationJpegDataUrl(
     throw new Error("Window is not available for DOM capture.");
   }
 
-  const cardElement = document.querySelector<HTMLElement>("#official-wedding-invitation-card");
+  // Priority 1: Dedicated Canonical Export element (fixed 672 × 840 desktop spec)
+  // Priority 2: Fallback to visible #official-wedding-invitation-card
+  const canonicalCard = document.querySelector<HTMLElement>("#canonical-export-invitation-card");
+  const cardElement = canonicalCard || document.querySelector<HTMLElement>("#official-wedding-invitation-card");
   if (!cardElement) {
-    throw new Error("Official invitation card element (#official-wedding-invitation-card) not found.");
+    throw new Error("Official invitation card element not found.");
   }
 
   await prepareElementForCapture(cardElement);
   const pixelRatio = options.pixelRatio || options.scale || 2.5;
   const htmlToImage = await getHtmlToImage();
 
-  if (cardElement.offsetWidth >= 670 && window.innerWidth >= 768) {
+  // If dedicated canonical card is present or on desktop viewports, capture directly from live DOM
+  if (canonicalCard || (cardElement.offsetWidth >= 670 && window.innerWidth >= 768)) {
     return await htmlToImage.toJpeg(cardElement, {
       pixelRatio,
       quality: 0.95,
       backgroundColor: "#FAF6EE",
       cacheBust: true,
       skipFonts: false,
+      width: 672,
+      height: 840,
     });
   }
 
+  // Emergency fallback if dedicated canonical card is missing on mobile
   return await captureInCanonicalIframeJpeg(cardElement, pixelRatio);
 }
 

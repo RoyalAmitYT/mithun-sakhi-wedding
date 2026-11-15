@@ -36,7 +36,8 @@ export function InteractiveTiltCard({
   const isEnabled = !shouldReduceMotion && isFinePointer;
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isEnabled || !ref.current) return;
+    // Strictly ignore touch interactions to preserve native mobile momentum scrolling
+    if (!isEnabled || !ref.current || e.pointerType === "touch") return;
     const rect = ref.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
