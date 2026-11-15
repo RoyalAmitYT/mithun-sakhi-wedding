@@ -793,8 +793,12 @@ function SingleCeremonySection({
       aria-labelledby={`${ceremony.id}-title`}
       style={{
         zIndex,
-        transform: "translate3d(0, 0, 0)",
-        willChange: "transform",
+        ...(isDesktop
+          ? {
+              transform: "translate3d(0, 0, 0)",
+              willChange: "transform",
+            }
+          : {}),
       }}
       className={`
         relative lg:sticky lg:top-0 w-full min-h-0 h-auto lg:min-h-[100svh] lg:h-[100svh] overflow-hidden

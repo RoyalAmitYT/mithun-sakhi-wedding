@@ -169,11 +169,24 @@ export const PetalCanvas: React.FC<PetalCanvasProps> = ({
       };
       document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
 
-      const render = () => {
+      let lastRenderTime = 0;
+      // On mobile/tablet (<1024px), cap particle loop to ~30fps (32ms interval)
+      // to eliminate main thread competition during momentum scroll while maintaining graceful visual drift.
+      // Desktop remains 100% uncapped (60/120fps).
+      const frameInterval = isTouchOrMobile ? 32 : 0;
+
+      const render = (now: number) => {
         if (!isVisible || isDisposed) {
           isRunning = false;
           return;
         }
+
+        animationFrameId = requestAnimationFrame(render);
+
+        if (frameInterval > 0 && now - lastRenderTime < frameInterval) {
+          return;
+        }
+        lastRenderTime = now;
 
         ctx.clearRect(0, 0, width, height);
 
@@ -250,8 +263,6 @@ export const PetalCanvas: React.FC<PetalCanvasProps> = ({
 
           ctx.restore();
         }
-
-        animationFrameId = requestAnimationFrame(render);
       };
 
       animationFrameId = requestAnimationFrame(render);

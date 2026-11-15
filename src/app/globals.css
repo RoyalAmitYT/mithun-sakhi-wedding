@@ -320,7 +320,8 @@ html.lenis, html.lenis body {
    ========================================================================= */
 @media (orientation: portrait) {
   .hero-portrait-variant {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   .hero-landscape-variant {
     display: none !important;

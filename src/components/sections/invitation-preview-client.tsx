@@ -114,7 +114,7 @@ export function InvitationPreviewClient({ settings }: InvitationPreviewClientPro
             delay: 0.14,
             ease: luxuryEase,
           }}
-          className="relative max-w-xl sm:max-w-2xl lg:max-w-[730px] mx-auto group transition-transform duration-500 will-change-transform"
+          className="relative max-w-xl sm:max-w-2xl lg:max-w-[730px] mx-auto group transition-transform duration-500"
         >
           {/* Ambient Soft Under-Glow / Presentation Halo */}
           <AmbientGlow

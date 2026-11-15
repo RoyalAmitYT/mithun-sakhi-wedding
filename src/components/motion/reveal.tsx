@@ -71,7 +71,7 @@ export function Reveal({
 
   const resolvedDuration = duration ?? PRESET_DURATIONS[preset];
   const resolvedEase = PRESET_EASINGS[preset];
-  const resolvedDistance = distance ?? yOffset ?? 20;
+  const resolvedDistance = distance ?? yOffset ?? 16;
   const resolvedThreshold = threshold ?? MOTION_VIEWPORT.standard.amount;
 
   if (shouldReduceMotion) {

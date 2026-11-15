@@ -89,7 +89,7 @@ export function AmbientGlow({
   return (
     <div
       aria-hidden="true"
-      className={`absolute pointer-events-none select-none rounded-full blur-2xl sm:blur-3xl transition-opacity duration-700 will-change-transform ${posClass} ${sizeClass} ${
+      className={`absolute pointer-events-none select-none rounded-full blur-2xl sm:blur-3xl transition-opacity duration-700 ${posClass} ${sizeClass} ${
         pulse ? "motion-safe:animate-[ambientPulseGlow_7s_ease-in-out_infinite]" : ""
       } ${className}`}
       style={{

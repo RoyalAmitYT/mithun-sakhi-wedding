@@ -65,7 +65,20 @@ export function FloatingMusicPlayer() {
         }, 700);
       };
 
-      window.addEventListener("scroll", handleScroll, { passive: true });
+      let isScrollListenerAttached = false;
+      const attachScrollIfNeeded = () => {
+        const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+        if (isDesktop && !isScrollListenerAttached) {
+          window.addEventListener("scroll", handleScroll, { passive: true });
+          isScrollListenerAttached = true;
+        } else if (!isDesktop && isScrollListenerAttached) {
+          window.removeEventListener("scroll", handleScroll);
+          isScrollListenerAttached = false;
+        }
+      };
+
+      attachScrollIfNeeded();
+      window.addEventListener("resize", attachScrollIfNeeded, { passive: true });
 
       const checkModalState = () => {
         if (typeof document !== "undefined") {
@@ -83,7 +96,10 @@ export function FloatingMusicPlayer() {
       }
 
       cleanup = () => {
-        window.removeEventListener("scroll", handleScroll);
+        if (isScrollListenerAttached) {
+          window.removeEventListener("scroll", handleScroll);
+        }
+        window.removeEventListener("resize", attachScrollIfNeeded);
         observer.disconnect();
         if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
       };

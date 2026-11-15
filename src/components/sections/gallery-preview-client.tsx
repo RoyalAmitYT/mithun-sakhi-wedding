@@ -224,6 +224,24 @@ export function GalleryPreviewClient({
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [measuredCardWidth, setMeasuredCardWidth] = useState<number>(0);
+  const [isInView, setIsInView] = useState<boolean>(false);
+
+  // Viewport intersection observer to pause heavy marquee animations when scrolled out of view
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: "250px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // ResizeObserver to dynamically track visible container width across viewports, orientation changes, and resizes
   useEffect(() => {
@@ -425,7 +443,9 @@ export function GalleryPreviewClient({
       {/* ==================================================================== */}
       <div
         ref={containerRef}
-        className="relative w-full overflow-hidden select-none space-y-3.5 sm:space-y-4 md:space-y-5 py-2"
+        className={`relative w-full overflow-hidden select-none space-y-3.5 sm:space-y-4 md:space-y-5 py-2 ${
+          !isInView ? "is-paused" : ""
+        }`}
       >
         {/* ------------------------------------------------------------------ */}
         {/* ROW 1: TOP ROW (Moves Right to Left: animate-marquee-left)        */}

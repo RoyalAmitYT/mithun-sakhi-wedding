@@ -424,10 +424,10 @@ export function OfficialWeddingInvitation({
               style={{ clipPath: "url(#ceremony-crescent-clip)" }}
             >
               <img
-                src="/images/invitationcard-haldi-display.webp"
-                data-export-src="/images/invitationcard-haldi-image.webp"
+                src="/images/invitationcard-haldi-image-optimized.webp"
+                data-export-src="/images/invitationcard-haldi-image-optimized.webp"
                 alt="Haldi Ceremony"
-                className="w-[50%] h-full object-cover object-center"
+                className="w-[50%] h-full object-cover object-[left_15%]"
                 loading={isCanonical ? "eager" : "lazy"}
               />
             </div>
@@ -522,10 +522,10 @@ export function OfficialWeddingInvitation({
               style={{ clipPath: "url(#ceremony-crescent-clip)" }}
             >
               <img
-                src="/images/invitationcard-mehndi-display.webp"
-                data-export-src="/images/invitationcard-mehndi-image.webp"
+                src="/images/invitationcard-mehndi-image-optimized.webp"
+                data-export-src="/images/invitationcard-mehndi-image-optimized.webp"
                 alt="Mehndi Ceremony"
-                className="w-[50%] h-full object-cover object-[25%_center]"
+                className="w-[50%] h-full object-cover object-[left_15%]"
                 loading={isCanonical ? "eager" : "lazy"}
               />
             </div>
@@ -615,10 +615,10 @@ export function OfficialWeddingInvitation({
               style={{ clipPath: "url(#ceremony-crescent-clip)" }}
             >
               <img
-                src="/images/invitationcard-wedding-display.webp"
-                data-export-src="/images/invitationcard-wedding-image.webp"
+                src="/images/invitationcard-wedding-image-optimized.webp"
+                data-export-src="/images/invitationcard-wedding-image-optimized.webp"
                 alt="The Sacred Wedding"
-                className="w-[50%] h-full object-cover object-center"
+                className="w-[50%] h-full object-cover object-[left_15%]"
                 loading={isCanonical ? "eager" : "lazy"}
               />
             </div>
@@ -705,10 +705,10 @@ export function OfficialWeddingInvitation({
               style={{ clipPath: "url(#ceremony-crescent-clip)" }}
             >
               <img
-                src="/images/invitationcard-reception-display.webp"
-                data-export-src="/images/invitationcard-reception-image.webp"
+                src="/images/invitationcard-reception-image-optimized.webp"
+                data-export-src="/images/invitationcard-reception-image-optimized.webp"
                 alt="Reception Ceremony"
-                className="w-[50%] h-full object-cover object-[20%_center]"
+                className="w-[50%] h-full object-cover object-[left_15%]"
                 loading={isCanonical ? "eager" : "lazy"}
               />
             </div>

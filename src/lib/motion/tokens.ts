@@ -68,25 +68,25 @@ export type MotionSpringKey = keyof typeof MOTION_SPRINGS;
 
 // 4. Viewport Intersection Thresholds
 export const MOTION_VIEWPORT = {
-  /** Standard viewport reveal: triggers once when 15% visible */
+  /** Standard viewport reveal: triggers once when 8% visible for fluid, responsive entrance */
   standard: {
     once: true,
-    amount: 0.15,
+    amount: 0.08,
   },
-  /** Conservative reveal: triggers once when 30% visible (for dense cards) */
+  /** Conservative reveal: triggers once when 20% visible */
   conservative: {
     once: true,
-    amount: 0.30,
+    amount: 0.20,
   },
   /** Early reveal: triggers with bottom margin before entering screen */
   early: {
     once: true,
-    margin: "0px 0px -10% 0px",
+    margin: "0px 0px -8% 0px",
   },
   /** Repeatable reveal: re-triggers on scroll in/out */
   repeatable: {
     once: false,
-    amount: 0.15,
+    amount: 0.08,
   },
 } as const;
 

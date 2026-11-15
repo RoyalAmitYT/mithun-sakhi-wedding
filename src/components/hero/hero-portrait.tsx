@@ -33,16 +33,15 @@ export function HeroPortrait() {
 
   const narrative = getHeroLifecycleNarrative(lifecycleState);
 
-  // Parallax and scroll-linked depth transitions
+  // Content opacity fade on scroll
   const { scrollY } = useScroll();
-  const bgParallaxY = useTransform(scrollY, [0, 900], [0, 90]);
   const contentOpacity = useTransform(scrollY, [0, 500, 950], [1, 0.94, 0.45]);
 
   const luxuryEase = MOTION_EASINGS.luxury as [number, number, number, number];
 
   return (
     <div
-      className="relative w-full min-h-[100dvh] pt-8 xs:pt-10 sm:pt-16 md:pt-20 pb-3 xs:pb-4 sm:pb-6 flex flex-col justify-between overflow-hidden bg-[#150409]"
+      className="relative w-full min-h-[100svh] flex-1 pt-8 xs:pt-10 sm:pt-16 md:pt-20 pb-3 xs:pb-4 sm:pb-6 flex flex-col justify-between overflow-hidden bg-[#150409]"
     >
       {/* =========================================================================
           1. FULL-BLEED CINEMATIC BACKGROUND IMAGE & ATMOSPHERIC VIGNETTES
@@ -51,7 +50,7 @@ export function HeroPortrait() {
         {/* Solid canvas base */}
         <div className="absolute inset-0 bg-[#150409] -z-20" />
 
-        {/* Master Background Artwork Layer */}
+        {/* Master Background Artwork Layer with bottom bleed to guarantee zero seam */}
         <motion.div
           suppressHydrationWarning
           initial={
@@ -64,16 +63,7 @@ export function HeroPortrait() {
             duration: shouldReduceMotion ? 0 : 1.2,
             ease: luxuryEase,
           }}
-          style={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  y: bgParallaxY,
-                  transform: "translate3d(0, 0, 0)",
-                  willChange: "transform",
-                }
-          }
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 -bottom-2 w-full h-[calc(100%+8px)]"
         >
           <img
             src="/images/hero/mithun-sakhi-cinematic-hero-bg.webp"

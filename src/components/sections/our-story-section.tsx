@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useSyncExternalStore } from "react";
 import {
   motion,
   useScroll,
@@ -129,6 +129,15 @@ interface MilestoneRowProps {
   shouldReduceMotion: boolean;
 }
 
+const emptySubscribe = () => () => {};
+function useIsDesktop() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => typeof window !== "undefined" && window.innerWidth >= 1024,
+    () => true
+  );
+}
+
 function MilestoneRow({
   item,
   index,
@@ -136,6 +145,7 @@ function MilestoneRow({
   threshold,
   shouldReduceMotion,
 }: MilestoneRowProps) {
+  const isDesktop = useIsDesktop();
   const isEven = index % 2 === 1; // 0, 2, 4 on left; 1, 3, 5 on right
   const luxuryEase = MOTION_EASINGS.luxury as [number, number, number, number];
 
@@ -335,10 +345,10 @@ function MilestoneRow({
       >
         <motion.article
           style={{
-            borderColor: cardBorder,
-            boxShadow: cardShadow,
+            borderColor: isDesktop ? cardBorder : undefined,
+            boxShadow: isDesktop ? cardShadow : undefined,
           }}
-          className={`relative p-3.5 sm:p-4 md:p-4.5 rounded-xl bg-gradient-to-b ${item.bgGradient} border transition-transform duration-300 overflow-hidden group hover:-translate-y-0.5`}
+          className={`relative p-3.5 sm:p-4 md:p-4.5 rounded-xl bg-gradient-to-b ${item.bgGradient} border border-[rgba(184,151,94,0.25)] shadow-[0_4px_16px_rgba(184,151,94,0.04)] transition-transform duration-300 overflow-hidden group hover:-translate-y-0.5`}
         >
           {/* Mobile/Tablet Hardware-Accelerated Glow & Active Border Overlay */}
           <motion.div
@@ -347,7 +357,7 @@ function MilestoneRow({
               boxShadow: `0 14px 36px ${item.activeGlowColor}`,
               borderColor: item.activeBorderColor,
             }}
-            className="md:hidden absolute inset-0 rounded-xl border pointer-events-none z-0 will-change-[opacity]"
+            className="lg:hidden absolute inset-0 rounded-xl border pointer-events-none z-0 will-change-[opacity]"
             aria-hidden="true"
           />
           {/* Architectural Corner Brackets (Matching Venues) */}
@@ -702,65 +712,65 @@ export function OurStorySection() {
                         {/* Small Identity Label */}
                         <div className="inline-flex items-center gap-1.5 mb-1">
                           <span className="text-[7px] text-[#A67C1E] rotate-45 font-bold">◆</span>
-                          <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E]">
+                          <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E6518]">
                             THE GROOM
                           </span>
                           <span className="text-[7px] text-[#A67C1E] rotate-45 font-bold">◆</span>
                         </div>
 
-                        {/* Full Name */}
+                        {/* Full Name — Prominent Luxury Typography (+25% size, refined weight) */}
                         <h3
                           id="groom-card-title-mobile"
-                          className="font-serif text-[1.62rem] xs:text-[1.85rem] text-[#292322] font-normal tracking-tight leading-[1.1] mb-1.5"
+                          className="font-serif text-[2.05rem] xs:text-[2.32rem] text-[#221B1A] font-medium tracking-tight leading-[1.08] mb-1.5"
                         >
                           Mithun Gorain
                         </h3>
 
                         {/* Decorative Diamond Divider */}
                         <div className="flex items-center gap-1.5 mb-2" aria-hidden="true">
-                          <div className="h-[1px] w-7 bg-[#B8975E]/45" />
+                          <div className="h-[1px] w-7 bg-[#B8975E]/55" />
                           <span className="text-[6px] text-[#B8975E] rotate-45">◇</span>
-                          <div className="h-[1px] w-3.5 bg-[#B8975E]/25" />
+                          <div className="h-[1px] w-3.5 bg-[#B8975E]/30" />
                         </div>
 
-                        {/* Location Tag */}
-                        <span className="text-[10.5px] xs:text-[11px] font-serif italic text-[#706663] leading-tight">
+                        {/* Location Tag — Enhanced Contrast & Readability */}
+                        <span className="text-[12px] xs:text-[12.5px] font-serif italic text-[#3E3533] leading-tight font-normal">
                           Chitmu, Purulia
                         </span>
                       </div>
                     </div>
 
-                    {/* Below Horizontal Header: Full-Width Content Hierarchy */}
-                    <div className="mt-3.5 pt-3 border-t border-[#B8975E]/20 space-y-3">
-                      {/* Personal Introduction */}
-                      <p className="font-serif italic text-[12.5px] xs:text-[13px] text-[#5C5351] leading-relaxed">
+                    {/* Below Horizontal Header: Comfortable Breathing Room & Full-Width Content Hierarchy */}
+                    <div className="mt-4 xs:mt-4.5 pt-3.5 xs:pt-4 border-t border-[#B8975E]/25 space-y-3.5">
+                      {/* Personal Introduction — High-Contrast Dark Text & Refined Line Height */}
+                      <p className="font-serif italic text-[13.5px] xs:text-[14px] text-[#332A28] leading-[1.65]">
                         &ldquo;Rooted in family values and cherished traditions, Mithun carries forward the warmth of his family&apos;s heritage as he begins a beautiful new chapter of life.&rdquo;
                       </p>
 
-                      {/* Beloved Parents */}
+                      {/* Beloved Parents — Clear Visual Hierarchy & Crisp Names */}
                       <div className="pt-2.5 border-t border-[#B8975E]/20">
-                        <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E6D38] block mb-1">
+                        <span className="text-[10px] xs:text-[10.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#7A561E] block mb-1.5">
                           BELOVED PARENTS
                         </span>
-                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                        <p className="font-serif text-[16px] xs:text-[17px] font-medium text-[#1E1817] leading-snug">
                           Mr. Kenaram Gorain
                         </p>
-                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                        <p className="font-serif text-[16px] xs:text-[17px] font-medium text-[#1E1817] leading-snug">
                           &amp; Ms. Savita Gorian
                         </p>
                       </div>
 
-                      {/* Family Residence / Location */}
+                      {/* Family Residence / Location — Distinct Bold Street/PIN Info */}
                       <div className="pt-2.5 border-t border-[#B8975E]/20">
                         <div className="flex items-start gap-1.5 text-xs text-[#6B615F]">
-                          <svg className="w-3.5 h-3.5 text-[#A67C1E] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <svg className="w-4 h-4 text-[#8E6518] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                           </svg>
                           <div>
-                            <span className="font-sans font-semibold text-[#292322] block text-[11.5px] xs:text-xs">
+                            <span className="font-sans font-bold text-[#1E1817] block text-[12.5px] xs:text-[13px] leading-snug">
                               Chitmu &bull; Kotshila &bull; Purulia
                             </span>
-                            <span className="text-[10.5px] xs:text-[11px] text-[#8A8280]">
+                            <span className="text-[11px] xs:text-[11.5px] text-[#594F4D] font-medium leading-snug">
                               Family Residence &bull; PIN 723215
                             </span>
                           </div>
@@ -770,8 +780,8 @@ export function OurStorySection() {
                   </div>
 
                   {/* Closing Blessing Message */}
-                  <div className="mt-3.5 pt-2.5 border-t border-[#B8975E]/20 text-center select-none">
-                    <p className="font-serif italic text-[12px] xs:text-[12.5px] text-[#6B615F] leading-relaxed">
+                  <div className="mt-4 pt-3 border-t border-[#B8975E]/20 text-center select-none">
+                    <p className="font-serif italic text-[12.5px] xs:text-[13px] text-[#483E3C] leading-relaxed">
                       &ldquo;With ancestral blessings and the love of our kin, we celebrate this sacred union.&rdquo;
                     </p>
                   </div>
@@ -982,65 +992,65 @@ export function OurStorySection() {
                         {/* Small Identity Label */}
                         <div className="inline-flex items-center gap-1.5 mb-1">
                           <span className="text-[7px] text-[#8E1B29] rotate-45 font-bold">◆</span>
-                          <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29]">
+                          <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-[#801422]">
                             THE BRIDE
                           </span>
                           <span className="text-[7px] text-[#8E1B29] rotate-45 font-bold">◆</span>
                         </div>
 
-                        {/* Full Name */}
+                        {/* Full Name — Prominent Luxury Typography (+25% size, refined weight) */}
                         <h3
                           id="bride-card-title-mobile"
-                          className="font-serif text-[1.62rem] xs:text-[1.85rem] text-[#8E1B29] font-normal tracking-tight leading-[1.1] mb-1.5"
+                          className="font-serif text-[2.05rem] xs:text-[2.32rem] text-[#7A1320] font-medium tracking-tight leading-[1.08] mb-1.5"
                         >
                           Sakhi Gorain
                         </h3>
 
                         {/* Decorative Diamond Divider */}
                         <div className="flex items-center gap-1.5 mb-2" aria-hidden="true">
-                          <div className="h-[1px] w-7 bg-[#8E1B29]/40" />
+                          <div className="h-[1px] w-7 bg-[#8E1B29]/45" />
                           <span className="text-[6px] text-[#8E1B29] rotate-45">◇</span>
-                          <div className="h-[1px] w-3.5 bg-[#8E1B29]/20" />
+                          <div className="h-[1px] w-3.5 bg-[#8E1B29]/25" />
                         </div>
 
-                        {/* Location Tag */}
-                        <span className="text-[10.5px] xs:text-[11px] font-serif italic text-[#7A5B60] leading-tight">
+                        {/* Location Tag — Enhanced Contrast & Readability */}
+                        <span className="text-[12px] xs:text-[12.5px] font-serif italic text-[#541B23] leading-tight font-normal">
                           Ghaghra, Purulia
                         </span>
                       </div>
                     </div>
 
-                    {/* Below Horizontal Header: Full-Width Content Hierarchy */}
-                    <div className="mt-3.5 pt-3 border-t border-[#8E1B29]/20 space-y-3">
-                      {/* Personal Introduction */}
-                      <p className="font-serif italic text-[12.5px] xs:text-[13px] text-[#5C5351] leading-relaxed">
+                    {/* Below Horizontal Header: Comfortable Breathing Room & Full-Width Content Hierarchy */}
+                    <div className="mt-4 xs:mt-4.5 pt-3.5 xs:pt-4 border-t border-[#8E1B29]/25 space-y-3.5">
+                      {/* Personal Introduction — High-Contrast Dark Text & Refined Line Height */}
+                      <p className="font-serif italic text-[13.5px] xs:text-[14px] text-[#332A28] leading-[1.65]">
                         &ldquo;Graceful in spirit and deeply connected to her family and traditions, Sakhi steps into a new journey filled with love, togetherness and beautiful possibilities.&rdquo;
                       </p>
 
-                      {/* Beloved Parents */}
+                      {/* Beloved Parents — Clear Visual Hierarchy & Crisp Names */}
                       <div className="pt-2.5 border-t border-[#8E1B29]/20">
-                        <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29] block mb-1">
+                        <span className="text-[10px] xs:text-[10.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#7A1320] block mb-1.5">
                           BELOVED PARENTS
                         </span>
-                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                        <p className="font-serif text-[16px] xs:text-[17px] font-medium text-[#1E1817] leading-snug">
                           Mr. Upen Gorain
                         </p>
-                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                        <p className="font-serif text-[16px] xs:text-[17px] font-medium text-[#1E1817] leading-snug">
                           &amp; Ms. Kokila Gorain
                         </p>
                       </div>
 
-                      {/* Family Residence / Location */}
+                      {/* Family Residence / Location — Distinct Bold Street/PIN Info */}
                       <div className="pt-2.5 border-t border-[#8E1B29]/20">
                         <div className="flex items-start gap-1.5 text-xs text-[#6B615F]">
-                          <svg className="w-3.5 h-3.5 text-[#8E1B29] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <svg className="w-4 h-4 text-[#7A1320] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                           </svg>
                           <div>
-                            <span className="font-sans font-semibold text-[#292322] block text-[11.5px] xs:text-xs">
+                            <span className="font-sans font-bold text-[#1E1817] block text-[12.5px] xs:text-[13px] leading-snug">
                               Ghaghra &bull; Jaipur &bull; Purulia
                             </span>
-                            <span className="text-[10.5px] xs:text-[11px] text-[#8A8280]">
+                            <span className="text-[11px] xs:text-[11.5px] text-[#594F4D] font-medium leading-snug">
                               Family Residence &bull; PIN 723201
                             </span>
                           </div>
@@ -1050,8 +1060,8 @@ export function OurStorySection() {
                   </div>
 
                   {/* Closing Blessing Message */}
-                  <div className="mt-3.5 pt-2.5 border-t border-[#8E1B29]/20 text-center select-none">
-                    <p className="font-serif italic text-[12px] xs:text-[12.5px] text-[#6B615F] leading-relaxed">
+                  <div className="mt-4 pt-3 border-t border-[#8E1B29]/20 text-center select-none">
+                    <p className="font-serif italic text-[12.5px] xs:text-[13px] text-[#483E3C] leading-relaxed">
                       &ldquo;May every step forward together bring timeless peace, joy, and prosperity.&rdquo;
                     </p>
                   </div>
