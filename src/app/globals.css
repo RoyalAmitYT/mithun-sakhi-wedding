@@ -336,4 +336,13 @@ html.lenis, html.lenis body {
   }
 }
 
+/* =========================================================================
+   LUXURY SKELETON SHIMMER ANIMATION
+   ========================================================================= */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 

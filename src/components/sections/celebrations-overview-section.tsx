@@ -179,16 +179,13 @@ export function CelebrationsOverviewSection() {
                       group relative flex flex-col h-full rounded-2xl overflow-hidden
                       border ${c.borderClass} shadow-[0_12px_36px_rgba(41,35,34,0.06)]
                       hover:shadow-[0_20px_48px_rgba(41,35,34,0.14)] hover:-translate-y-1.5
-                      transition-[box-shadow,border-color,transform] duration-300
+                      transition-all duration-300
                     `}
                   >
                   {/* Subtle Gold Light Sweep on Card Hover */}
                   <GoldLightSweep trigger="hover" intensity="subtle" />
                   {/* Top Image Container with Hanging Date Ribbon Badge & Wave Bottom */}
-                  <div
-                    className="relative w-full h-[215px] sm:h-[225px] overflow-hidden"
-                    style={{ backgroundColor: c.cardBg }}
-                  >
+                  <div className="relative w-full h-[215px] sm:h-[225px] overflow-hidden bg-[#F7F1E6]">
                     {/* Hanging Date Ribbon Badge */}
                     <motion.div
                       initial={shouldReduceMotion ? { y: 0, opacity: 1 } : { y: -14, opacity: 0 }}
@@ -234,9 +231,9 @@ export function CelebrationsOverviewSection() {
                       />
                     </motion.div>
 
-                    {/* Subtle Photographic Depth Vignette - fades out before wave transition to prevent dark seam */}
+                    {/* Subtle Photographic Depth Vignette */}
                     <div
-                      className="absolute inset-x-0 top-0 bottom-6 sm:bottom-8 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10"
+                      className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10"
                       aria-hidden="true"
                     />
 
@@ -244,19 +241,16 @@ export function CelebrationsOverviewSection() {
                     <svg
                       viewBox="0 0 320 28"
                       preserveAspectRatio="none"
-                      className="absolute -bottom-px left-0 right-0 w-full h-[calc(1.75rem+2px)] sm:h-8 z-10 pointer-events-none select-none"
+                      className="absolute bottom-0 left-0 right-0 w-full h-7 sm:h-8 z-10 pointer-events-none select-none"
                       style={{ fill: c.cardBg }}
                       aria-hidden="true"
                     >
-                      <path d="M 0 14 C 60 14, 90 26, 140 26 C 210 26, 250 4, 320 4 L 320 32 L 0 32 Z" />
+                      <path d="M 0 14 C 60 14, 90 26, 140 26 C 210 26, 250 4, 320 4 L 320 28 L 0 28 Z" />
                     </svg>
                   </div>
 
                   {/* Card Content Area with Architectural Ornaments */}
-                  <div
-                    className="relative flex-1 flex flex-col justify-between p-5 pt-3 sm:p-6 sm:pt-4 -mt-px sm:mt-0 overflow-hidden"
-                    style={{ backgroundColor: c.cardBg }}
-                  >
+                  <div className="relative flex-1 flex flex-col justify-between p-5 pt-3 sm:p-6 sm:pt-4 overflow-hidden">
                     {/* Corner Ornaments */}
                     <CornerBracket position="bottom-left" color={c.accentColor} size={14} />
                     <CornerBracket position="bottom-right" color={c.accentColor} size={14} />

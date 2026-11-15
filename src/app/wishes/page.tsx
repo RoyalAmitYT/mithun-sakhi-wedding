@@ -1,6 +1,5 @@
 import React from "react";
 import type { Metadata } from "next";
-import { connection } from "next/server";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database.types";
 import { Navbar } from "@/components/navigation";
@@ -10,7 +9,6 @@ import { PageTransition } from "@/components/motion/page-transition";
 import { WishesView } from "./wishes-view";
 import type { ApprovedWish } from "@/components/sections/wishes-preview-wall";
 
-export const instant = false;
 
 export const metadata: Metadata = {
   title: "Guest Blessings & Wishes",
@@ -24,7 +22,6 @@ export const metadata: Metadata = {
 };
 
 export default async function WishesPage() {
-  await connection();
   let approvedWishes: ApprovedWish[] = [];
 
   try {

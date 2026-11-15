@@ -399,6 +399,7 @@ export function WishesPreviewWall({ initialWishes = [] }: WishesPreviewWallProps
               <MagneticButton className="w-full sm:w-auto">
                 <Link
                   href="/wishes"
+                  prefetch={true}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-7 sm:px-9 py-3.5 rounded-full bg-white/90 hover:bg-[#FFFDF9] border border-[#B8975E]/45 text-[#292322] font-sans font-semibold text-xs sm:text-[13px] tracking-[0.14em] uppercase shadow-md shadow-[#B8975E]/10 hover:shadow-lg hover:border-[#B8975E] hover:brightness-105 transition-all cursor-pointer whitespace-nowrap active:scale-[0.98]"
                 >
                   <span>VIEW ALL BLESSINGS</span>

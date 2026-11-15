@@ -55,7 +55,7 @@ export function AdminHeader({
           </h1>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start sm:self-center">
+        <div className="flex items-center gap-2 self-start sm:self-center flex-wrap">
           {/* Notifications Drawer */}
           <AdminNotificationsDrawer
             notifications={recentNotifications}
@@ -65,7 +65,7 @@ export function AdminHeader({
           <form action={adminSignOutAction}>
             <button
               type="submit"
-              className="px-3.5 py-1.5 rounded-full border border-[#A52232]/30 text-xs font-sans font-medium text-[#A52232] hover:bg-[#A52232]/10 transition-colors cursor-pointer"
+              className="min-h-[44px] px-4 py-2 rounded-full border border-[#A52232]/30 text-xs font-sans font-medium text-[#A52232] hover:bg-[#A52232]/10 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center"
             >
               Sign Out
             </button>
@@ -73,7 +73,7 @@ export function AdminHeader({
 
           <Link
             href="/"
-            className="px-3.5 py-1.5 rounded-full border border-[#B8975E]/30 text-xs font-sans font-medium text-[#8E6D38] hover:bg-[#B8975E]/10 transition-colors"
+            className="min-h-[44px] px-4 py-2 rounded-full border border-[#B8975E]/30 text-xs font-sans font-medium text-[#8E6D38] hover:bg-[#B8975E]/10 active:scale-95 transition-all inline-flex items-center justify-center"
           >
             Public Site &rarr;
           </Link>
@@ -81,12 +81,15 @@ export function AdminHeader({
       </div>
 
       {/* Navigation Pills Bar */}
-      <nav aria-label="Admin Navigation" className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none -mx-2 px-2 sm:mx-0 sm:px-0 sm:flex-wrap">
+      <nav
+        aria-label="Admin Navigation"
+        className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -mx-2 px-2 sm:mx-0 sm:px-0 sm:flex-wrap overscroll-x-contain touch-pan-x"
+      >
         <Link
           href="/admin"
-          className={`whitespace-nowrap px-4 py-2 sm:py-1.5 min-h-[40px] sm:min-h-0 rounded-full text-xs font-sans font-medium transition-all shrink-0 ${
+          className={`whitespace-nowrap px-4 py-2.5 min-h-[44px] rounded-full text-xs font-sans font-medium transition-all shrink-0 inline-flex items-center justify-center active:scale-95 ${
             pathname === "/admin"
-              ? "bg-[#292322] text-white shadow-sm"
+              ? "bg-[#292322] text-white shadow-sm ring-1 ring-[#B8975E]/40"
               : "bg-white text-[#292322]/70 hover:bg-[#F7F1E6] border border-[#B8975E]/30"
           }`}
         >
@@ -96,9 +99,9 @@ export function AdminHeader({
         {hasRsvp && (
           <Link
             href="/admin/rsvps"
-            className={`whitespace-nowrap px-4 py-2 sm:py-1.5 min-h-[40px] sm:min-h-0 rounded-full text-xs font-sans font-medium transition-all shrink-0 ${
+            className={`whitespace-nowrap px-4 py-2.5 min-h-[44px] rounded-full text-xs font-sans font-medium transition-all shrink-0 inline-flex items-center justify-center active:scale-95 ${
               pathname === "/admin/rsvps"
-                ? "bg-[#292322] text-white shadow-sm"
+                ? "bg-[#292322] text-white shadow-sm ring-1 ring-[#B8975E]/40"
                 : "bg-white text-[#292322]/70 hover:bg-[#F7F1E6] border border-[#B8975E]/30"
             }`}
           >
@@ -109,9 +112,9 @@ export function AdminHeader({
         {hasPhotos && (
           <Link
             href="/admin/media"
-            className={`whitespace-nowrap px-4 py-2 sm:py-1.5 min-h-[40px] sm:min-h-0 rounded-full text-xs font-sans font-medium transition-all shrink-0 ${
+            className={`whitespace-nowrap px-4 py-2.5 min-h-[44px] rounded-full text-xs font-sans font-medium transition-all shrink-0 inline-flex items-center justify-center active:scale-95 ${
               pathname === "/admin/media"
-                ? "bg-[#292322] text-white shadow-sm"
+                ? "bg-[#292322] text-white shadow-sm ring-1 ring-[#B8975E]/40"
                 : "bg-white text-[#292322]/70 hover:bg-[#F7F1E6] border border-[#B8975E]/30"
             }`}
           >
@@ -122,9 +125,9 @@ export function AdminHeader({
         {hasWishes && (
           <Link
             href="/admin/wishes"
-            className={`whitespace-nowrap px-4 py-2 sm:py-1.5 min-h-[40px] sm:min-h-0 rounded-full text-xs font-sans font-medium transition-all shrink-0 ${
+            className={`whitespace-nowrap px-4 py-2.5 min-h-[44px] rounded-full text-xs font-sans font-medium transition-all shrink-0 inline-flex items-center justify-center active:scale-95 ${
               pathname === "/admin/wishes"
-                ? "bg-[#292322] text-white shadow-sm"
+                ? "bg-[#292322] text-white shadow-sm ring-1 ring-[#B8975E]/40"
                 : "bg-white text-[#292322]/70 hover:bg-[#F7F1E6] border border-[#B8975E]/30"
             }`}
           >
@@ -135,9 +138,9 @@ export function AdminHeader({
         {hasInvitation && (
           <Link
             href="/admin/invitation"
-            className={`whitespace-nowrap px-4 py-2 sm:py-1.5 min-h-[40px] sm:min-h-0 rounded-full text-xs font-sans font-medium transition-all shrink-0 ${
+            className={`whitespace-nowrap px-4 py-2.5 min-h-[44px] rounded-full text-xs font-sans font-medium transition-all shrink-0 inline-flex items-center justify-center active:scale-95 ${
               pathname === "/admin/invitation"
-                ? "bg-[#292322] text-white shadow-sm"
+                ? "bg-[#292322] text-white shadow-sm ring-1 ring-[#B8975E]/40"
                 : "bg-white text-[#292322]/70 hover:bg-[#F7F1E6] border border-[#B8975E]/30"
             }`}
           >

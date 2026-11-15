@@ -536,6 +536,7 @@ export function GalleryPreviewClient({
               <MagneticButton>
                 <Link
                   href="/gallery"
+                  prefetch={true}
                   className="rounded-full focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B8975E] focus-visible:ring-offset-2 block"
                 >
                   <motion.div

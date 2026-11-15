@@ -11,6 +11,7 @@ import {
   type WeddingLifecycleState,
 } from "@/lib/lifecycle";
 import { useMotionReduced, MOTION_EASINGS } from "@/lib/motion";
+import { useSmoothScroll } from "@/components/motion";
 import { AmbientGlow, GlassReflection } from "@/components/effects";
 import { MagneticButton } from "@/components/interactive";
 
@@ -18,6 +19,7 @@ const emptySubscribe = () => () => {};
 
 export function HeroLandscape() {
   const shouldReduceMotion = useMotionReduced();
+  const { scrollTo } = useSmoothScroll();
   const lifecycleState = useSyncExternalStore<WeddingLifecycleState>(
     emptySubscribe,
     () => getWeddingLifecycleState(),
@@ -471,6 +473,19 @@ export function HeroLandscape() {
               <MagneticButton className="w-full sm:w-auto">
                 <Link
                   href={narrative.primaryCtaHref}
+                  onClick={(e) => {
+                    const href = narrative.primaryCtaHref;
+                    const hashIndex = href.indexOf("#");
+                    if (hashIndex !== -1 && (typeof window !== "undefined" && window.location.pathname === "/")) {
+                      e.preventDefault();
+                      const targetId = href.slice(hashIndex + 1);
+                      const targetEl = document.getElementById(targetId);
+                      if (targetEl) {
+                        scrollTo(targetEl, { offset: -72 });
+                        window.history.pushState(null, "", `#${targetId}`);
+                      }
+                    }
+                  }}
                   className="group w-full sm:w-auto min-w-[190px] xs:min-w-[210px] sm:min-w-[230px] h-11 xs:h-12 sm:h-[50px] px-5 xs:px-6 sm:px-8 rounded-full bg-gradient-to-r from-[#7D1525] via-[#8E1B29] to-[#6A1220] hover:from-[#8E1B29] hover:via-[#9E2030] hover:to-[#7D1525] text-white border border-[#E8929E]/40 shadow-[0_8px_24px_rgba(142,27,41,0.38),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_12px_28px_rgba(142,27,41,0.52),0_0_20px_rgba(232,146,158,0.28)] flex items-center justify-center gap-2 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.964] md:active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer"
                 >
                   <span>{narrative.primaryCtaText.replace(" ↓", "")}</span>
@@ -481,6 +496,19 @@ export function HeroLandscape() {
               <MagneticButton className="w-full sm:w-auto">
                 <Link
                   href={narrative.secondaryCtaHref}
+                  onClick={(e) => {
+                    const href = narrative.secondaryCtaHref;
+                    const hashIndex = href.indexOf("#");
+                    if (hashIndex !== -1 && (typeof window !== "undefined" && window.location.pathname === "/")) {
+                      e.preventDefault();
+                      const targetId = href.slice(hashIndex + 1);
+                      const targetEl = document.getElementById(targetId);
+                      if (targetEl) {
+                        scrollTo(targetEl, { offset: -72 });
+                        window.history.pushState(null, "", `#${targetId}`);
+                      }
+                    }
+                  }}
                   className="group w-full sm:w-auto min-w-[180px] xs:min-w-[200px] sm:min-w-[220px] h-11 xs:h-12 sm:h-[50px] px-5 xs:px-6 sm:px-8 rounded-full bg-gradient-to-r from-[#22070F]/85 via-[#300B16]/90 to-[#22070F]/85 hover:from-[#300B16] hover:via-[#420F1F] hover:to-[#300B16] text-[#FFFDF8] border border-[#D4AF37]/65 hover:border-[#FFE8A3] shadow-[0_8px_24px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.22)] hover:shadow-[0_12px_28px_rgba(212,175,55,0.25),0_0_16px_rgba(255,232,163,0.18)] flex items-center justify-center gap-2.5 text-xs sm:text-[12.5px] font-sans font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.964] md:active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer backdrop-blur-md"
                 >
                   <svg

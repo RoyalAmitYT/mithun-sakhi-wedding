@@ -449,6 +449,7 @@ export function Navbar() {
                   <Link
                     key={link.id}
                     href={link.href}
+                    prefetch={link.href.startsWith("/")}
                     onClick={(e) => handleNavClick(e, itemConfig)}
                     className={`
                       group relative px-1.5 md:px-1.5 lg:px-2 xl:px-2.5 py-1.5 md:py-2 text-[10px] md:text-[10.5px] lg:text-[11px] xl:text-xs font-semibold tracking-[0.05em] lg:tracking-[0.06em] xl:tracking-[0.08em] uppercase rounded-[3px]
@@ -496,7 +497,7 @@ export function Navbar() {
             {/* Desktop Action & Mobile Toggle */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               <div className="hidden sm:block">
-                <Link href={isMemories ? "/gallery" : "/rsvp"}>
+                <Link href={isMemories ? "/gallery" : "/rsvp"} prefetch={true}>
                   <Button
                     variant={isMemories ? "outline-maroon" : "primary"}
                     size="sm"

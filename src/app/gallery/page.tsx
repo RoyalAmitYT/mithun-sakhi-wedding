@@ -2,14 +2,14 @@ import React from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navigation";
 import { EditorialFooter } from "@/components/sections";
-import { Container } from "@/components/ui/container";
-import { createClient } from "@/lib/supabase/server";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/types/database.types";
 import { GalleryView, type PublishedMediaItem } from "./gallery-view";
 import { SectionHeaderFiligree } from "@/components/ui/decorative-surfaces";
+import { Container } from "@/components/ui/container";
 import { AnimatedDivider } from "@/components/motion/animated-divider";
 import { PageTransition } from "@/components/motion/page-transition";
 
-export const instant = false;
 
 export const metadata: Metadata = {
   title: "Wedding Memories Gallery",
@@ -23,11 +23,23 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
-  const supabase = await createClient();
+  let publishedMedia: PublishedMediaItem[] = [];
 
-  // Hydrate only approved & published media items from the database
-  const { data: rawMedia } = await supabase.rpc("get_published_media");
-  const publishedMedia = (rawMedia as unknown as PublishedMediaItem[]) || [];
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey =
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && supabaseKey) {
+      const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseKey);
+      const { data: rawMedia } = await supabase.rpc("get_published_media");
+      publishedMedia = (rawMedia as unknown as PublishedMediaItem[]) || [];
+    }
+  } catch (err) {
+    console.error("Failed to hydrate published media for gallery page:", err);
+    publishedMedia = [];
+  }
 
   return (
     <>

@@ -16,6 +16,7 @@ import {
   type WeddingLifecycleState,
 } from "@/lib/lifecycle";
 import { useMotionReduced, MOTION_EASINGS } from "@/lib/motion";
+import { useSmoothScroll } from "@/components/motion";
 import { AmbientGlow, GlassReflection } from "@/components/effects";
 import { MagneticButton } from "@/components/interactive";
 
@@ -23,6 +24,7 @@ const emptySubscribe = () => () => {};
 
 export function HeroPortrait() {
   const shouldReduceMotion = useMotionReduced();
+  const { scrollTo } = useSmoothScroll();
   const lifecycleState = useSyncExternalStore<WeddingLifecycleState>(
     emptySubscribe,
     () => getWeddingLifecycleState(),
@@ -40,7 +42,7 @@ export function HeroPortrait() {
 
   return (
     <div
-      className="relative w-full min-h-[100dvh] pt-10 xs:pt-14 sm:pt-20 md:pt-24 pb-20 xs:pb-24 sm:pb-32 flex flex-col justify-between overflow-hidden bg-[#150409]"
+      className="relative w-full min-h-[100dvh] pt-8 xs:pt-10 sm:pt-16 md:pt-20 pb-3 xs:pb-4 sm:pb-6 flex flex-col justify-between overflow-hidden bg-[#150409]"
     >
       {/* =========================================================================
           1. FULL-BLEED CINEMATIC BACKGROUND IMAGE & ATMOSPHERIC VIGNETTES
@@ -209,10 +211,10 @@ export function HeroPortrait() {
 
           <h1
             id="hero-title-portrait"
-            className="font-serif text-[clamp(2.55rem,9.2vw,3.75rem)] sm:text-[clamp(3.7rem,7.5vw,4.8rem)] font-normal tracking-tight text-[#FFFDF8] leading-[1.06] drop-shadow-[0_4px_20px_rgba(0,0,0,0.92)] select-none px-2 py-0.5 whitespace-nowrap"
+            className="font-serif text-[clamp(2.6rem,11.5vw,3.65rem)] sm:text-[clamp(3.7rem,7.5vw,4.8rem)] font-normal tracking-tight text-[#FFFDF8] leading-[1.06] drop-shadow-[0_4px_20px_rgba(0,0,0,0.92)] select-none px-2 py-0.5 whitespace-nowrap"
             style={{
               textShadow:
-                "0 2px 10px rgba(0, 0, 0, 0.95), 0 0 24px rgba(229, 193, 88, 0.42), 0 0 48px rgba(212, 175, 55, 0.22)",
+                "0 2px 10px rgba(0, 0, 0, 0.95), 0 0 18px rgba(229, 193, 88, 0.52), 0 0 36px rgba(212, 175, 55, 0.32), 0 0 54px rgba(184, 151, 94, 0.18)",
             }}
           >
             {narrative.isMemories ? (
@@ -229,7 +231,7 @@ export function HeroPortrait() {
                   className="font-light italic text-[#E5C158] text-[0.88em] inline-block mx-1 xs:mx-1.5"
                   style={{
                     textShadow:
-                      "0 2px 8px rgba(0, 0, 0, 0.9), 0 0 26px rgba(229, 193, 88, 0.75), 0 0 50px rgba(212, 175, 55, 0.35)",
+                      "0 2px 8px rgba(0, 0, 0, 0.95), 0 0 22px rgba(229, 193, 88, 0.85), 0 0 44px rgba(212, 175, 55, 0.45)",
                   }}
                 >
                   &amp;
@@ -254,11 +256,13 @@ export function HeroPortrait() {
             delay: 0.22,
             ease: luxuryEase,
           }}
-          className="font-serif italic text-[0.84rem] xs:text-[0.92rem] sm:text-[1.05rem] text-[#FFFDF8] mt-1 xs:mt-1.5 sm:mt-2 max-w-[340px] xs:max-w-[400px] sm:max-w-xl leading-[1.45] xs:leading-[1.5] drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] tracking-wide"
+          className="font-serif italic text-[clamp(0.88rem,2.8vw,1.1rem)] text-[#FFFDF8] mt-1.5 xs:mt-2 sm:mt-2.5 max-w-[320px] xs:max-w-[390px] sm:max-w-xl leading-[1.55] xs:leading-[1.6] tracking-[0.015em] [text-wrap:balance]"
+          style={{
+            textShadow:
+              "0 1px 3px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.92), 0 4px 18px rgba(12, 2, 5, 0.85)",
+          }}
         >
-          &ldquo;With our families&apos; blessings, two hearts begin a timeless
-          <br className="inline" />
-          journey &mdash; united by sacred Vedic vows and a love to cherish forever.&rdquo;
+          &ldquo;With our families&apos; blessings, two hearts begin a timeless journey &mdash; united by sacred Vedic vows and a love to cherish forever.&rdquo;
         </motion.p>
 
         {/* -------------------------------------------------------------
@@ -455,6 +459,19 @@ export function HeroPortrait() {
           <MagneticButton className="w-full">
             <Link
               href={narrative.primaryCtaHref}
+              onClick={(e) => {
+                const href = narrative.primaryCtaHref;
+                const hashIndex = href.indexOf("#");
+                if (hashIndex !== -1 && (typeof window !== "undefined" && window.location.pathname === "/")) {
+                  e.preventDefault();
+                  const targetId = href.slice(hashIndex + 1);
+                  const targetEl = document.getElementById(targetId);
+                  if (targetEl) {
+                    scrollTo(targetEl, { offset: -72 });
+                    window.history.pushState(null, "", `#${targetId}`);
+                  }
+                }
+              }}
               className="group w-full h-11 xs:h-12 px-6 rounded-full bg-gradient-to-r from-[#7D1525] via-[#8E1B29] to-[#6A1220] hover:from-[#8E1B29] hover:via-[#9E2030] hover:to-[#7D1525] text-white border border-[#FFE8A3]/60 shadow-[0_6px_20px_rgba(142,27,41,0.38),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_10px_26px_rgba(142,27,41,0.52),0_0_18px_rgba(255,232,163,0.28)] flex items-center justify-center gap-2 text-[11px] xs:text-xs font-sans font-bold uppercase tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer whitespace-nowrap"
             >
               <span>{narrative.primaryCtaText.replace(" ↓", "")}</span>
@@ -471,6 +488,19 @@ export function HeroPortrait() {
           <MagneticButton className="w-full">
             <Link
               href={narrative.secondaryCtaHref}
+              onClick={(e) => {
+                const href = narrative.secondaryCtaHref;
+                const hashIndex = href.indexOf("#");
+                if (hashIndex !== -1 && (typeof window !== "undefined" && window.location.pathname === "/")) {
+                  e.preventDefault();
+                  const targetId = href.slice(hashIndex + 1);
+                  const targetEl = document.getElementById(targetId);
+                  if (targetEl) {
+                    scrollTo(targetEl, { offset: -72 });
+                    window.history.pushState(null, "", `#${targetId}`);
+                  }
+                }
+              }}
               className="group w-full h-11 xs:h-12 px-6 rounded-full bg-gradient-to-r from-[#22070F]/85 via-[#300B16]/90 to-[#22070F]/85 hover:from-[#300B16] hover:via-[#420F1F] hover:to-[#300B16] text-[#FFFDF8] border border-[#D4AF37]/65 hover:border-[#FFE8A3] shadow-[0_6px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18)] hover:shadow-[0_10px_26px_rgba(212,175,55,0.25),0_0_16px_rgba(255,232,163,0.18)] flex items-center justify-center gap-2 text-[11px] xs:text-xs font-sans font-bold uppercase tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#150409] cursor-pointer backdrop-blur-md whitespace-nowrap"
             >
               <svg

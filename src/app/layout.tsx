@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
 import dynamic from "next/dynamic";
 import { Cormorant_Garamond, Manrope, Great_Vibes, Cinzel } from "next/font/google";
@@ -6,6 +7,7 @@ import { MotionProvider, SmoothScrollProvider } from "@/components/motion";
 import { AudioProvider } from "@/components/audio";
 import { PetalCanvas } from "@/components/effects";
 import { ToastProvider } from "@/components/ui/toast";
+import { RouteProgressBar } from "@/components/navigation";
 import "./globals.css";
 
 const FloatingMusicPlayer = dynamic(
@@ -105,6 +107,9 @@ export default function RootLayout({
           <SmoothScrollProvider>
             <AudioProvider>
               <ToastProvider>
+                <Suspense fallback={null}>
+                  <RouteProgressBar />
+                </Suspense>
                 {children}
                 <FloatingMusicPlayer />
                 <PetalCanvas />

@@ -42,7 +42,7 @@ interface UnifiedAdminDashboardProps {
 }
 
 const NAV_PILL =
-  "text-xs font-sans font-semibold text-[#8E6D38] hover:text-[#B8975E] inline-flex items-center gap-1 pt-2 border-t border-[#B8975E]/15";
+  "min-h-[44px] text-xs font-sans font-semibold text-[#8E6D38] hover:text-[#B8975E] inline-flex items-center gap-1.5 pt-2 border-t border-[#B8975E]/15";
 
 function KpiCard({
   label,
@@ -181,7 +181,7 @@ export function UnifiedAdminDashboard({
             </div>
             <Link
               href="/admin/rsvps"
-              className="text-xs font-sans font-semibold text-[#8E6D38] hover:underline"
+              className="min-h-[44px] px-3 py-1.5 rounded-full border border-[#B8975E]/30 text-xs font-sans font-semibold text-[#8E6D38] hover:bg-[#F7F1E6] inline-flex items-center justify-center transition-colors"
             >
               Full Roster &rarr;
             </Link>

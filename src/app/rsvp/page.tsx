@@ -6,8 +6,6 @@ import { PageTransition } from "@/components/motion";
 import { PublicRsvpForm } from "@/components/rsvp/public-rsvp-form";
 import { SectionHeaderFiligree } from "@/components/ui/decorative-surfaces";
 
-export const instant = false;
-
 export const metadata: Metadata = {
   title: "Confirm Your Presence (RSVP)",
   description:

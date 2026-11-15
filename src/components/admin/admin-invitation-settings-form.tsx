@@ -3,6 +3,7 @@
 import React, { useState, useTransition } from "react";
 import Link from "next/link";
 import { updateInvitationSettingsAction } from "@/actions/invitation";
+import { useToast } from "@/components/ui/toast";
 
 export interface AdminInvitationSettings {
   id?: string;
@@ -19,6 +20,7 @@ interface AdminInvitationSettingsFormProps {
 }
 
 export function AdminInvitationSettingsForm({ initialSettings }: AdminInvitationSettingsFormProps) {
+  const { toast } = useToast();
   const [headline, setHeadline] = useState(
     initialSettings.headline_text || "WITH THE DIVINE BLESSINGS OF OUR FAMILIES"
   );
@@ -56,9 +58,13 @@ export function AdminInvitationSettingsForm({ initialSettings }: AdminInvitation
     startTransition(async () => {
       const res = await updateInvitationSettingsAction(formData);
       if (res.success) {
-        setStatusMessage({ type: "success", text: "Invitation Studio configuration saved successfully." });
+        const msg = "Invitation Studio configuration saved successfully.";
+        setStatusMessage({ type: "success", text: msg });
+        toast.success("Studio Saved", msg);
       } else {
-        setStatusMessage({ type: "error", text: res.error || "Failed to save configuration." });
+        const err = res.error || "Failed to save configuration.";
+        setStatusMessage({ type: "error", text: err });
+        toast.error("Save Failed", err);
       }
     });
   };
@@ -220,9 +226,16 @@ export function AdminInvitationSettingsForm({ initialSettings }: AdminInvitation
         <button
           type="submit"
           disabled={isPending}
-          className="px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-[#292322] hover:bg-[#A52232] disabled:opacity-50 transition-colors shadow-sm active:scale-[0.98] cursor-pointer"
+          className="w-full sm:w-auto min-h-[48px] px-7 py-3 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-[#292322] hover:bg-[#A52232] disabled:opacity-50 transition-colors shadow-sm active:scale-[0.98] inline-flex items-center justify-center gap-2 cursor-pointer"
         >
-          {isPending ? "Saving Changes..." : "Save Configuration"}
+          {isPending ? (
+            <>
+              <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Saving Changes...</span>
+            </>
+          ) : (
+            <span>Save Configuration</span>
+          )}
         </button>
       </div>
     </form>

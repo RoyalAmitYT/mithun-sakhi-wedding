@@ -111,7 +111,7 @@ export default function HomePage({
 
         {/* Cinematic Scroll-Reveal Container: Incoming Opaque Champagne-White Content Layer */}
         <div
-          className="relative z-10 bg-[#FFFCF6] shadow-[0_-24px_48px_rgba(0,0,0,0.35)] lg:[will-change:transform] lg:[transform:translate3d(0,0,0)]"
+          className="relative z-10 bg-[#FFFCF6] lg:shadow-[0_-24px_48px_rgba(0,0,0,0.35)] lg:[will-change:transform] lg:[transform:translate3d(0,0,0)]"
         >
           {/* Section B: Our Story & Journey (Mithun & Sakhi, Parents, Milestones) */}
           <OurStorySection />

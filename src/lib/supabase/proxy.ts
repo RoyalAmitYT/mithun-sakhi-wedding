@@ -4,7 +4,7 @@ import type { Database } from "@/types/database.types";
 
 /**
  * Refreshes Supabase authentication sessions and propagates refreshed cookies
- * through the Next.js 16 Proxy layer.
+ * through the Next.js 16 Proxy layer with high-performance routing fast-paths.
  */
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -12,6 +12,48 @@ export async function updateSession(request: NextRequest) {
       headers: request.headers,
     },
   });
+
+  const pathname = request.nextUrl.pathname;
+
+  // Dedicated admin login page is public, but all other /admin/* paths require authentication
+  const isAdminLogin = pathname === "/admin/login";
+  const isProtectedAdminPath = pathname.startsWith("/admin") && !isAdminLogin;
+  const isProtectedAccountPath = pathname.startsWith("/account");
+  const isAuthPage =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/forgot-password";
+
+  // Check if any Supabase session cookies exist in this request
+  const allCookies = request.cookies.getAll();
+  const hasAuthCookie = allCookies.some(
+    (c) => c.name.startsWith("sb-") || c.name.includes("auth-token")
+  );
+
+  // Fast path 1: Public routes without session cookies (Home, Gallery, Wishes, RSVP, RSC prefetch)
+  // Skip remote Supabase auth network round-trip entirely, eliminating 300ms–1500ms latency on every click!
+  if (!isProtectedAdminPath && !isProtectedAccountPath && !isAuthPage && !hasAuthCookie) {
+    return response;
+  }
+
+  // Fast path 2: Unauthenticated visitors hitting protected routes redirect immediately without network delay
+  if (!hasAuthCookie && isProtectedAdminPath) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/admin/login";
+    url.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(url);
+  }
+
+  if (!hasAuthCookie && isProtectedAccountPath) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(url);
+  }
+
+  if (!hasAuthCookie && isAuthPage) {
+    return response;
+  }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey =
@@ -41,21 +83,10 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  // Calling getUser refreshes the session token if expired
+  // Calling getUser refreshes the session token if expired (only when session cookies exist)
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const pathname = request.nextUrl.pathname;
-
-  // Dedicated admin login page is public, but all other /admin/* paths require authentication
-  const isAdminLogin = pathname === "/admin/login";
-  const isProtectedAdminPath = pathname.startsWith("/admin") && !isAdminLogin;
-  const isProtectedAccountPath = pathname.startsWith("/account");
-  const isAuthPage =
-    pathname === "/login" ||
-    pathname === "/register" ||
-    pathname === "/forgot-password";
 
   // 1. Unauthenticated visitors accessing protected admin routes redirect directly to /admin/login
   if (!user && isProtectedAdminPath) {

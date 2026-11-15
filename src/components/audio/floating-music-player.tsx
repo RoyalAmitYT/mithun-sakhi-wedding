@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { useAudio } from "./audio-provider";
 import { MagneticButton } from "@/components/interactive";
 
@@ -117,8 +118,11 @@ export function FloatingMusicPlayer() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isExpanded]);
 
-  // Suppress completely when full-screen drawers or modal dialogs are open
-  if (isModalOpen) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname ? pathname.startsWith("/admin") : false;
+
+  // Suppress completely when full-screen drawers or modal dialogs are open, or on admin routes
+  if (isModalOpen || isAdminRoute) {
     return null;
   }
 

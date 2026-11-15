@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useToast } from "@/components/ui/toast";
 
 export interface AdminPublicRsvpItem {
   id: string;
@@ -62,8 +63,10 @@ function AttendancePip({
 }
 
 export function AdminRsvpDashboard({ publicRsvps }: AdminRsvpDashboardProps) {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [ceremonyFilter, setCeremonyFilter] = useState("all");
+  const [isExporting, setIsExporting] = useState(false);
 
   // Filter RSVPs
   const filteredRsvps = publicRsvps.filter((rsvp) => {
@@ -94,42 +97,50 @@ export function AdminRsvpDashboard({ publicRsvps }: AdminRsvpDashboardProps) {
 
   // CSV Export
   const handleExportCsv = () => {
-    const headers = [
-      "Guest Name",
-      "Mobile Number",
-      "Address",
-      "Relationship",
-      "Number of Guests",
-      "Haldi (19 Nov)",
-      "Mehndi (20 Nov)",
-      "The Sacred Wedding (21 Nov)",
-      "Reception (22 Nov)",
-      "Submission Date",
-    ];
+    setIsExporting(true);
+    try {
+      const headers = [
+        "Guest Name",
+        "Mobile Number",
+        "Address",
+        "Relationship",
+        "Number of Guests",
+        "Haldi (19 Nov)",
+        "Mehndi (20 Nov)",
+        "The Sacred Wedding (21 Nov)",
+        "Reception (22 Nov)",
+        "Submission Date",
+      ];
 
-    const rows = filteredRsvps.map((r) => [
-      `"${(r.guest_name || "").replace(/"/g, '""')}"`,
-      `"${(r.mobile_number || "—").replace(/"/g, '""')}"`,
-      `"${(r.address || "—").replace(/"/g, '""')}"`,
-      `"${(r.relationship || "—").replace(/"/g, '""')}"`,
-      r.guest_count,
-      r.attending_haldi ? "Yes" : "No",
-      r.attending_mehndi ? "Yes" : "No",
-      r.attending_wedding ? "Yes" : "No",
-      r.attending_reception ? "Yes" : "No",
-      `"${new Date(r.created_at).toLocaleString("en-IN")}"`,
-    ]);
+      const rows = filteredRsvps.map((r) => [
+        `"${(r.guest_name || "").replace(/"/g, '""')}"`,
+        `"${(r.mobile_number || "—").replace(/"/g, '""')}"`,
+        `"${(r.address || "—").replace(/"/g, '""')}"`,
+        `"${(r.relationship || "—").replace(/"/g, '""')}"`,
+        r.guest_count,
+        r.attending_haldi ? "Yes" : "No",
+        r.attending_mehndi ? "Yes" : "No",
+        r.attending_wedding ? "Yes" : "No",
+        r.attending_reception ? "Yes" : "No",
+        `"${new Date(r.created_at).toLocaleString("en-IN")}"`,
+      ]);
 
-    const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `mithun-sakhi-rsvps-${new Date().toISOString().slice(0, 10)}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+      const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `mithun-sakhi-rsvps-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("RSVP Export Ready", `Exported ${filteredRsvps.length} guest records to CSV.`);
+    } catch {
+      toast.error("Export Failed", "Could not export RSVP records. Please try again.");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -174,7 +185,7 @@ export function AdminRsvpDashboard({ publicRsvps }: AdminRsvpDashboardProps) {
       </div>
 
       {/* Search + Filter + Export Bar */}
-      <div className="bg-white/80 border border-[#B8975E]/30 rounded-2xl p-5 backdrop-blur-md">
+      <div className="bg-white/80 border border-[#B8975E]/30 rounded-2xl p-4 sm:p-5 backdrop-blur-md">
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between mb-5">
           <div>
             <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.25em] text-[#B8975E] block mb-0.5">
@@ -188,10 +199,24 @@ export function AdminRsvpDashboard({ publicRsvps }: AdminRsvpDashboardProps) {
           <button
             type="button"
             onClick={handleExportCsv}
-            disabled={filteredRsvps.length === 0}
-            className="shrink-0 px-4 py-2 rounded-full border border-[#B8975E]/40 text-xs font-sans font-semibold text-[#8E6D38] hover:bg-[#F7F1E6] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            disabled={filteredRsvps.length === 0 || isExporting}
+            className="w-full sm:w-auto shrink-0 min-h-[44px] px-5 py-2.5 rounded-full border border-[#B8975E]/40 text-xs font-sans font-semibold text-[#8E6D38] hover:bg-[#F7F1E6] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
           >
-            Export CSV ({filteredRsvps.length})
+            {isExporting ? (
+              <>
+                <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                <span>Exporting CSV...</span>
+              </>
+            ) : (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                <span>Export CSV ({filteredRsvps.length})</span>
+              </>
+            )}
           </button>
         </div>
 
@@ -202,13 +227,13 @@ export function AdminRsvpDashboard({ publicRsvps }: AdminRsvpDashboardProps) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name, mobile, address, or relationship…"
-            className="flex-1 px-4 py-2 rounded-xl border border-[#B8975E]/30 text-sm font-sans text-[#292322] placeholder:text-[#292322]/40 bg-white focus:outline-none focus:ring-2 focus:ring-[#B8975E]/30"
+            className="flex-1 min-h-[44px] px-4 py-2.5 rounded-xl border border-[#B8975E]/30 text-xs sm:text-sm font-sans text-[#292322] placeholder:text-[#292322]/40 bg-white focus:outline-none focus:ring-2 focus:ring-[#B8975E]/30"
           />
 
           <select
             value={ceremonyFilter}
             onChange={(e) => setCeremonyFilter(e.target.value)}
-            className="px-4 py-2 rounded-xl border border-[#B8975E]/30 text-sm font-sans text-[#292322] bg-white focus:outline-none focus:ring-2 focus:ring-[#B8975E]/30"
+            className="min-h-[44px] px-4 py-2.5 rounded-xl border border-[#B8975E]/30 text-xs sm:text-sm font-sans text-[#292322] bg-white focus:outline-none focus:ring-2 focus:ring-[#B8975E]/30 cursor-pointer"
           >
             {CEREMONY_FILTERS.map((f) => (
               <option key={f.value} value={f.value}>
@@ -218,7 +243,7 @@ export function AdminRsvpDashboard({ publicRsvps }: AdminRsvpDashboardProps) {
           </select>
         </div>
 
-        {/* RSVP Table */}
+        {/* Empty States */}
         {publicRsvps.length === 0 ? (
           <div className="text-center py-16 space-y-3">
             <div className="w-14 h-14 rounded-full bg-[#B8975E]/10 mx-auto flex items-center justify-center">
@@ -238,96 +263,198 @@ export function AdminRsvpDashboard({ publicRsvps }: AdminRsvpDashboardProps) {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto -mx-1">
-            <table className="w-full text-left text-sm font-sans min-w-[640px]">
-              <thead>
-                <tr className="border-b border-[#B8975E]/20 text-[10px] uppercase tracking-wider text-[#292322]/50">
-                  <th className="pb-3 pr-4 font-semibold">Guest</th>
-                  <th className="pb-3 pr-4 font-semibold">Contact & Location</th>
-                  <th className="pb-3 pr-4 font-semibold text-center">Guests</th>
-                  <th className="pb-3 pr-4 font-semibold">Ceremonies</th>
-                  <th className="pb-3 font-semibold">Submitted</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#B8975E]/10">
-                {filteredRsvps.map((rsvp) => (
-                  <tr
-                    key={rsvp.id}
-                    className="hover:bg-[#FFFCF6] transition-colors"
-                  >
-                    <td className="py-3 pr-4">
-                      <div className="font-medium text-[#292322]">
+          <>
+            {/* Mobile Cards View (<768px) */}
+            <div className="block md:hidden space-y-3">
+              {filteredRsvps.map((rsvp) => (
+                <div
+                  key={rsvp.id}
+                  className="p-4 rounded-xl border border-[#B8975E]/20 bg-white shadow-2xs space-y-3"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="font-serif text-base font-medium text-[#292322] truncate">
                         {rsvp.guest_name}
                       </div>
                       {rsvp.relationship && (
-                        <div className="text-[11px] text-[#292322]/50 mt-0.5">
+                        <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-sans font-medium bg-[#B8975E]/10 text-[#8E6D38] border border-[#B8975E]/20 mt-1">
                           {rsvp.relationship}
-                        </div>
+                        </span>
                       )}
-                    </td>
+                    </div>
+                    <div className="shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#B8975E]/10 border border-[#B8975E]/20">
+                      <span className="text-[10px] uppercase font-sans font-semibold text-[#8E6D38]">Guests:</span>
+                      <span className="font-serif font-bold text-sm text-[#A52232]">{rsvp.guest_count}</span>
+                    </div>
+                  </div>
 
-                    <td className="py-3 pr-4">
+                  {/* Contact & Location Details */}
+                  {(rsvp.mobile_number || rsvp.address) && (
+                    <div className="pt-2 border-t border-[#B8975E]/10 space-y-1.5 text-xs font-sans">
                       {rsvp.mobile_number && (
-                        <div className="text-[#292322]/80">{rsvp.mobile_number}</div>
+                        <a
+                          href={`tel:${rsvp.mobile_number}`}
+                          className="min-h-[44px] flex items-center gap-2 text-[#8E6D38] hover:text-[#B8975E] font-medium"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          <span>{rsvp.mobile_number} (Tap to call)</span>
+                        </a>
                       )}
                       {rsvp.address && (
-                        <div className="text-[11px] text-[#292322]/50 mt-0.5 max-w-[160px] leading-snug">
-                          {rsvp.address}
+                        <div className="text-[#292322]/70 leading-relaxed flex items-start gap-1.5 pt-0.5">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="shrink-0 mt-0.5 text-[#B8975E]">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                          </svg>
+                          <span>{rsvp.address}</span>
                         </div>
                       )}
-                      {!rsvp.mobile_number && !rsvp.address && (
-                        <span className="text-[#292322]/30">—</span>
-                      )}
-                    </td>
+                    </div>
+                  )}
 
-                    <td className="py-3 pr-4 text-center">
-                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#B8975E]/10 font-serif text-sm font-semibold text-[#8E6D38]">
-                        {rsvp.guest_count}
-                      </span>
-                    </td>
+                  {/* Ceremony Attendance */}
+                  <div className="pt-2 border-t border-[#B8975E]/10">
+                    <span className="text-[10px] font-sans font-semibold uppercase tracking-wider text-[#292322]/50 block mb-1.5">
+                      Ceremonies
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      <AttendancePip
+                        attending={rsvp.attending_haldi}
+                        label="Haldi"
+                        color={ATTENDANCE_DOT.haldi}
+                      />
+                      <AttendancePip
+                        attending={rsvp.attending_mehndi}
+                        label="Mehndi"
+                        color={ATTENDANCE_DOT.mehndi}
+                      />
+                      <AttendancePip
+                        attending={rsvp.attending_wedding}
+                        label="Wedding"
+                        color={ATTENDANCE_DOT.wedding}
+                      />
+                      <AttendancePip
+                        attending={rsvp.attending_reception}
+                        label="Reception"
+                        color={ATTENDANCE_DOT.reception}
+                      />
+                    </div>
+                  </div>
 
-                    <td className="py-3 pr-4">
-                      <div className="flex flex-wrap gap-2">
-                        <AttendancePip
-                          attending={rsvp.attending_haldi}
-                          label="Haldi"
-                          color={ATTENDANCE_DOT.haldi}
-                        />
-                        <AttendancePip
-                          attending={rsvp.attending_mehndi}
-                          label="Mehndi"
-                          color={ATTENDANCE_DOT.mehndi}
-                        />
-                        <AttendancePip
-                          attending={rsvp.attending_wedding}
-                          label="Wedding"
-                          color={ATTENDANCE_DOT.wedding}
-                        />
-                        <AttendancePip
-                          attending={rsvp.attending_reception}
-                          label="Reception"
-                          color={ATTENDANCE_DOT.reception}
-                        />
-                      </div>
-                    </td>
-
-                    <td className="py-3 text-[11px] text-[#292322]/50 whitespace-nowrap">
+                  {/* Timestamp */}
+                  <div className="pt-2 border-t border-[#B8975E]/10 flex items-center justify-between text-[11px] font-sans text-[#292322]/50">
+                    <span>Submitted</span>
+                    <span>
                       {new Date(rsvp.created_at).toLocaleDateString("en-IN", {
                         day: "numeric",
                         month: "short",
                         year: "numeric",
-                      })}
-                      <br />
+                      })}{" "}
+                      ·{" "}
                       {new Date(rsvp.created_at).toLocaleTimeString("en-IN", {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
-                    </td>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop & Tablet Table View (>=768px) */}
+            <div className="hidden md:block overflow-x-auto -mx-1">
+              <table className="w-full text-left text-sm font-sans min-w-[640px]">
+                <thead>
+                  <tr className="border-b border-[#B8975E]/20 text-[10px] uppercase tracking-wider text-[#292322]/50">
+                    <th className="pb-3 pr-4 font-semibold">Guest</th>
+                    <th className="pb-3 pr-4 font-semibold">Contact & Location</th>
+                    <th className="pb-3 pr-4 font-semibold text-center">Guests</th>
+                    <th className="pb-3 pr-4 font-semibold">Ceremonies</th>
+                    <th className="pb-3 font-semibold">Submitted</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-[#B8975E]/10">
+                  {filteredRsvps.map((rsvp) => (
+                    <tr
+                      key={rsvp.id}
+                      className="hover:bg-[#FFFCF6] transition-colors"
+                    >
+                      <td className="py-3 pr-4">
+                        <div className="font-medium text-[#292322]">
+                          {rsvp.guest_name}
+                        </div>
+                        {rsvp.relationship && (
+                          <div className="text-[11px] text-[#292322]/50 mt-0.5">
+                            {rsvp.relationship}
+                          </div>
+                        )}
+                      </td>
+
+                      <td className="py-3 pr-4">
+                        {rsvp.mobile_number && (
+                          <div className="text-[#292322]/80">{rsvp.mobile_number}</div>
+                        )}
+                        {rsvp.address && (
+                          <div className="text-[11px] text-[#292322]/50 mt-0.5 max-w-[160px] leading-snug">
+                            {rsvp.address}
+                          </div>
+                        )}
+                        {!rsvp.mobile_number && !rsvp.address && (
+                          <span className="text-[#292322]/30">—</span>
+                        )}
+                      </td>
+
+                      <td className="py-3 pr-4 text-center">
+                        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#B8975E]/10 font-serif text-sm font-semibold text-[#8E6D38]">
+                          {rsvp.guest_count}
+                        </span>
+                      </td>
+
+                      <td className="py-3 pr-4">
+                        <div className="flex flex-wrap gap-2">
+                          <AttendancePip
+                            attending={rsvp.attending_haldi}
+                            label="Haldi"
+                            color={ATTENDANCE_DOT.haldi}
+                          />
+                          <AttendancePip
+                            attending={rsvp.attending_mehndi}
+                            label="Mehndi"
+                            color={ATTENDANCE_DOT.mehndi}
+                          />
+                          <AttendancePip
+                            attending={rsvp.attending_wedding}
+                            label="Wedding"
+                            color={ATTENDANCE_DOT.wedding}
+                          />
+                          <AttendancePip
+                            attending={rsvp.attending_reception}
+                            label="Reception"
+                            color={ATTENDANCE_DOT.reception}
+                          />
+                        </div>
+                      </td>
+
+                      <td className="py-3 text-[11px] text-[#292322]/50 whitespace-nowrap">
+                        {new Date(rsvp.created_at).toLocaleDateString("en-IN", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                        <br />
+                        {new Date(rsvp.created_at).toLocaleTimeString("en-IN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

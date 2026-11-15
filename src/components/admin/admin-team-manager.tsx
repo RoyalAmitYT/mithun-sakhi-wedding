@@ -2,6 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 import { manageAdminUserAction } from "@/actions/admin-management";
+import { useToast } from "@/components/ui/toast";
 
 export type AdminTeamMember = {
   id: string;
@@ -28,6 +29,7 @@ const ALL_PERMISSION_GROUPS = [
 ];
 
 export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
+  const { toast } = useToast();
   const [team, setTeam] = useState<AdminTeamMember[]>(initialTeam);
   const [editingAdminId, setEditingAdminId] = useState<string | null>(null);
   const [editIsActive, setEditIsActive] = useState<boolean>(true);
@@ -60,10 +62,12 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
     startTransition(async () => {
       const res = await manageAdminUserAction(memberId, editIsActive, editPermissions);
       if (res.success) {
+        const msg = "Administrator configuration successfully updated.";
         setStatusMessage({
           type: "success",
-          text: "Administrator configuration successfully updated.",
+          text: msg,
         });
+        toast.success("Staff Updated", msg);
         setTeam((prev) =>
           prev.map((m) =>
             m.id === memberId
@@ -73,10 +77,12 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
         );
         setEditingAdminId(null);
       } else {
+        const err = res.error || "Failed to update administrator.";
         setStatusMessage({
           type: "error",
-          text: res.error || "Failed to update administrator.",
+          text: err,
         });
+        toast.error("Update Failed", err);
       }
     });
   };
@@ -158,7 +164,7 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
                     type="button"
                     onClick={() => handleStartEdit(member)}
                     disabled={isPending}
-                    className="self-start sm:self-center px-3.5 py-1.5 rounded-full border border-[#B8975E]/40 text-xs font-sans text-[#8E6D38] hover:bg-[#B8975E]/10 transition-colors cursor-pointer"
+                    className="self-start sm:self-center min-h-[44px] px-4 py-2 rounded-full border border-[#B8975E]/40 text-xs font-sans text-[#8E6D38] hover:bg-[#B8975E]/10 active:scale-95 transition-all inline-flex items-center justify-center cursor-pointer"
                   >
                     Edit Permissions
                   </button>
@@ -169,12 +175,12 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
               {isEditing ? (
                 <div className="mt-4 pt-4 border-t border-[#B8975E]/15 space-y-4">
                   <div className="flex items-center gap-3">
-                    <label className="text-xs font-sans font-medium text-[#292322] flex items-center gap-2 cursor-pointer">
+                    <label className="min-h-[44px] text-xs font-sans font-medium text-[#292322] flex items-center gap-2.5 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={editIsActive}
                         onChange={(e) => setEditIsActive(e.target.checked)}
-                        className="rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#A52232]"
+                        className="w-4 h-4 rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#A52232]"
                       />
                       <span>Active Administrator Account</span>
                     </label>
@@ -190,7 +196,7 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
                         return (
                           <label
                             key={grp.id}
-                            className={`p-2.5 rounded-xl border text-xs font-sans flex items-center gap-2 cursor-pointer transition-colors ${
+                            className={`min-h-[44px] p-3 rounded-xl border text-xs font-sans flex items-center gap-2.5 cursor-pointer transition-colors ${
                               checked
                                 ? "bg-[#B8975E]/10 border-[#B8975E] text-[#292322]"
                                 : "bg-white border-[#B8975E]/20 text-[#292322]/70 hover:bg-[#F7F1E6]/50"
@@ -200,7 +206,7 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
                               type="checkbox"
                               checked={checked}
                               onChange={() => togglePermission(grp.id)}
-                              className="rounded border-[#B8975E]/40 text-[#B8975E] focus:ring-[#B8975E]"
+                              className="w-4 h-4 rounded border-[#B8975E]/40 text-[#B8975E] focus:ring-[#B8975E]"
                             />
                             <span>{grp.label}</span>
                           </label>
@@ -209,12 +215,12 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-end gap-2 pt-2">
+                  <div className="flex flex-wrap items-center justify-end gap-2.5 pt-2">
                     <button
                       type="button"
                       onClick={handleCancelEdit}
                       disabled={isPending}
-                      className="px-4 py-1.5 rounded-full border border-gray-300 text-xs font-sans text-gray-600 hover:bg-gray-50 cursor-pointer"
+                      className="min-h-[44px] px-5 py-2 rounded-full border border-gray-300 text-xs font-sans text-gray-600 hover:bg-gray-50 cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -222,9 +228,16 @@ export function AdminTeamManager({ initialTeam }: AdminTeamManagerProps) {
                       type="button"
                       onClick={() => handleSave(member.id)}
                       disabled={isPending}
-                      className="px-5 py-1.5 rounded-full bg-[#A52232] text-xs font-sans font-semibold text-white uppercase tracking-wider hover:bg-[#8D1B29] transition-colors cursor-pointer shadow-sm"
+                      className="min-h-[44px] px-6 py-2 rounded-full bg-[#A52232] text-xs font-sans font-semibold text-white uppercase tracking-wider hover:bg-[#8D1B29] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                     >
-                      {isPending ? "Saving..." : "Save Configuration"}
+                      {isPending ? (
+                        <>
+                          <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Saving...</span>
+                        </>
+                      ) : (
+                        <span>Save Configuration</span>
+                      )}
                     </button>
                   </div>
                 </div>

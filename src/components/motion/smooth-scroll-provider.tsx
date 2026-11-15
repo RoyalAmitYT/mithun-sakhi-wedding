@@ -177,6 +177,9 @@ export function SmoothScrollProvider({
             const top = el.getBoundingClientRect().top + window.scrollY + (options?.offset || 0);
             window.scrollTo({ top, behavior: options?.immediate ? "auto" : "smooth" });
           }
+        } else if (typeof HTMLElement !== "undefined" && target instanceof HTMLElement) {
+          const top = target.getBoundingClientRect().top + window.scrollY + (options?.offset || 0);
+          window.scrollTo({ top, behavior: options?.immediate ? "auto" : "smooth" });
         }
       }
     },

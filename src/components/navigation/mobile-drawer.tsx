@@ -221,6 +221,7 @@ export function MobileDrawer({
                   >
                     <Link
                       href={link.href}
+                      prefetch={link.href.startsWith("/")}
                       onClick={(e) => handleMobileNavClick(e, link)}
                       className={`
                         flex items-center justify-between px-4 py-3 rounded-lg min-h-[48px]
@@ -258,7 +259,7 @@ export function MobileDrawer({
 
             {/* Bottom Action Area */}
             <div className="pt-3.5 mt-3 border-t border-[rgba(184,151,94,0.25)] space-y-2.5">
-              <Link href="/rsvp" onClick={onClose} className="block w-full">
+              <Link href="/rsvp" prefetch={true} onClick={onClose} className="block w-full">
                 <Button
                   variant="primary"
                   size="md"

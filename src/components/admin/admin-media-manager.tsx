@@ -2,6 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 import Image from "next/image";
+import { useToast } from "@/components/ui/toast";
 import {
   uploadMediaAction,
   createVideoMediaAction,
@@ -118,10 +119,13 @@ async function compressImageClient(
 }
 
 export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
+  const { toast } = useToast();
   const [items, setItems] = useState<AdminMediaItem[]>(initialItems);
   const [activeTab, setActiveTab] = useState<"all" | "photo" | "video">("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isPending, startTransition] = useTransition();
+  const [activeActionId, setActiveActionId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   // Upload Form State
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -235,77 +239,100 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
 
   // Handle Publication Toggle
   const handleTogglePublished = (id: string) => {
+    setActiveActionId(`publish-${id}`);
     startTransition(async () => {
-      const result = await toggleMediaPublishedAction(id);
-      if (result.success) {
-        setItems((prev) =>
-          prev.map((it) => (it.id === id ? { ...it, is_published: Boolean(result.is_published) } : it))
-        );
-        setStatusMessage({
-          type: "success",
-          text: `Item is now ${result.is_published ? "Published to Public Gallery" : "Moved to Private Draft"}.`,
-        });
-      } else {
-        setStatusMessage({ type: "error", text: result.error || "Failed to toggle publication." });
+      try {
+        const result = await toggleMediaPublishedAction(id);
+        if (result.success) {
+          setItems((prev) =>
+            prev.map((it) => (it.id === id ? { ...it, is_published: Boolean(result.is_published) } : it))
+          );
+          const msg = `Item is now ${result.is_published ? "Published to Public Gallery" : "Moved to Private Draft"}.`;
+          setStatusMessage({ type: "success", text: msg });
+          toast.success("Publication Updated", msg);
+        } else {
+          const err = result.error || "Failed to toggle publication.";
+          setStatusMessage({ type: "error", text: err });
+          toast.error("Update Failed", err);
+        }
+      } finally {
+        setActiveActionId(null);
       }
     });
   };
 
   // Handle Download Permission Toggle
   const handleToggleDownload = (id: string) => {
+    setActiveActionId(`download-${id}`);
     startTransition(async () => {
-      const result = await toggleMediaDownloadAction(id);
-      if (result.success) {
-        setItems((prev) =>
-          prev.map((it) =>
-            it.id === id ? { ...it, download_enabled: Boolean(result.download_enabled) } : it
-          )
-        );
-        setStatusMessage({
-          type: "success",
-          text: `Public download is now ${result.download_enabled ? "Enabled" : "Disabled"}.`,
-        });
-      } else {
-        setStatusMessage({ type: "error", text: result.error || "Failed to toggle download permission." });
+      try {
+        const result = await toggleMediaDownloadAction(id);
+        if (result.success) {
+          setItems((prev) =>
+            prev.map((it) =>
+              it.id === id ? { ...it, download_enabled: Boolean(result.download_enabled) } : it
+            )
+          );
+          const msg = `Public download is now ${result.download_enabled ? "Enabled" : "Disabled"}.`;
+          setStatusMessage({ type: "success", text: msg });
+          toast.info("Download Preference", msg);
+        } else {
+          const err = result.error || "Failed to toggle download permission.";
+          setStatusMessage({ type: "error", text: err });
+          toast.error("Update Failed", err);
+        }
+      } finally {
+        setActiveActionId(null);
       }
     });
   };
 
   // Handle Homepage Featured Toggle (Max 12 items)
   const handleToggleFeatured = (id: string) => {
+    setActiveActionId(`feature-${id}`);
     startTransition(async () => {
-      const result = await toggleMediaFeaturedAction(id);
-      if (result.success) {
-        setItems((prev) =>
-          prev.map((it) =>
-            it.id === id ? { ...it, is_featured: Boolean(result.is_featured) } : it
-          )
-        );
-        setStatusMessage({
-          type: "success",
-          text: result.is_featured
+      try {
+        const result = await toggleMediaFeaturedAction(id);
+        if (result.success) {
+          setItems((prev) =>
+            prev.map((it) =>
+              it.id === id ? { ...it, is_featured: Boolean(result.is_featured) } : it
+            )
+          );
+          const msg = result.is_featured
             ? "Photograph featured on homepage Wedding Memories (up to 12 curated)."
-            : "Photograph removed from homepage featured collection.",
-        });
-      } else {
-        setStatusMessage({ type: "error", text: result.error || "Failed to toggle homepage featured status." });
+            : "Photograph removed from homepage featured collection.";
+          setStatusMessage({ type: "success", text: msg });
+          toast.success("Featured Status", msg);
+        } else {
+          const err = result.error || "Failed to toggle homepage featured status.";
+          setStatusMessage({ type: "error", text: err });
+          toast.error("Update Failed", err);
+        }
+      } finally {
+        setActiveActionId(null);
       }
     });
   };
 
   // Handle Deletion
-  const handleDeleteItem = (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to permanently delete "${name}"? This action cannot be undone.`)) {
-      return;
-    }
-
+  const handleDeleteItem = (id: string) => {
+    setActiveActionId(`delete-${id}`);
     startTransition(async () => {
-      const result = await deleteMediaAction(id);
-      if (result.success) {
-        setItems((prev) => prev.filter((it) => it.id !== id));
-        setStatusMessage({ type: "success", text: "Media item deleted successfully." });
-      } else {
-        setStatusMessage({ type: "error", text: result.error || "Failed to delete item." });
+      try {
+        const result = await deleteMediaAction(id);
+        if (result.success) {
+          setItems((prev) => prev.filter((it) => it.id !== id));
+          setStatusMessage({ type: "success", text: "Media item deleted successfully." });
+          toast.success("Media Deleted", "The item was permanently removed.");
+          setConfirmDeleteId(null);
+        } else {
+          const err = result.error || "Failed to delete item.";
+          setStatusMessage({ type: "error", text: err });
+          toast.error("Deletion Failed", err);
+        }
+      } finally {
+        setActiveActionId(null);
       }
     });
   };
@@ -333,15 +360,15 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
       )}
 
       {/* Control Bar: Primary Actions & Search / Filter */}
-      <div className="bg-white/80 border border-[#B8975E]/30 rounded-2xl p-5 backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
+      <div className="bg-white/80 border border-[#B8975E]/30 rounded-2xl p-4 sm:p-5 backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
         {/* Left: View Tabs */}
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => setActiveTab("all")}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-colors ${
+            className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-sans font-medium transition-colors flex items-center justify-center ${
               activeTab === "all"
-                ? "bg-[#292322] text-white"
+                ? "bg-[#292322] text-white shadow-xs"
                 : "bg-[#FFFCF6] text-[#292322]/70 hover:bg-white border border-[#B8975E]/30"
             }`}
           >
@@ -350,9 +377,9 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
           <button
             type="button"
             onClick={() => setActiveTab("photo")}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-colors ${
+            className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-sans font-medium transition-colors flex items-center justify-center ${
               activeTab === "photo"
-                ? "bg-[#292322] text-white"
+                ? "bg-[#292322] text-white shadow-xs"
                 : "bg-[#FFFCF6] text-[#292322]/70 hover:bg-white border border-[#B8975E]/30"
             }`}
           >
@@ -361,9 +388,9 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
           <button
             type="button"
             onClick={() => setActiveTab("video")}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-colors ${
+            className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-sans font-medium transition-colors flex items-center justify-center ${
               activeTab === "video"
-                ? "bg-[#292322] text-white"
+                ? "bg-[#292322] text-white shadow-xs"
                 : "bg-[#FFFCF6] text-[#292322]/70 hover:bg-white border border-[#B8975E]/30"
             }`}
           >
@@ -374,7 +401,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-3 py-1.5 rounded-full text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:outline-hidden focus:ring-1 focus:ring-[#B8975E]"
+            className="min-h-[44px] px-3.5 py-2 rounded-full text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:outline-hidden focus:ring-1 focus:ring-[#B8975E]"
           >
             <option value="all">All Ceremonies</option>
             {CATEGORIES.map((c) => (
@@ -386,11 +413,11 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
         </div>
 
         {/* Right: Upload & Register CTAs */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           <button
             type="button"
             onClick={() => setShowUploadModal(true)}
-            className="px-4 py-2 rounded-full text-xs font-sans font-semibold bg-[#A52232] text-white hover:bg-[#8B1C2A] transition-colors shadow-xs inline-flex items-center gap-1.5"
+            className="min-h-[44px] px-4 sm:px-5 py-2.5 rounded-full text-xs font-sans font-semibold bg-[#A52232] text-white hover:bg-[#8B1C2A] active:scale-[0.98] transition-all shadow-xs inline-flex items-center gap-2"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -403,7 +430,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
           <button
             type="button"
             onClick={() => setShowVideoModal(true)}
-            className="px-4 py-2 rounded-full text-xs font-sans font-semibold border border-[#B8975E]/40 text-[#8E6D38] hover:bg-[#B8975E]/10 transition-colors inline-flex items-center gap-1.5"
+            className="min-h-[44px] px-4 sm:px-5 py-2.5 rounded-full text-xs font-sans font-semibold border border-[#B8975E]/40 text-[#8E6D38] hover:bg-[#B8975E]/10 active:scale-[0.98] transition-all inline-flex items-center gap-2"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polygon points="23 7 16 12 23 17 23 7" />
@@ -503,20 +530,23 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                   </div>
 
                   {/* Operational Toggles */}
-                  <div className="pt-3 border-t border-[#B8975E]/15 flex items-center justify-between gap-2">
+                  <div className="pt-3 border-t border-[#B8975E]/15 flex flex-wrap items-center justify-between gap-2">
                     {/* Publication Toggle */}
                     <button
                       type="button"
                       disabled={isPending}
                       onClick={() => handleTogglePublished(item.id)}
-                      className={`text-xs font-sans font-semibold px-2.5 py-1 rounded-full transition-colors ${
+                      className={`min-h-[40px] px-3 py-1.5 rounded-xl text-xs font-sans font-semibold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                         item.is_published
                           ? "bg-[#69765D]/15 text-[#525D48] hover:bg-[#69765D]/25"
                           : "bg-[#B8975E]/15 text-[#8E6D38] hover:bg-[#B8975E]/25"
                       }`}
                       title={item.is_published ? "Click to move to Draft" : "Click to Publish to public gallery"}
                     >
-                      {item.is_published ? "Unpublish" : "Publish"}
+                      {activeActionId === `publish-${item.id}` ? (
+                        <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      ) : null}
+                      <span>{item.is_published ? "Unpublish" : "Publish"}</span>
                     </button>
 
                     {/* Homepage Featured Toggle */}
@@ -524,7 +554,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                       type="button"
                       disabled={isPending || !item.is_published}
                       onClick={() => handleToggleFeatured(item.id)}
-                      className={`text-xs font-sans font-semibold px-2.5 py-1 rounded-full transition-colors ${
+                      className={`min-h-[40px] px-3 py-1.5 rounded-xl text-xs font-sans font-semibold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                         item.is_featured
                           ? "bg-[#A67C1E]/20 text-[#8E6D38] border border-[#B8975E]/50 hover:bg-[#A67C1E]/30"
                           : item.is_published
@@ -539,7 +569,10 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                           : "Click to feature on homepage (max 12 curated)."
                       }
                     >
-                      {item.is_featured ? "★ Featured" : "☆ Feature"}
+                      {activeActionId === `feature-${item.id}` ? (
+                        <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      ) : null}
+                      <span>{item.is_featured ? "★ Featured" : "☆ Feature"}</span>
                     </button>
 
                     {/* Download Toggle (Photos only) */}
@@ -548,7 +581,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                         type="button"
                         disabled={isPending}
                         onClick={() => handleToggleDownload(item.id)}
-                        className={`text-xs font-sans font-medium px-2 py-1 rounded-full transition-colors ${
+                        className={`min-h-[40px] px-2.5 py-1.5 rounded-xl text-xs font-sans font-medium inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                           item.download_enabled
                             ? "text-[#69765D] hover:bg-[#69765D]/10"
                             : "text-[#A52232] hover:bg-[#A52232]/10"
@@ -559,28 +592,51 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                             : "Downloads disabled. Click to enable download button."
                         }
                       >
-                        {item.download_enabled ? "Downloads: On" : "Downloads: Off"}
+                        {activeActionId === `download-${item.id}` ? (
+                          <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        ) : null}
+                        <span>{item.download_enabled ? "Downloads: On" : "Downloads: Off"}</span>
                       </button>
                     )}
 
-                    {/* Delete Action */}
-                    <button
-                      type="button"
-                      disabled={isPending}
-                      onClick={() =>
-                        handleDeleteItem(
-                          item.id,
-                          item.caption || item.file_name || (isVideo ? "Wedding Film" : "Photograph")
-                        )
-                      }
-                      className="text-xs font-sans text-red-600 hover:text-red-800 p-1"
-                      title="Permanently Delete Media Item"
-                    >
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                      </svg>
-                    </button>
+                    {/* Delete Action with Inline Confirmation */}
+                    {confirmDeleteId === item.id ? (
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          disabled={activeActionId === `delete-${item.id}`}
+                          onClick={() => handleDeleteItem(item.id)}
+                          className="min-h-[40px] px-3 py-1.5 rounded-xl bg-red-600 text-white text-xs font-sans font-semibold hover:bg-red-700 active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+                        >
+                          {activeActionId === `delete-${item.id}` ? (
+                            <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            "Confirm"
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDeleteId(null)}
+                          className="min-h-[40px] px-2.5 py-1.5 rounded-xl border border-gray-300 text-xs font-sans text-gray-600 hover:bg-gray-100 cursor-pointer"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        disabled={isPending}
+                        onClick={() => setConfirmDeleteId(item.id)}
+                        className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-xl text-red-600 hover:bg-red-50 hover:text-red-800 transition-colors cursor-pointer"
+                        title="Permanently Delete Media Item"
+                        aria-label="Delete media item"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <polyline points="3 6 5 6 21 6" />
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -591,8 +647,13 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
 
       {/* Upload Photos Modal */}
       {showUploadModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="bg-[#FFFCF6] border border-[#B8975E]/40 rounded-2xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowUploadModal(false);
+          }}
+        >
+          <div className="relative bg-[#FFFCF6] border border-[#B8975E]/40 rounded-2xl p-5 sm:p-7 max-w-lg w-full max-h-[min(90dvh,calc(100vh-2rem))] overflow-y-auto overscroll-contain space-y-5 sm:space-y-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between border-b border-[#B8975E]/20 pb-3">
               <div>
                 <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-[#B8975E] block">
@@ -603,7 +664,8 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
               <button
                 type="button"
                 onClick={() => setShowUploadModal(false)}
-                className="text-[#292322]/60 hover:text-[#292322] p-1 text-lg font-serif"
+                className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-[#292322]/60 hover:text-[#292322] hover:bg-black/5 transition-colors text-2xl font-serif cursor-pointer"
+                aria-label="Close dialog"
               >
                 &times;
               </button>
@@ -617,7 +679,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                 <select
                   value={uploadCategory}
                   onChange={(e) => setUploadCategory(e.target.value as MediaCategory)}
-                  className="w-full px-3 py-2 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c.value} value={c.value}>
@@ -637,7 +699,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                   placeholder="e.g. Sacred Vedic Saat Phere vows at the Mandap"
                   value={uploadCaption}
                   onChange={(e) => setUploadCaption(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
                 />
               </div>
 
@@ -653,7 +715,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                     const files = Array.from(e.target.files || []);
                     setSelectedFiles(files);
                   }}
-                  className="w-full text-xs font-sans file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#B8975E]/15 file:text-[#8E6D38] hover:file:bg-[#B8975E]/25"
+                  className="w-full text-xs font-sans file:mr-3 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#B8975E]/15 file:text-[#8E6D38] hover:file:bg-[#B8975E]/25 file:cursor-pointer"
                 />
                 <p className="text-[11px] font-sans text-[#292322]/50 mt-1">
                   {selectedFiles.length > 0
@@ -662,46 +724,54 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                 </p>
               </div>
 
-              <div className="flex items-center gap-6 pt-2">
-                <label className="flex items-center gap-2 cursor-pointer">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
+                <label className="min-h-[44px] flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={uploadIsPublished}
                     onChange={(e) => setUploadIsPublished(e.target.checked)}
-                    className="rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#B8975E]"
+                    className="w-4 h-4 rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#B8975E]"
                   />
                   <span className="text-xs font-sans text-[#292322]">Publish immediately</span>
                 </label>
 
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="min-h-[44px] flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={uploadDownloadEnabled}
                     onChange={(e) => setUploadDownloadEnabled(e.target.checked)}
-                    className="rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#B8975E]"
+                    className="w-4 h-4 rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#B8975E]"
                   />
                   <span className="text-xs font-sans text-[#292322]">Allow guest downloads</span>
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#B8975E]/20">
+              <div className="flex flex-wrap items-center justify-end gap-3 pt-4 border-t border-[#B8975E]/20">
                 <button
                   type="button"
                   onClick={() => setShowUploadModal(false)}
-                  className="px-4 py-2 rounded-full text-xs font-sans text-[#292322]/70 hover:bg-gray-100"
+                  className="min-h-[44px] px-5 py-2.5 rounded-full text-xs font-sans text-[#292322]/70 hover:bg-gray-100 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isPending || isCompressing || selectedFiles.length === 0}
-                  className="px-5 py-2 rounded-full text-xs font-sans font-semibold bg-[#A52232] text-white hover:bg-[#8B1C2A] disabled:opacity-50 transition-colors shadow-xs"
+                  className="min-h-[44px] px-6 py-2.5 rounded-full text-xs font-sans font-semibold bg-[#A52232] text-white hover:bg-[#8B1C2A] disabled:opacity-50 active:scale-[0.98] transition-all shadow-xs flex items-center gap-2 cursor-pointer"
                 >
-                  {isCompressing
-                    ? "Compressing Images..."
-                    : isPending
-                    ? "Uploading..."
-                    : `Upload ${selectedFiles.length} Photograph(s)`}
+                  {isCompressing ? (
+                    <>
+                      <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Compressing Images...</span>
+                    </>
+                  ) : isPending ? (
+                    <>
+                      <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Uploading...</span>
+                    </>
+                  ) : (
+                    <span>Upload {selectedFiles.length} Photograph(s)</span>
+                  )}
                 </button>
               </div>
             </form>
@@ -711,8 +781,13 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
 
       {/* Add YouTube Video Modal */}
       {showVideoModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="bg-[#FFFCF6] border border-[#B8975E]/40 rounded-2xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowVideoModal(false);
+          }}
+        >
+          <div className="relative bg-[#FFFCF6] border border-[#B8975E]/40 rounded-2xl p-5 sm:p-7 max-w-lg w-full max-h-[min(90dvh,calc(100vh-2rem))] overflow-y-auto overscroll-contain space-y-5 sm:space-y-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between border-b border-[#B8975E]/20 pb-3">
               <div>
                 <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-[#B8975E] block">
@@ -723,7 +798,8 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
               <button
                 type="button"
                 onClick={() => setShowVideoModal(false)}
-                className="text-[#292322]/60 hover:text-[#292322] p-1 text-lg font-serif"
+                className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-[#292322]/60 hover:text-[#292322] hover:bg-black/5 transition-colors text-2xl font-serif cursor-pointer"
+                aria-label="Close dialog"
               >
                 &times;
               </button>
@@ -740,7 +816,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                   placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
                   value={videoUrl}
                   onChange={(e) => setVideoUrl(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
                 />
                 <p className="text-[11px] font-sans text-[#292322]/50 mt-1">
                   Supports standard YouTube links, unlisted ceremonial videos, and Shorts.
@@ -754,7 +830,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                 <select
                   value={videoCategory}
                   onChange={(e) => setVideoCategory(e.target.value as MediaCategory)}
-                  className="w-full px-3 py-2 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c.value} value={c.value}>
@@ -774,36 +850,43 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
                   placeholder="e.g. Official Cinematic Teaser — The Sacred Union"
                   value={videoCaption}
                   onChange={(e) => setVideoCaption(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-sans border border-[#B8975E]/30 bg-white text-[#292322] focus:ring-1 focus:ring-[#B8975E]"
                 />
               </div>
 
               <div className="pt-2">
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="min-h-[44px] flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={videoIsPublished}
                     onChange={(e) => setVideoIsPublished(e.target.checked)}
-                    className="rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#B8975E]"
+                    className="w-4 h-4 rounded border-[#B8975E]/40 text-[#A52232] focus:ring-[#B8975E]"
                   />
                   <span className="text-xs font-sans text-[#292322]">Publish to gallery immediately</span>
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#B8975E]/20">
+              <div className="flex flex-wrap items-center justify-end gap-3 pt-4 border-t border-[#B8975E]/20">
                 <button
                   type="button"
                   onClick={() => setShowVideoModal(false)}
-                  className="px-4 py-2 rounded-full text-xs font-sans text-[#292322]/70 hover:bg-gray-100"
+                  className="min-h-[44px] px-5 py-2.5 rounded-full text-xs font-sans text-[#292322]/70 hover:bg-gray-100 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isPending || !videoUrl}
-                  className="px-5 py-2 rounded-full text-xs font-sans font-semibold bg-[#A52232] text-white hover:bg-[#8B1C2A] disabled:opacity-50 transition-colors shadow-xs"
+                  className="min-h-[44px] px-6 py-2.5 rounded-full text-xs font-sans font-semibold bg-[#A52232] text-white hover:bg-[#8B1C2A] disabled:opacity-50 active:scale-[0.98] transition-all shadow-xs flex items-center gap-2 cursor-pointer"
                 >
-                  {isPending ? "Registering..." : "Add Video Film"}
+                  {isPending ? (
+                    <>
+                      <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Registering...</span>
+                    </>
+                  ) : (
+                    <span>Add Video Film</span>
+                  )}
                 </button>
               </div>
             </form>

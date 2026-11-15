@@ -197,7 +197,7 @@ export function AdminLoginForm({
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#8A8280] hover:text-[#292322] transition-colors cursor-pointer"
+                className="absolute inset-y-0 right-0 w-12 flex items-center justify-center text-[#8A8280] hover:text-[#292322] transition-colors cursor-pointer"
               >
                 {showPassword ? (
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -261,7 +261,7 @@ export function AdminLoginForm({
         <div className="mt-7 pt-4 border-t border-[#B8975E]/20 text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-[#5C5452] hover:text-[#A52232] transition-colors"
+            className="min-h-[44px] inline-flex items-center justify-center px-4 py-2 gap-1.5 text-xs text-[#5C5452] hover:text-[#A52232] transition-colors"
           >
             <span>&larr;</span>
             <span>Return to Wedding Celebration</span>

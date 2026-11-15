@@ -9,7 +9,11 @@ import {
 } from "motion/react";
 import { Container } from "@/components/ui/container";
 import { Reveal, AnimatedDivider, useMotionReduced, MOTION_EASINGS } from "@/components/motion";
-import { AmbientGlow } from "@/components/effects";
+import {
+  AmbientGlow,
+  GoldLightSweep,
+  PhotoAmbientHalo,
+} from "@/components/effects";
 import { InteractiveTiltCard } from "@/components/interactive";
 import {
   CornerBracket,
@@ -17,7 +21,6 @@ import {
   SectionHeaderFiligree,
   SectionSideMandala,
 } from "@/components/ui/decorative-surfaces";
-import { ProfileCard, GROOM_PROFILE_DATA, BRIDE_PROFILE_DATA } from "@/components/story";
 
 interface Milestone {
   number: string;
@@ -478,7 +481,7 @@ export function OurStorySection() {
         {/* ================================================================ */}
         {/* PROFILE CARDS WITH VENUE PATTERNS & RESTORED ARCH FRAME          */}
         {/* ================================================================ */}
-        <div className="relative max-w-5xl lg:max-w-6xl xl:max-w-[1260px] 2xl:max-w-[1320px] mx-auto mb-12 sm:mb-16 md:mb-18 lg:mb-22">
+        <div className="relative max-w-5xl lg:max-w-6xl xl:max-w-[1180px] mx-auto mb-12 sm:mb-16 md:mb-18 lg:mb-22">
           {/* Vertical Center Diamond Flourish between cards on Desktop */}
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0.7 }}
@@ -495,10 +498,10 @@ export function OurStorySection() {
             <span className="text-[7px] text-[#B8975E]/80 rotate-45 font-bold">◇</span>
           </motion.div>
 
-          {/* Desktop Separation */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-8 xl:gap-10 items-stretch">
+          {/* Desktop Separation (gap-14 xl:gap-16) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-14 xl:gap-16 items-stretch">
             {/* ------------------------------------------------------------ */}
-            {/* CARD 01: THE GROOM — ROYAL IVORY & ANTIQUE GOLD               */}
+            {/* CARD 01: THE GROOM                                           */}
             {/* ------------------------------------------------------------ */}
             <motion.div
               initial={shouldReduceMotion ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -16, y: 16 }}
@@ -507,13 +510,278 @@ export function OurStorySection() {
               transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: luxuryEase }}
               className="h-full"
             >
-              <InteractiveTiltCard maxRotateDeg={1.5} className="h-full">
-                <ProfileCard data={GROOM_PROFILE_DATA} />
-              </InteractiveTiltCard>
-            </motion.div>
+              <InteractiveTiltCard maxRotateDeg={1.8} className="h-full">
+                <article
+                  aria-labelledby="groom-card-title"
+                  className="relative h-full flex flex-col justify-between p-4 xs:p-5 sm:p-6 md:p-7 rounded-2xl bg-gradient-to-b from-[#FCF9EE] to-[#FAF5E6] border border-[#B8975E]/35 shadow-[0_12px_40px_rgba(184,151,94,0.08)] hover:shadow-[0_18px_48px_rgba(184,151,94,0.15)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group"
+                >
+                {/* Gold Light Sweep on Hover */}
+                <GoldLightSweep trigger="hover" intensity="subtle" />
+
+                {/* Architectural Corner Brackets (Exact Venues Language) */}
+                <CornerBracket position="top-left" color="#B8975E" />
+                <CornerBracket position="top-right" color="#B8975E" />
+                <CornerBracket position="bottom-left" color="#B8975E" />
+                <CornerBracket position="bottom-right" color="#B8975E" />
+
+                {/* Radial Half-Mandala Watermark (Exact Venues Language) */}
+                <CardMandalaWatermark strokeColor="#B8975E" opacity={0.16} size="md" position="right" />
+
+                {/* Subtle Decorative Initial Watermark: M */}
+                <div
+                  className="absolute -right-3 -bottom-5 font-serif text-[130px] sm:text-[150px] font-bold text-[#B8975E]/[0.035] select-none pointer-events-none leading-none z-0"
+                  aria-hidden="true"
+                >
+                  M
+                </div>
+
+                {/* ------------------------------------------------------------ */}
+                {/* DESKTOP & TABLET LAYOUT (≥ sm) — 100% PRESERVED & UNCHANGED  */}
+                {/* ------------------------------------------------------------ */}
+                <div className="hidden sm:flex relative z-10 flex-col h-full justify-between">
+                  <div>
+                    {/* Top Label */}
+                    <div className="flex items-center justify-center gap-2 pb-2.5 sm:pb-3 border-b border-[#B8975E]/20 mb-4 sm:mb-5 select-none">
+                      <span className="text-[8px] text-[#B8975E] rotate-45 font-bold">◆</span>
+                      <span className="text-[10px] sm:text-[10.5px] lg:text-[10.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E]">
+                        THE GROOM
+                      </span>
+                      <span className="text-[8px] text-[#B8975E] rotate-45 font-bold">◆</span>
+                    </div>
+
+                    {/* Split Content: Restored Arched Architectural Frame (Left) + Information (Right) */}
+                    <div className="flex sm:flex-row gap-4 sm:gap-5 items-start">
+                      {/* Restored Elegant Arched Frame (Preserving increased 2:3 height) */}
+                      <div className="relative w-40 sm:w-44 md:w-48 aspect-[2/3] shrink-0 p-1.5 sm:p-2 rounded-t-[84px] sm:rounded-t-[92px] rounded-b-xl border-2 border-[#B8975E]/55 bg-gradient-to-b from-[#FFFDF9] via-[#FAF5E6] to-[#F5EEDC] shadow-[0_10px_28px_rgba(184,151,94,0.16)] transition-all duration-500 group-hover:border-[#B8975E]/85">
+                        {/* Ambient Studio Rim Halo */}
+                        <PhotoAmbientHalo color="#D4AF37" size="md" opacity={0.25} />
+
+                        {/* Top Arch Finial Accent */}
+                        <div
+                          className="absolute -top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1 select-none pointer-events-none z-20"
+                          aria-hidden="true"
+                        >
+                          <span className="text-[5px] text-[#B8975E] rotate-45">◇</span>
+                          <span className="text-[7.5px] text-[#A67C1E] rotate-45 font-bold">◆</span>
+                          <span className="text-[5px] text-[#B8975E] rotate-45">◇</span>
+                        </div>
+
+                        {/* Inner Inset Arched Frame */}
+                        <div className="relative w-full h-full rounded-t-[74px] sm:rounded-t-[82px] rounded-b-lg overflow-hidden border border-[#B8975E]/40 shadow-inner bg-[#FAF5E6]">
+                          <div className="relative w-full h-full">
+                            <picture className="absolute inset-0 w-full h-full">
+                              <img
+                                src="/images/portraits/mithun-groom-portrait.webp"
+                                alt="Mithun Gorain — Groom Portrait"
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                              />
+                            </picture>
+                          </div>
+                          {/* Inset Highlight Ring */}
+                          <div className="absolute inset-0 pointer-events-none rounded-t-[74px] sm:rounded-t-[82px] rounded-b-lg ring-1 ring-inset ring-white/40 z-10" />
+                        </div>
+                      </div>
+
+                      {/* Information Side */}
+                      <div className="flex-1 flex flex-col justify-between min-w-0 text-left w-full sm:w-auto">
+                        <div>
+                          {/* Eyebrow */}
+                          <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E] block">
+                            The Groom
+                          </span>
+
+                          {/* Name */}
+                          <h3
+                            id="groom-card-title"
+                            className="font-serif text-[1.82rem] sm:text-[2.28rem] text-[#292322] font-normal tracking-tight leading-tight mt-0.5 mb-1"
+                          >
+                            Mithun Gorain
+                          </h3>
+
+                          {/* Sub-divider ◇ Matching Venues */}
+                          <div className="flex items-center gap-2 my-1.5 select-none" aria-hidden="true">
+                            <div className="h-[1px] w-6 bg-[#B8975E]/40" />
+                            <span className="text-[6.5px] text-[#B8975E] rotate-45">◇</span>
+                          </div>
+
+                          {/* Personal Introduction */}
+                          <p className="font-serif italic text-[13.5px] sm:text-[13.5px] lg:text-[13px] text-[#5C5351] leading-relaxed my-2">
+                            &ldquo;Rooted in family values and cherished traditions, Mithun carries forward the warmth of his family&apos;s heritage as he begins a beautiful new chapter of life.&rdquo;
+                          </p>
+
+                          {/* Parents Header Block */}
+                          <div className="mt-3 pt-2.5 border-t border-[#B8975E]/20">
+                            <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E6D38] block mb-1">
+                              BELOVED PARENTS
+                            </span>
+                            <p className="font-serif text-base sm:text-[17px] font-medium text-[#292322] leading-snug">
+                              Mr. Kenaram Gorain
+                            </p>
+                            <p className="font-serif text-base sm:text-[17px] font-medium text-[#292322] leading-snug">
+                              &amp; Ms. Savita Gorian
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Residence Location Pill */}
+                        <div
+                          className="mt-3.5 pt-2.5 border-t border-[#B8975E]/20"
+                        >
+                          <div className="flex items-start gap-1.5 text-xs text-[#6B615F]">
+                            <svg className="w-3.5 h-3.5 text-[#A67C1E] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            </svg>
+                            <div>
+                              <span className="font-sans font-semibold text-[#292322] block text-[12px] sm:text-xs lg:text-[11.5px]">
+                                Chitmu &bull; Kotshila &bull; Purulia
+                              </span>
+                              <span className="text-[11px] sm:text-[11.5px] lg:text-[10.5px] text-[#8A8280]">
+                                Family Residence &bull; PIN 723215
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Blessing Quotation */}
+                  <div
+                    className="mt-4 pt-3 border-t border-[#B8975E]/20 text-center select-none"
+                  >
+                    <p className="font-serif italic text-[13px] sm:text-[13.5px] lg:text-[13px] text-[#6B615F]">
+                      &ldquo;With ancestral blessings and the love of our kin, we celebrate this sacred union.&rdquo;
+                    </p>
+                  </div>
+                </div>
+
+                {/* ------------------------------------------------------------ */}
+                {/* MOBILE LAYOUT (< sm) — HORIZONTAL PROFILE HEADER ROW         */}
+                {/* ------------------------------------------------------------ */}
+                <div className="flex sm:hidden relative z-10 flex-col h-full justify-between">
+                  <div>
+                    {/* Horizontal Profile Header: Left Arched Portrait + Right Identity Block */}
+                    <div className="flex flex-row items-center gap-3.5 xs:gap-4">
+                      {/* Left: Scaled Arched Portrait Frame (Preserving exact 2:3 aspect ratio, proportional width) */}
+                      <div className="relative w-[42%] max-w-[150px] min-w-[114px] aspect-[2/3] shrink-0 p-1.5 rounded-t-[72px] xs:rounded-t-[80px] rounded-b-xl border-2 border-[#B8975E]/55 bg-gradient-to-b from-[#FFFDF9] via-[#FAF5E6] to-[#F5EEDC] shadow-[0_8px_24px_rgba(184,151,94,0.16)] transition-all duration-500">
+                        {/* Ambient Studio Rim Halo */}
+                        <PhotoAmbientHalo color="#D4AF37" size="sm" opacity={0.25} />
+
+                        {/* Top Arch Finial Accent */}
+                        <div
+                          className="absolute -top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-0.5 select-none pointer-events-none z-20"
+                          aria-hidden="true"
+                        >
+                          <span className="text-[4px] text-[#B8975E] rotate-45">◇</span>
+                          <span className="text-[6.5px] text-[#A67C1E] rotate-45 font-bold">◆</span>
+                          <span className="text-[4px] text-[#B8975E] rotate-45">◇</span>
+                        </div>
+
+                        {/* Inner Inset Arched Frame */}
+                        <div className="relative w-full h-full rounded-t-[64px] xs:rounded-t-[72px] rounded-b-lg overflow-hidden border border-[#B8975E]/40 shadow-inner bg-[#FAF5E6]">
+                          <div className="relative w-full h-full">
+                            <picture className="absolute inset-0 w-full h-full">
+                              <img
+                                src="/images/portraits/mithun-groom-portrait.webp"
+                                alt="Mithun Gorain — Groom Portrait"
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover object-top"
+                              />
+                            </picture>
+                          </div>
+                          {/* Inset Highlight Ring */}
+                          <div className="absolute inset-0 pointer-events-none rounded-t-[64px] xs:rounded-t-[72px] rounded-b-lg ring-1 ring-inset ring-white/40 z-10" />
+                        </div>
+                      </div>
+
+                      {/* Right: Identity Block (Vertically centered, prominent and balanced) */}
+                      <div className="flex-1 flex flex-col justify-center min-w-0 select-none">
+                        {/* Small Identity Label */}
+                        <div className="inline-flex items-center gap-1.5 mb-1">
+                          <span className="text-[7px] text-[#A67C1E] rotate-45 font-bold">◆</span>
+                          <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-[#A67C1E]">
+                            THE GROOM
+                          </span>
+                          <span className="text-[7px] text-[#A67C1E] rotate-45 font-bold">◆</span>
+                        </div>
+
+                        {/* Full Name */}
+                        <h3
+                          id="groom-card-title-mobile"
+                          className="font-serif text-[1.62rem] xs:text-[1.85rem] text-[#292322] font-normal tracking-tight leading-[1.1] mb-1.5"
+                        >
+                          Mithun Gorain
+                        </h3>
+
+                        {/* Decorative Diamond Divider */}
+                        <div className="flex items-center gap-1.5 mb-2" aria-hidden="true">
+                          <div className="h-[1px] w-7 bg-[#B8975E]/45" />
+                          <span className="text-[6px] text-[#B8975E] rotate-45">◇</span>
+                          <div className="h-[1px] w-3.5 bg-[#B8975E]/25" />
+                        </div>
+
+                        {/* Location Tag */}
+                        <span className="text-[10.5px] xs:text-[11px] font-serif italic text-[#706663] leading-tight">
+                          Chitmu, Purulia
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Below Horizontal Header: Full-Width Content Hierarchy */}
+                    <div className="mt-3.5 pt-3 border-t border-[#B8975E]/20 space-y-3">
+                      {/* Personal Introduction */}
+                      <p className="font-serif italic text-[12.5px] xs:text-[13px] text-[#5C5351] leading-relaxed">
+                        &ldquo;Rooted in family values and cherished traditions, Mithun carries forward the warmth of his family&apos;s heritage as he begins a beautiful new chapter of life.&rdquo;
+                      </p>
+
+                      {/* Beloved Parents */}
+                      <div className="pt-2.5 border-t border-[#B8975E]/20">
+                        <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E6D38] block mb-1">
+                          BELOVED PARENTS
+                        </span>
+                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                          Mr. Kenaram Gorain
+                        </p>
+                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                          &amp; Ms. Savita Gorian
+                        </p>
+                      </div>
+
+                      {/* Family Residence / Location */}
+                      <div className="pt-2.5 border-t border-[#B8975E]/20">
+                        <div className="flex items-start gap-1.5 text-xs text-[#6B615F]">
+                          <svg className="w-3.5 h-3.5 text-[#A67C1E] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                          </svg>
+                          <div>
+                            <span className="font-sans font-semibold text-[#292322] block text-[11.5px] xs:text-xs">
+                              Chitmu &bull; Kotshila &bull; Purulia
+                            </span>
+                            <span className="text-[10.5px] xs:text-[11px] text-[#8A8280]">
+                              Family Residence &bull; PIN 723215
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Closing Blessing Message */}
+                  <div className="mt-3.5 pt-2.5 border-t border-[#B8975E]/20 text-center select-none">
+                    <p className="font-serif italic text-[12px] xs:text-[12.5px] text-[#6B615F] leading-relaxed">
+                      &ldquo;With ancestral blessings and the love of our kin, we celebrate this sacred union.&rdquo;
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </InteractiveTiltCard>
+          </motion.div>
 
             {/* ------------------------------------------------------------ */}
-            {/* CARD 02: THE BRIDE — BLUSH IVORY & ROSE GOLD                 */}
+            {/* CARD 02: THE BRIDE                                           */}
             {/* ------------------------------------------------------------ */}
             <motion.div
               initial={shouldReduceMotion ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: 16, y: 16 }}
@@ -522,10 +790,275 @@ export function OurStorySection() {
               transition={{ duration: shouldReduceMotion ? 0 : 0.75, delay: shouldReduceMotion ? 0 : 0.12, ease: luxuryEase }}
               className="h-full"
             >
-              <InteractiveTiltCard maxRotateDeg={1.5} className="h-full">
-                <ProfileCard data={BRIDE_PROFILE_DATA} />
-              </InteractiveTiltCard>
-            </motion.div>
+              <InteractiveTiltCard maxRotateDeg={1.8} className="h-full">
+                <article
+                  aria-labelledby="bride-card-title"
+                  className="relative h-full flex flex-col justify-between p-4 xs:p-5 sm:p-6 md:p-7 rounded-2xl bg-gradient-to-b from-[#FDF5F5] to-[#FAF0F1] border border-[#8E1B29]/30 shadow-[0_12px_40px_rgba(142,27,41,0.06)] hover:shadow-[0_18px_48px_rgba(142,27,41,0.13)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group"
+                >
+                {/* Gold Light Sweep on Hover */}
+                <GoldLightSweep trigger="hover" intensity="subtle" />
+
+                {/* Architectural Corner Brackets (Exact Venues Language) */}
+                <CornerBracket position="top-left" color="#8E1B29" />
+                <CornerBracket position="top-right" color="#8E1B29" />
+                <CornerBracket position="bottom-left" color="#8E1B29" />
+                <CornerBracket position="bottom-right" color="#8E1B29" />
+
+                {/* Radial Half-Mandala Watermark (Exact Venues Language) */}
+                <CardMandalaWatermark strokeColor="#8E1B29" opacity={0.14} size="md" position="right" />
+
+                {/* Subtle Decorative Initial Watermark: S */}
+                <div
+                  className="absolute -right-3 -bottom-5 font-serif text-[130px] sm:text-[150px] font-bold text-[#8E1B29]/[0.035] select-none pointer-events-none leading-none z-0"
+                  aria-hidden="true"
+                >
+                  S
+                </div>
+
+                {/* ------------------------------------------------------------ */}
+                {/* DESKTOP & TABLET LAYOUT (≥ sm) — 100% PRESERVED & UNCHANGED  */}
+                {/* ------------------------------------------------------------ */}
+                <div className="hidden sm:flex relative z-10 flex-col h-full justify-between">
+                  <div>
+                    {/* Top Label */}
+                    <div className="flex items-center justify-center gap-2 pb-2.5 sm:pb-3 border-b border-[#8E1B29]/20 mb-4 sm:mb-5 select-none">
+                      <span className="text-[8px] text-[#8E1B29] rotate-45 font-bold">◆</span>
+                      <span className="text-[10px] sm:text-[10.5px] lg:text-[10.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29]">
+                        THE BRIDE
+                      </span>
+                      <span className="text-[8px] text-[#8E1B29] rotate-45 font-bold">◆</span>
+                    </div>
+
+                    {/* Split Content: Restored Arched Architectural Frame (Left) + Information (Right) */}
+                    <div className="flex sm:flex-row gap-4 sm:gap-5 items-start">
+                      {/* Restored Elegant Arched Frame (Preserving increased 2:3 height) */}
+                      <div className="relative w-40 sm:w-44 md:w-48 aspect-[2/3] shrink-0 p-1.5 sm:p-2 rounded-t-[84px] sm:rounded-t-[92px] rounded-b-xl border-2 border-[#8E1B29]/45 bg-gradient-to-b from-[#FFFDF9] via-[#FAF0F1] to-[#F5E6E8] shadow-[0_10px_28px_rgba(142,27,41,0.14)] transition-all duration-500 group-hover:border-[#8E1B29]/80">
+                        {/* Ambient Studio Rim Halo */}
+                        <PhotoAmbientHalo color="#A52232" size="md" opacity={0.22} />
+
+                        {/* Top Arch Finial Accent */}
+                        <div
+                          className="absolute -top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1 select-none pointer-events-none z-20"
+                          aria-hidden="true"
+                        >
+                          <span className="text-[5px] text-[#8E1B29]/70 rotate-45">◇</span>
+                          <span className="text-[7.5px] text-[#8E1B29] rotate-45 font-bold">◆</span>
+                          <span className="text-[5px] text-[#8E1B29]/70 rotate-45">◇</span>
+                        </div>
+
+                        {/* Inner Inset Arched Frame */}
+                        <div className="relative w-full h-full rounded-t-[74px] sm:rounded-t-[82px] rounded-b-lg overflow-hidden border border-[#8E1B29]/35 shadow-inner bg-[#FAF0F1]">
+                          <div className="relative w-full h-full">
+                            <picture className="absolute inset-0 w-full h-full">
+                              <img
+                                src="/images/portraits/sakhi-bride-portrait.webp"
+                                alt="Sakhi Gorain — Bride Portrait"
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                              />
+                            </picture>
+                          </div>
+                          {/* Inset Highlight Ring */}
+                          <div className="absolute inset-0 pointer-events-none rounded-t-[74px] sm:rounded-t-[82px] rounded-b-lg ring-1 ring-inset ring-white/40 z-10" />
+                        </div>
+                      </div>
+
+                      {/* Information Side */}
+                      <div className="flex-1 flex flex-col justify-between min-w-0 text-left w-full sm:w-auto">
+                        <div>
+                          {/* Eyebrow */}
+                          <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29] block">
+                            The Bride
+                          </span>
+
+                          {/* Name */}
+                          <h3
+                            id="bride-card-title"
+                            className="font-serif text-[1.82rem] sm:text-[2.28rem] text-[#8E1B29] font-normal tracking-tight leading-tight mt-0.5 mb-1"
+                          >
+                            Sakhi Gorain
+                          </h3>
+
+                          {/* Sub-divider ◇ Matching Venues */}
+                          <div className="flex items-center gap-2 my-1.5 select-none" aria-hidden="true">
+                            <div className="h-[1px] w-6 bg-[#8E1B29]/35" />
+                            <span className="text-[6.5px] text-[#8E1B29] rotate-45">◇</span>
+                          </div>
+
+                          {/* Personal Introduction */}
+                          <p className="font-serif italic text-[13.5px] sm:text-[13.5px] lg:text-[13px] text-[#5C5351] leading-relaxed my-2">
+                            &ldquo;Graceful in spirit and deeply connected to her family and traditions, Sakhi steps into a new journey filled with love, togetherness and beautiful possibilities.&rdquo;
+                          </p>
+
+                          {/* Parents Header Block */}
+                          <div className="mt-3 pt-2.5 border-t border-[#8E1B29]/20">
+                            <span className="text-[10px] sm:text-[10.5px] lg:text-[9.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29] block mb-1">
+                              BELOVED PARENTS
+                            </span>
+                            <p className="font-serif text-base sm:text-[17px] font-medium text-[#292322] leading-snug">
+                              Mr. Upen Gorain
+                            </p>
+                            <p className="font-serif text-base sm:text-[17px] font-medium text-[#292322] leading-snug">
+                              &amp; Ms. Kokila Gorain
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Residence Location Pill */}
+                        <div
+                          className="mt-3.5 pt-2.5 border-t border-[#8E1B29]/20"
+                        >
+                          <div className="flex items-start gap-1.5 text-xs text-[#6B615F]">
+                            <svg className="w-3.5 h-3.5 text-[#8E1B29] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            </svg>
+                            <div>
+                              <span className="font-sans font-semibold text-[#292322] block text-[12px] sm:text-xs lg:text-[11.5px]">
+                                Ghaghra &bull; Jaipur &bull; Purulia
+                              </span>
+                              <span className="text-[11px] sm:text-[11.5px] lg:text-[10.5px] text-[#8A8280]">
+                                Family Residence &bull; PIN 723201
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Blessing Quotation */}
+                  <div
+                    className="mt-4 pt-3 border-t border-[#8E1B29]/20 text-center select-none"
+                  >
+                    <p className="font-serif italic text-[13px] sm:text-[13.5px] lg:text-[13px] text-[#6B615F]">
+                      &ldquo;May every step forward together bring timeless peace, joy, and prosperity.&rdquo;
+                    </p>
+                  </div>
+                </div>
+
+                {/* ------------------------------------------------------------ */}
+                {/* MOBILE LAYOUT (< sm) — HORIZONTAL PROFILE HEADER ROW         */}
+                {/* ------------------------------------------------------------ */}
+                <div className="flex sm:hidden relative z-10 flex-col h-full justify-between">
+                  <div>
+                    {/* Horizontal Profile Header: Left Arched Portrait + Right Identity Block */}
+                    <div className="flex flex-row items-center gap-3.5 xs:gap-4">
+                      {/* Left: Scaled Arched Portrait Frame (Preserving exact 2:3 aspect ratio, proportional width) */}
+                      <div className="relative w-[42%] max-w-[150px] min-w-[114px] aspect-[2/3] shrink-0 p-1.5 rounded-t-[72px] xs:rounded-t-[80px] rounded-b-xl border-2 border-[#8E1B29]/45 bg-gradient-to-b from-[#FFFDF9] via-[#FAF0F1] to-[#F5E6E8] shadow-[0_8px_24px_rgba(142,27,41,0.14)] transition-all duration-500">
+                        {/* Ambient Studio Rim Halo */}
+                        <PhotoAmbientHalo color="#A52232" size="sm" opacity={0.22} />
+
+                        {/* Top Arch Finial Accent */}
+                        <div
+                          className="absolute -top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-0.5 select-none pointer-events-none z-20"
+                          aria-hidden="true"
+                        >
+                          <span className="text-[4px] text-[#8E1B29]/70 rotate-45">◇</span>
+                          <span className="text-[6.5px] text-[#8E1B29] rotate-45 font-bold">◆</span>
+                          <span className="text-[4px] text-[#8E1B29]/70 rotate-45">◇</span>
+                        </div>
+
+                        {/* Inner Inset Arched Frame */}
+                        <div className="relative w-full h-full rounded-t-[64px] xs:rounded-t-[72px] rounded-b-lg overflow-hidden border border-[#8E1B29]/35 shadow-inner bg-[#FAF0F1]">
+                          <div className="relative w-full h-full">
+                            <picture className="absolute inset-0 w-full h-full">
+                              <img
+                                src="/images/portraits/sakhi-bride-portrait.webp"
+                                alt="Sakhi Gorain — Bride Portrait"
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover object-top"
+                              />
+                            </picture>
+                          </div>
+                          {/* Inset Highlight Ring */}
+                          <div className="absolute inset-0 pointer-events-none rounded-t-[64px] xs:rounded-t-[72px] rounded-b-lg ring-1 ring-inset ring-white/40 z-10" />
+                        </div>
+                      </div>
+
+                      {/* Right: Identity Block (Vertically centered, prominent and balanced) */}
+                      <div className="flex-1 flex flex-col justify-center min-w-0 select-none">
+                        {/* Small Identity Label */}
+                        <div className="inline-flex items-center gap-1.5 mb-1">
+                          <span className="text-[7px] text-[#8E1B29] rotate-45 font-bold">◆</span>
+                          <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-[#8E1B29]">
+                            THE BRIDE
+                          </span>
+                          <span className="text-[7px] text-[#8E1B29] rotate-45 font-bold">◆</span>
+                        </div>
+
+                        {/* Full Name */}
+                        <h3
+                          id="bride-card-title-mobile"
+                          className="font-serif text-[1.62rem] xs:text-[1.85rem] text-[#8E1B29] font-normal tracking-tight leading-[1.1] mb-1.5"
+                        >
+                          Sakhi Gorain
+                        </h3>
+
+                        {/* Decorative Diamond Divider */}
+                        <div className="flex items-center gap-1.5 mb-2" aria-hidden="true">
+                          <div className="h-[1px] w-7 bg-[#8E1B29]/40" />
+                          <span className="text-[6px] text-[#8E1B29] rotate-45">◇</span>
+                          <div className="h-[1px] w-3.5 bg-[#8E1B29]/20" />
+                        </div>
+
+                        {/* Location Tag */}
+                        <span className="text-[10.5px] xs:text-[11px] font-serif italic text-[#7A5B60] leading-tight">
+                          Ghaghra, Purulia
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Below Horizontal Header: Full-Width Content Hierarchy */}
+                    <div className="mt-3.5 pt-3 border-t border-[#8E1B29]/20 space-y-3">
+                      {/* Personal Introduction */}
+                      <p className="font-serif italic text-[12.5px] xs:text-[13px] text-[#5C5351] leading-relaxed">
+                        &ldquo;Graceful in spirit and deeply connected to her family and traditions, Sakhi steps into a new journey filled with love, togetherness and beautiful possibilities.&rdquo;
+                      </p>
+
+                      {/* Beloved Parents */}
+                      <div className="pt-2.5 border-t border-[#8E1B29]/20">
+                        <span className="text-[9.5px] xs:text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#8E1B29] block mb-1">
+                          BELOVED PARENTS
+                        </span>
+                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                          Mr. Upen Gorain
+                        </p>
+                        <p className="font-serif text-[15px] xs:text-base font-medium text-[#292322] leading-snug">
+                          &amp; Ms. Kokila Gorain
+                        </p>
+                      </div>
+
+                      {/* Family Residence / Location */}
+                      <div className="pt-2.5 border-t border-[#8E1B29]/20">
+                        <div className="flex items-start gap-1.5 text-xs text-[#6B615F]">
+                          <svg className="w-3.5 h-3.5 text-[#8E1B29] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                          </svg>
+                          <div>
+                            <span className="font-sans font-semibold text-[#292322] block text-[11.5px] xs:text-xs">
+                              Ghaghra &bull; Jaipur &bull; Purulia
+                            </span>
+                            <span className="text-[10.5px] xs:text-[11px] text-[#8A8280]">
+                              Family Residence &bull; PIN 723201
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Closing Blessing Message */}
+                  <div className="mt-3.5 pt-2.5 border-t border-[#8E1B29]/20 text-center select-none">
+                    <p className="font-serif italic text-[12px] xs:text-[12.5px] text-[#6B615F] leading-relaxed">
+                      &ldquo;May every step forward together bring timeless peace, joy, and prosperity.&rdquo;
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </InteractiveTiltCard>
+          </motion.div>
           </div>
         </div>
 

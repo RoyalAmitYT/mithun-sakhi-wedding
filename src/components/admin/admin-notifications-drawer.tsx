@@ -58,7 +58,7 @@ export function AdminNotificationsDrawer({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 rounded-full border border-[#B8975E]/30 bg-white hover:bg-[#F7F1E6] transition-colors cursor-pointer text-[#292322]"
+        className="relative min-w-[44px] min-h-[44px] rounded-full border border-[#B8975E]/30 bg-white hover:bg-[#F7F1E6] transition-colors cursor-pointer text-[#292322] flex items-center justify-center"
         title="Operational Notifications"
         aria-label="Operational Notifications"
       >
@@ -77,7 +77,7 @@ export function AdminNotificationsDrawer({
         </svg>
 
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-[#A52232] text-white text-[9px] font-sans font-bold shadow-sm">
+          <span className="absolute 0 top-0.5 right-0.5 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-[#A52232] text-white text-[9px] font-sans font-bold shadow-sm">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -110,7 +110,7 @@ export function AdminNotificationsDrawer({
                   type="button"
                   onClick={handleMarkAllAsRead}
                   disabled={isPending}
-                  className="text-[11px] font-sans text-[#8E6D38] hover:text-[#B8975E] hover:underline cursor-pointer transition-colors"
+                  className="min-h-[36px] flex items-center px-2 text-[11px] font-sans text-[#8E6D38] hover:text-[#B8975E] hover:underline cursor-pointer transition-colors"
                 >
                   Mark all as read
                 </button>
@@ -160,7 +160,7 @@ export function AdminNotificationsDrawer({
                           type="button"
                           onClick={() => handleMarkAsRead(n.id)}
                           disabled={isPending}
-                          className="text-[#8E6D38] hover:underline cursor-pointer"
+                          className="min-h-[32px] flex items-center px-2 text-[#8E6D38] hover:underline cursor-pointer"
                         >
                           Mark read
                         </button>
