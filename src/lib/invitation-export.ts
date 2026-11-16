@@ -22,7 +22,26 @@ async function getHtmlToImage() {
 }
 
 export const CANONICAL_PUBLIC_INVITATION_URL =
-  "https://mithun-sakhi-wedding.vercel.app/#invitation";
+  "https://mithun-sakhi-wedding.vercel.app";
+
+export const APPROVED_WHATSAPP_INVITATION_MESSAGE =
+`✨ *A Celebration of Love & Togetherness* ✨
+
+With immense joy and the blessings of our families, we cordially invite you to celebrate the wedding festivities of
+
+❤️ *Mithun & Sakhi* ❤️
+
+🗓️ *19th – 22nd November 2026*
+
+📍 *Purulia, West Bengal, India*
+
+Four beautiful celebrations, countless precious moments, and the beginning of a lifetime together.
+
+Your gracious presence and blessings would make our celebration even more special.
+
+💌 *Explore the Wedding Invitation & Complete Celebration Details:*
+
+https://mithun-sakhi-wedding.vercel.app`;
 export const CANONICAL_INVITATION_PNG_FILENAME =
   "mithun-sakhi-official-wedding-invitation-4x5.png";
 export const CANONICAL_INVITATION_JPG_FILENAME =
@@ -654,8 +673,8 @@ export async function shareOrCopyInvitationUrl(
   if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
     try {
       await navigator.share({
-        title: "Mithun & Sakhi — Wedding Invitation",
-        text: "We warmly invite you to celebrate the wedding festivities of Mithun & Sakhi, from 19–22 November 2026 in Purulia, West Bengal.",
+        title: "Mithun & Sakhi — Wedding Celebration",
+        text: "With immense joy and the blessings of our families, we cordially invite you to celebrate the wedding festivities of Mithun & Sakhi.",
         url,
       });
       return { success: true, method: "share", message: "Invitation shared!" };

@@ -86,6 +86,18 @@ export const NAV_ITEMS: NavItemConfig[] = [
   },
 ];
 
+const SECTION_IDS_REVERSE = [
+  "hospitality",
+  "rsvp",
+  "wishes",
+  "gallery",
+  "invitation",
+  "venues",
+  "events",
+  "celebrations",
+  "our-story",
+] as const;
+
 export function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -126,63 +138,9 @@ export function Navbar() {
     description: item.description,
   }));
 
-  // Intelligent scroll-aware section detection with zero layout thrashing
+  // Intelligent, single-source-of-truth active section detection based on primary viewport reading position
   useEffect(() => {
     let ticking = false;
-    let sectionTops: Array<{ id: string; top: number }> = [];
-    let ceremoniesTop = 0;
-    let venuesTop = 0;
-    let navbarHeight = 75;
-
-    // Cache section top offsets once on load and on resize (zero getBoundingClientRect in scroll RAF loop)
-    const measureSectionOffsets = () => {
-      if (!isHome) return;
-      const ids = [
-        "our-story",
-        "celebrations",
-        "events",
-        "venues",
-        "invitation",
-        "gallery",
-        "wishes",
-        "rsvp",
-        "hospitality",
-      ];
-      sectionTops = ids
-        .map((id) => {
-          const el = document.getElementById(id);
-          if (!el) return null;
-          const rect = el.getBoundingClientRect();
-          const top = rect.top + window.scrollY - 140;
-          return { id, top };
-        })
-        .filter(Boolean) as Array<{ id: string; top: number }>;
-
-      const navbarEl = document.querySelector<HTMLElement>('header[role="banner"]');
-      if (navbarEl) {
-        navbarHeight = navbarEl.offsetHeight || 75;
-      }
-
-      const ceremoniesEl = document.getElementById("ceremonies-stack");
-      if (ceremoniesEl) {
-        const cRect = ceremoniesEl.getBoundingClientRect();
-        ceremoniesTop = cRect.top + window.scrollY;
-      }
-
-      const venuesEl = document.getElementById("venues");
-      if (venuesEl) {
-        const vRect = venuesEl.getBoundingClientRect();
-        venuesTop = vRect.top + window.scrollY;
-      }
-    };
-
-    let measured = false;
-    const ensureMeasured = () => {
-      if (!measured) {
-        measureSectionOffsets();
-        measured = true;
-      }
-    };
 
     const updateScrollState = () => {
       const scrollY = window.scrollY;
@@ -195,62 +153,57 @@ export function Navbar() {
         return;
       }
 
+      const navbarEl = document.querySelector<HTMLElement>('header[role="banner"]');
+      const navbarHeight = navbarEl?.offsetHeight || 75;
+
       // Fast-path at page top: zero layout calculations needed
-      if (scrollY <= 10) {
+      if (scrollY <= 80) {
         setIsOverCeremonies(false);
-        setHomeActiveSection("home");
+        setHomeActiveSection((prev) => (prev !== "home" ? "home" : prev));
         ticking = false;
         return;
-      }
-
-      ensureMeasured();
-
-      // Safety check: ensure coordinates are measured
-      if (venuesTop === 0) {
-        const vEl = document.getElementById("venues");
-        if (vEl) {
-          venuesTop = vEl.getBoundingClientRect().top + window.scrollY;
-        }
-      }
-      if (ceremoniesTop === 0) {
-        const cEl = document.getElementById("ceremonies-stack");
-        if (cEl) {
-          ceremoniesTop = cEl.getBoundingClientRect().top + window.scrollY;
-        }
       }
 
       // Ceremonies dark-glass coverage:
       // Active through all four ceremony chapters (Haldi, Mehndi, Sacred Wedding, Reception).
       // Transitions to warm-white liquid glass precisely when the top boundary of Venues touches the navbar bottom edge.
-      const ceremoniesStart = ceremoniesTop > 0 ? ceremoniesTop - navbarHeight : 0;
-      const venuesTouch = venuesTop > 0 ? venuesTop - navbarHeight : Infinity;
-      const overCeremonies = scrollY >= ceremoniesStart && scrollY < venuesTouch;
-      setIsOverCeremonies((prev) => (prev !== overCeremonies ? overCeremonies : prev));
+      const ceremoniesEl = document.getElementById("ceremonies-stack") || document.getElementById("events");
+      if (ceremoniesEl) {
+        const cRect = ceremoniesEl.getBoundingClientRect();
+        const venuesEl = document.getElementById("venues");
+        const vRect = venuesEl?.getBoundingClientRect();
+        const venuesBoundary = vRect ? vRect.top : cRect.bottom;
+        const overCeremonies = cRect.top <= navbarHeight && venuesBoundary > navbarHeight;
+        setIsOverCeremonies((prev) => (prev !== overCeremonies ? overCeremonies : prev));
+      } else {
+        setIsOverCeremonies(false);
+      }
 
       // Check bottom of page
-      const isAtBottom =
-        window.innerHeight + scrollY >=
-        document.documentElement.scrollHeight - 60;
+      const docHeight = document.documentElement.scrollHeight;
+      const vpHeight = window.innerHeight;
+      if (vpHeight + scrollY >= docHeight - 40) {
+        setHomeActiveSection((prev) => (prev !== "hospitality" ? "hospitality" : prev));
+        ticking = false;
+        return;
+      }
 
-      const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+      // Primary reading focus point below sticky navbar
+      const focusY = navbarHeight + Math.min(180, Math.max(70, vpHeight * 0.22));
 
-      if (isAtBottom) {
-        if (isDesktop || isMobileMenuOpen) {
-          setHomeActiveSection((prev) => (prev !== "hospitality" ? "hospitality" : prev));
-        }
-      } else {
-        // Pure numerical comparison (zero DOM layout access, zero layout thrash!)
-        let current = "home";
-        for (let i = 0; i < sectionTops.length; i++) {
-          if (scrollY >= sectionTops[i].top) {
-            current = sectionTops[i].id;
-          }
-        }
-        if (isDesktop || isMobileMenuOpen) {
-          setHomeActiveSection((prev) => (prev !== current ? current : prev));
+      // Reverse stack check: topmost/later element covering focus line wins
+      let current = "home";
+      for (const sId of SECTION_IDS_REVERSE) {
+        const el = document.getElementById(sId);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= focusY && rect.bottom > focusY) {
+          current = sId;
+          break;
         }
       }
 
+      setHomeActiveSection((prev) => (prev !== current ? current : prev));
       ticking = false;
     };
 
@@ -262,47 +215,48 @@ export function Navbar() {
     };
 
     const onResizeOrChange = () => {
-      measured = false;
-      if (window.scrollY > 10) {
-        ensureMeasured();
-        onScroll();
-      }
+      onScroll();
     };
 
-    // Only measure immediately if already scrolled on load (e.g. reload or anchor link)
-    let rafId: number | null = null;
-    if (window.scrollY > 10) {
-      ensureMeasured();
-      rafId = window.requestAnimationFrame(updateScrollState);
-    }
+    // Initial check on mount
+    const rafId = window.requestAnimationFrame(updateScrollState);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResizeOrChange, { passive: true });
-    window.addEventListener("hashchange", onResizeOrChange, { passive: true });
 
     return () => {
-      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResizeOrChange);
-      window.removeEventListener("hashchange", onResizeOrChange);
     };
-  }, [isHome, isMobileMenuOpen]);
+  }, [isHome]);
 
   // Handle direct hash URL landing and cross-route hash navigation on homepage
   useEffect(() => {
     if (!isHome) return;
-    const hash = window.location.hash;
-    if (hash && hash.length > 1) {
-      const id = hash.slice(1);
-      const timer = window.setTimeout(() => {
-        const targetEl = document.getElementById(id);
-        if (targetEl) {
-          scrollTo(targetEl, { offset: -72 });
-          setHomeActiveSection(id);
-        }
-      }, 150);
-      return () => window.clearTimeout(timer);
-    }
+
+    const handleHashNavigation = () => {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return;
+      const targetId = hash === "contact" ? "hospitality" : hash;
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        setHomeActiveSection(targetId);
+        const navbarEl = document.querySelector<HTMLElement>('header[role="banner"]');
+        const offset = navbarEl ? -(navbarEl.offsetHeight - 2) : -72;
+        scrollTo(targetEl, { offset });
+      }
+    };
+
+    const timer = window.setTimeout(handleHashNavigation, 150);
+    window.addEventListener("hashchange", handleHashNavigation);
+    window.addEventListener("popstate", handleHashNavigation);
+
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("hashchange", handleHashNavigation);
+      window.removeEventListener("popstate", handleHashNavigation);
+    };
   }, [isHome, scrollTo]);
 
   const isLinkActive = (item: NavItemConfig) => {
@@ -334,7 +288,9 @@ export function Navbar() {
       const targetEl = document.getElementById(item.id);
       if (targetEl) {
         setHomeActiveSection(item.id);
-        scrollTo(targetEl, { offset: -72 });
+        const navbarEl = document.querySelector<HTMLElement>('header[role="banner"]');
+        const offset = navbarEl ? -(navbarEl.offsetHeight - 2) : -72;
+        scrollTo(targetEl, { offset });
         window.history.pushState(null, "", `#${item.id}`);
       }
     }
@@ -522,31 +478,7 @@ export function Navbar() {
               {/* Mobile Hamburger Toggle (Refined Touch Target 44–48px with Haptic-Like Active State) */}
               <button
                 type="button"
-                onClick={() => {
-                  if (isHome) {
-                    const scrollY = window.scrollY;
-                    const ids = [
-                      "our-story",
-                      "celebrations",
-                      "events",
-                      "venues",
-                      "invitation",
-                      "gallery",
-                      "wishes",
-                      "rsvp",
-                      "hospitality",
-                    ];
-                    let current = "home";
-                    for (const id of ids) {
-                      const el = document.getElementById(id);
-                      if (el && scrollY >= el.getBoundingClientRect().top + window.scrollY - 160) {
-                        current = id;
-                      }
-                    }
-                    setHomeActiveSection(current);
-                  }
-                  setIsMobileMenuOpen(true);
-                }}
+                onClick={() => setIsMobileMenuOpen(true)}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-navigation-drawer"
                 aria-label="Open navigation menu"

@@ -60,13 +60,23 @@ export const metadata: Metadata = {
     siteName: "Mithun & Sakhi Wedding",
     title: "Mithun & Sakhi — Wedding Celebration",
     description:
-      "Official wedding celebration website for Mithun Gorain and Sakhi Gorain. 19–22 November 2026, Purulia, West Bengal.",
+      "Join us in celebrating the wedding festivities of Mithun & Sakhi, 19–22 November 2026, in Purulia, West Bengal.",
+    images: [
+      {
+        url: "/opengraph-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Mithun & Sakhi — Wedding Celebration",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Mithun & Sakhi — Wedding Celebration",
     description:
-      "Official wedding celebration website for Mithun Gorain and Sakhi Gorain. 19–22 November 2026, Purulia, West Bengal.",
+      "Join us in celebrating the wedding festivities of Mithun & Sakhi, 19–22 November 2026, in Purulia, West Bengal.",
+    images: ["/opengraph-image.jpg"],
   },
   icons: {
     icon: [
@@ -84,6 +94,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#48070F",
 };
 
 export default function RootLayout({

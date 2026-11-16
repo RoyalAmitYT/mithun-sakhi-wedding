@@ -19,8 +19,8 @@ import {
   CANONICAL_PUBLIC_INVITATION_URL,
   downloadInvitationCardAsJpg,
   downloadInvitationCardAsPdf,
-  shareOrCopyInvitationUrl,
 } from "@/lib/invitation-export";
+import { InvitationShareModal } from "./invitation-share-modal";
 import { useToast } from "@/components/ui/toast";
 
 interface InvitationActionButtonsProps {
@@ -49,7 +49,6 @@ export function InvitationActionButtons({
   const [activeModal, setActiveModal] = useState<"calendar" | "download" | "share" | null>(null);
   const [downloadFormatLoading, setDownloadFormatLoading] = useState<"pdf" | "jpg" | "png" | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
-  const [copiedLink, setCopiedLink] = useState(false);
 
   // References to restore focus when a modal closes
   const triggerCalendarRef = useRef<HTMLButtonElement>(null);
@@ -61,7 +60,6 @@ export function InvitationActionButtons({
   const closeModal = useCallback(() => {
     const prevModal = activeModal;
     setActiveModal(null);
-    setCopiedLink(false);
 
     // Return focus to triggering button
     setTimeout(() => {
@@ -178,46 +176,10 @@ export function InvitationActionButtons({
     }
   };
 
-  // 3. Share handlers
-  const handleShareClick = async () => {
-    // If native sharing is supported, invoke it directly
-    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
-      try {
-        const res = await shareOrCopyInvitationUrl(CANONICAL_PUBLIC_INVITATION_URL);
-        if (res.success) {
-          showFeedback(res.message);
-          toast.success("Shared Successfully", res.message);
-        }
-        return;
-      } catch (err: unknown) {
-        if ((err as Error)?.name === "AbortError") {
-          // User closed the native share sheet - no action needed
-          return;
-        }
-      }
-    }
-
-    // Fallback: open elegant in-page share dialog
+  // 3. Share handlers — opens the luxury sharing modal on all devices
+  const handleShareClick = () => {
     setActiveModal("share");
   };
-
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(CANONICAL_PUBLIC_INVITATION_URL);
-      setCopiedLink(true);
-      showFeedback("Invitation link copied!");
-      toast.success("Link Copied to Clipboard", "Shareable wedding invitation link is ready to paste.");
-      setTimeout(() => setCopiedLink(false), 3000);
-    } catch {
-      showFeedback(`Public Link: ${CANONICAL_PUBLIC_INVITATION_URL}`);
-      toast.info("Invitation Link", CANONICAL_PUBLIC_INVITATION_URL);
-    }
-  };
-
-  // Construct WhatsApp sharing URL
-  const whatsAppShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-    `We warmly invite you to celebrate the wedding festivities of Mithun & Sakhi, from 19–22 November 2026 in Purulia, West Bengal.\n\nView Official Invitation Decree:\n${CANONICAL_PUBLIC_INVITATION_URL}`
-  )}`;
 
   return (
     <div id="official-invitation-actions" className={`relative space-y-4 ${className}`}>
@@ -382,7 +344,7 @@ export function InvitationActionButtons({
       {mounted && typeof document !== "undefined"
         ? createPortal(
             <AnimatePresence>
-              {activeModal && (
+              {(activeModal === "calendar" || activeModal === "download") && (
                 <div
                   className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
                   role="presentation"
@@ -687,138 +649,21 @@ export function InvitationActionButtons({
                 </div>
               </motion.div>
             )}
-
-            {/* ---------------------------------------------------------------- */}
-            {/* MODAL 3: SHARE INVITATION FALLBACK DIALOG                        */}
-            {/* ---------------------------------------------------------------- */}
-            {activeModal === "share" && (
-              <motion.div
-                ref={modalContainerRef}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="share-modal-title"
-                initial={
-                  shouldReduceMotion
-                    ? { opacity: 1, scale: 1 }
-                    : { opacity: 0, scale: 0.96, y: 14 }
-                }
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={
-                  shouldReduceMotion
-                    ? { opacity: 0, transition: { duration: 0 } }
-                    : { opacity: 0, scale: 0.96, y: 10 }
-                }
-                transition={{ duration: shouldReduceMotion ? 0 : 0.28, ease: luxuryEase }}
-                className="relative z-10 w-full max-w-md rounded-2xl bg-[#FFFDF9] border border-[#B8975E]/40 p-5 sm:p-7 shadow-[0_25px_60px_-15px_rgba(45,15,20,0.35)] text-left my-auto"
-              >
-                {/* Header */}
-                <div className="flex items-start justify-between border-b border-[#B8975E]/20 pb-4 mb-4">
-                  <div>
-                    <div className="flex items-center gap-1.5 text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#B8975E] mb-1">
-                      <span>◆</span>
-                      <span>Wedding Invitation</span>
-                    </div>
-                    <h3
-                      id="share-modal-title"
-                      className="font-serif text-2xl sm:text-3xl font-medium text-[#7D1525] tracking-tight"
-                    >
-                      Share Invitation
-                    </h3>
-                    <p className="font-sans text-xs text-[#5C5452] mt-1">
-                      Share the sacred celebration decree with family &amp; friends.
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={closeModal}
-                    aria-label="Close share modal"
-                    className="p-1.5 rounded-full text-[#8A8280] hover:text-[#7D1525] hover:bg-[#FAF4E6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
-                  >
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Share Options */}
-                <div className="space-y-3 mb-5">
-                  {/* 1. Share on WhatsApp */}
-                  <a
-                    href={whatsAppShareUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full p-3.5 rounded-xl bg-gradient-to-r from-[#25D366]/10 to-[#128C7E]/10 hover:from-[#25D366]/20 hover:to-[#128C7E]/20 border border-[#25D366]/40 flex items-center justify-between transition-all group shadow-xs cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-9 h-9 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-xs">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z" />
-                        </svg>
-                      </span>
-                      <div className="text-left">
-                        <span className="font-serif font-semibold text-sm sm:text-base text-[#128C7E] block">
-                          Share on WhatsApp
-                        </span>
-                        <span className="text-[11px] text-[#5C5452]">
-                          Send invitation decree directly to contacts &amp; groups
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-sm font-semibold text-[#128C7E] group-hover:translate-x-1 transition-transform shrink-0" aria-hidden="true">
-                      &rarr;
-                    </span>
-                  </a>
-
-                  {/* 2. Copy Invitation Link */}
-                  <button
-                    type="button"
-                    onClick={handleCopyLink}
-                    className="w-full p-3.5 rounded-xl bg-white hover:bg-[#FAF4E6] border border-[#B8975E]/30 flex items-center justify-between transition-all group shadow-xs cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8975E]"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-9 h-9 rounded-full bg-[#FAF4E6] border border-[#B8975E]/40 text-[#8E6322] flex items-center justify-center shrink-0 shadow-xs">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>
-                      </span>
-                      <div className="text-left">
-                        <span className="font-serif font-semibold text-sm sm:text-base text-[#292322] block group-hover:text-[#7D1525] transition-colors">
-                          {copiedLink ? "Link Copied!" : "Copy Invitation Link"}
-                        </span>
-                        <span className="text-[11px] text-[#5C5452] font-mono truncate max-w-[200px] sm:max-w-xs block">
-                          {CANONICAL_PUBLIC_INVITATION_URL}
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-xs font-sans font-bold uppercase tracking-wider text-[#9E722C] group-hover:translate-x-0.5 transition-transform shrink-0">
-                      {copiedLink ? "Copied ✓" : "Copy"}
-                    </span>
-                  </button>
-                </div>
-
-                {/* Footer and Close */}
-                <div className="border-t border-[#B8975E]/15 pt-3.5 flex items-center justify-between">
-                  <span className="font-serif italic text-xs text-[#8A8280]">
-                    * Public link accessible to all wedding guests.
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={closeModal}
-                    className="text-xs font-sans font-semibold uppercase tracking-wider text-[#8A8280] hover:text-[#292322] transition-colors px-3 py-1.5 rounded-full"
-                  >
-                    Close
-                  </button>
-                </div>
-              </motion.div>
-            )}
           </div>
         )}
       </AnimatePresence>,
       document.body
     )
   : null}
+
+      {/* ==================================================================== */}
+      {/* MASTER LUXURY INVITATION SHARING MODAL (PORTALED TO BODY)            */}
+      {/* ==================================================================== */}
+      <InvitationShareModal
+        isOpen={activeModal === "share"}
+        onClose={closeModal}
+        canonicalUrl={CANONICAL_PUBLIC_INVITATION_URL}
+      />
     </div>
   );
 }

@@ -19,7 +19,7 @@ export function OfficialWeddingInvitation({
   variant = "full",
   layout = "responsive",
   className = "",
-  canonicalUrl = "https://mithun-sakhi-wedding.vercel.app/#invitation",
+  canonicalUrl = "https://mithun-sakhi-wedding.vercel.app",
   headlineText = "WITH THE DIVINE BLESSINGS OF OUR FAMILIES",
   blessingMessage: rawBlessingMessage,
   introText,

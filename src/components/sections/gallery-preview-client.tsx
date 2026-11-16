@@ -38,6 +38,7 @@ export type GalleryPreviewState =
   | { status: "error"; message?: string };
 
 export const REFERENCE_CURATED_PHOTOS: PublishedPhotoItem[] = [
+  // 1. (Top Row 1)
   {
     id: "groom-portrait",
     src: "/images/groom-portrait-tall.webp",
@@ -47,33 +48,7 @@ export const REFERENCE_CURATED_PHOTOS: PublishedPhotoItem[] = [
     category: "The Groom",
     caption: "The Groom adorned in traditional wedding sherwani and safa",
   },
-  {
-    id: "bride-portrait",
-    src: "/images/bride-portrait-gallery.webp",
-    fullSrc: "/images/bride-portrait-lightbox.webp",
-    alt: "Sakhi Gorain — Bride adorned in crimson wedding lehenga and traditional jewelry",
-    title: "Sakhi Gorain",
-    category: "The Bride",
-    caption: "The Bride radiant in ceremonial crimson and intricate gold ornaments",
-  },
-  {
-    id: "the-sacred-wedding",
-    src: "/images/the-sacred-wedding-card.webp",
-    fullSrc: "/images/the-sacred-wedding-desktop.webp",
-    alt: "The Sacred Wedding — Sacred Vedic wedding rituals and seven vows",
-    title: "The Sacred Wedding",
-    category: "The Sacred Wedding",
-    caption: "Sacred Vedic wedding rituals and timeless matrimonial vows",
-  },
-  {
-    id: "ceremony-haldi",
-    src: "/images/haldi-portrait-card.webp",
-    fullSrc: "/images/haldi-portrait-lightbox.webp",
-    alt: "Joyful Haldi celebration with turmeric blessings and cheerful smiles",
-    title: "Haldi Blessings",
-    category: "Haldi Ceremony",
-    caption: "Joyous laughter and golden turmeric blessings with loved ones",
-  },
+  // 2. (Bottom Row 1)
   {
     id: "sacred-union",
     src: "/images/hero-portrait-card.webp",
@@ -83,6 +58,57 @@ export const REFERENCE_CURATED_PHOTOS: PublishedPhotoItem[] = [
     category: "Mithun & Sakhi",
     caption: "Mithun & Sakhi united in everlasting love and sacred matrimonial bliss",
   },
+  // 3. (Top Row 2)
+  {
+    id: "invitation-haldi",
+    src: "/images/invitationcard-haldi-image-optimized.webp",
+    fullSrc: "/images/invitationcard-haldi-image-optimized.webp",
+    alt: "Auspicious turmeric pastes and vibrant yellow marigold blessings",
+    title: "Turmeric Rituals",
+    category: "Haldi Ceremony",
+    caption: "Auspicious turmeric pastes and vibrant yellow marigold blessings",
+  },
+  // 4. (Bottom Row 2)
+  {
+    id: "invitation-wedding",
+    src: "/images/invitationcard-wedding-image-optimized.webp",
+    fullSrc: "/images/invitationcard-wedding-image-optimized.webp",
+    alt: "Seven sacred circumambulations around the holy matrimonial fire",
+    title: "Sacred Pheras",
+    category: "The Sacred Wedding",
+    caption: "Seven sacred circumambulations around the holy matrimonial fire",
+  },
+  // 5. (Top Row 3)
+  {
+    id: "bride-portrait",
+    src: "/images/bride-portrait-gallery.webp",
+    fullSrc: "/images/bride-portrait-lightbox.webp",
+    alt: "Sakhi Gorain — Bride adorned in crimson wedding lehenga and traditional jewelry",
+    title: "Sakhi Gorain",
+    category: "The Bride",
+    caption: "The Bride radiant in ceremonial crimson and intricate gold ornaments",
+  },
+  // 6. (Bottom Row 3)
+  {
+    id: "ceremony-haldi",
+    src: "/images/haldi-portrait-card.webp",
+    fullSrc: "/images/haldi-portrait-lightbox.webp",
+    alt: "Joyful Haldi celebration with turmeric blessings and cheerful smiles",
+    title: "Haldi Blessings",
+    category: "Haldi Ceremony",
+    caption: "Joyous laughter and golden turmeric blessings with loved ones",
+  },
+  // 7. (Top Row 4)
+  {
+    id: "invitation-mehndi",
+    src: "/images/invitationcard-mehndi-image-optimized.webp",
+    fullSrc: "/images/invitationcard-mehndi-image-optimized.webp",
+    alt: "Exquisite bridal mehndi artistry celebrating love and prosperity",
+    title: "Henna Elegance",
+    category: "Mehndi Ceremony",
+    caption: "Exquisite bridal mehndi artistry celebrating love and prosperity",
+  },
+  // 8. (Bottom Row 4)
   {
     id: "ceremony-mehndi",
     src: "/images/mehendi-portrait-card.webp",
@@ -92,6 +118,27 @@ export const REFERENCE_CURATED_PHOTOS: PublishedPhotoItem[] = [
     category: "Mehndi Ceremony",
     caption: "Intricate henna motifs woven with traditional songs and celebration",
   },
+  // 9. (Top Row 5)
+  {
+    id: "the-sacred-wedding",
+    src: "/images/the-sacred-wedding-card.webp",
+    fullSrc: "/images/the-sacred-wedding-desktop.webp",
+    alt: "The Sacred Wedding — Sacred Vedic wedding rituals and seven vows",
+    title: "The Sacred Wedding",
+    category: "The Sacred Wedding",
+    caption: "Sacred Vedic wedding rituals and timeless matrimonial vows",
+  },
+  // 10. (Bottom Row 5)
+  {
+    id: "decor-flowers",
+    src: "/media/temporary/photos/wedding_decor_flowers.jpg",
+    fullSrc: "/media/temporary/photos/wedding_decor_flowers.jpg",
+    alt: "Opulent floral mandap arrangement with marigolds and fresh roses",
+    title: "Floral Mandap",
+    category: "Wedding Moments",
+    caption: "Opulent marigold and tuberose mandap decorations honoring sacred traditions",
+  },
+  // 11. (Top Row 6)
   {
     id: "ceremony-reception",
     src: "/images/reception-portrait-card.webp",
@@ -101,6 +148,96 @@ export const REFERENCE_CURATED_PHOTOS: PublishedPhotoItem[] = [
     category: "Reception",
     caption: "Grand evening banquet welcoming family, friends, and warm blessings",
   },
+  // 12. (Bottom Row 6)
+  {
+    id: "invitation-reception",
+    src: "/images/invitationcard-reception-image-optimized.webp",
+    fullSrc: "/images/invitationcard-reception-image-optimized.webp",
+    alt: "An evening of royal dining, starlight toasts, and celebratory rejoicings",
+    title: "Royal Reception",
+    category: "Reception",
+    caption: "An evening of royal dining, starlight toasts, and celebratory rejoicings",
+  },
+  // 13. (Top Row 7)
+  {
+    id: "portraits-mithun",
+    src: "/images/portraits/mithun-groom-portrait.webp",
+    fullSrc: "/images/portraits/mithun-groom-portrait.webp",
+    alt: "Mithun Gorain regal in golden zardozi embroidery and royal velvet stoles",
+    title: "The Royal Groom",
+    category: "The Groom",
+    caption: "Mithun regal in golden zardozi embroidery and royal velvet stoles",
+  },
+  // 14. (Bottom Row 7)
+  {
+    id: "hero-cinematic",
+    src: "/images/hero/mithun-sakhi-cinematic-hero-bg.webp",
+    fullSrc: "/images/hero/mithun-sakhi-cinematic-hero-bg.webp",
+    alt: "Cinematic portrait of Mithun & Sakhi celebrating their eternal bond",
+    title: "Sacred Matrimony",
+    category: "Mithun & Sakhi",
+    caption: "Cinematic portrait of Mithun & Sakhi celebrating their eternal bond",
+  },
+  // 15. (Top Row 8)
+  {
+    id: "ceremony-haldi-full",
+    src: "/media/temporary/photos/ceremony_haldi.jpg",
+    fullSrc: "/media/temporary/photos/ceremony_haldi.jpg",
+    alt: "Joyous laughter and golden turmeric blessings with family and loved ones",
+    title: "Haldi Joy",
+    category: "Haldi Ceremony",
+    caption: "Warm smiles, cheerful splashing, and golden blessings of togetherness",
+  },
+  // 16. (Bottom Row 8)
+  {
+    id: "ceremony-mehndi-full",
+    src: "/media/temporary/photos/ceremony_mehndi.jpg",
+    fullSrc: "/media/temporary/photos/ceremony_mehndi.jpg",
+    alt: "Festive Mehndi celebrations with bridal henna and ceremonial diya",
+    title: "Bridal Sangeet",
+    category: "Mehndi Ceremony",
+    caption: "Rhythmic dholak beats, festive singing, and celebratory laughter",
+  },
+  // 17. (Top Row 9)
+  {
+    id: "portraits-sakhi",
+    src: "/images/portraits/sakhi-bride-portrait.webp",
+    fullSrc: "/images/portraits/sakhi-bride-portrait.webp",
+    alt: "Sakhi Gorain graceful in heritage bridal jewels and crimson silken drape",
+    title: "The Royal Bride",
+    category: "The Bride",
+    caption: "Sakhi graceful in heritage bridal jewels and crimson silken drape",
+  },
+  // 18. (Bottom Row 9)
+  {
+    id: "wedding-bg",
+    src: "/images/the-sacred-wedding-desktop.webp",
+    fullSrc: "/images/the-sacred-wedding-desktop.webp",
+    alt: "The sacred vermilion ritual solemnizing matrimonial devotion",
+    title: "Sindoor Daan",
+    category: "The Sacred Wedding",
+    caption: "The sacred vermilion ritual solemnizing matrimonial devotion",
+  },
+  // 19. (Top Row 10)
+  {
+    id: "ceremony-reception-full",
+    src: "/media/temporary/photos/ceremony_reception.jpg",
+    fullSrc: "/media/temporary/photos/ceremony_reception.jpg",
+    alt: "Grand reception hall set with crystal chandeliers and luxury banquet dining",
+    title: "Starlit Evening",
+    category: "Reception",
+    caption: "A grand culinary feast beneath sparkling crystal chandeliers",
+  },
+  // 20. (Bottom Row 10)
+  {
+    id: "hero-couple-full",
+    src: "/media/temporary/photos/hero_couple_portrait.jpg",
+    fullSrc: "/media/temporary/photos/hero_couple_portrait.jpg",
+    alt: "Mithun & Sakhi share a loving and joyous moment together",
+    title: "Two Souls, One Heart",
+    category: "Mithun & Sakhi",
+    caption: "A romantic embrace marking the dawn of an auspicious lifelong union",
+  },
 ];
 
 interface SquarePhotoCardProps {
@@ -108,17 +245,21 @@ interface SquarePhotoCardProps {
   originalIndex: number;
   onClick: () => void;
   priority?: boolean;
+  isDuplicate?: boolean;
 }
 
 function SquarePhotoCard({
   photo,
   onClick,
   priority = false,
+  isDuplicate = false,
 }: SquarePhotoCardProps) {
   return (
     <button
       type="button"
       onClick={onClick}
+      tabIndex={isDuplicate ? -1 : undefined}
+      aria-hidden={isDuplicate ? true : undefined}
       aria-label={`View photograph: ${photo.title}`}
       className="group relative aspect-square w-[160px] sm:w-[210px] md:w-[250px] shrink-0 rounded-2xl overflow-hidden border border-[#B8975E]/30 bg-[#292322]/5 shadow-xs hover:shadow-md hover:border-[#B8975E]/70 active:scale-[0.976] md:active:scale-100 transition-all duration-200 text-left cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#B8975E]/60 select-none block"
     >
@@ -269,9 +410,22 @@ export function GalleryPreviewClient({
     };
   }, []);
 
+  // Tab visibility listener to pause heavy animations when page is backgrounded
+  const [isTabVisible, setIsTabVisible] = useState(true);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsTabVisible(document.visibilityState === "visible");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   // Split photos into Top Row and Bottom Row
-  // Top Row: items with even indices [0, 2, 4, ...]
-  // Bottom Row: items with odd indices [1, 3, 5, ...]
+  // Top Row: items with even indices [0, 2, 4, ...] (10 items in demo mode)
+  // Bottom Row: items with odd indices [1, 3, 5, ...] (10 items in demo mode)
   const topRowSource = useMemo(
     () => activePhotos.filter((_, i) => i % 2 === 0),
     [activePhotos]
@@ -293,40 +447,46 @@ export function GalleryPreviewClient({
   const topRowNaturalWidth = useMemo(() => {
     const count = topRowSource.length;
     if (count === 0) return 0;
-    return count * cardWidth + Math.max(0, count - 1) * cardGap;
+    return count * (cardWidth + cardGap);
   }, [topRowSource.length, cardWidth, cardGap]);
 
   const bottomRowNaturalWidth = useMemo(() => {
     const count = bottomRowSource.length;
     if (count === 0) return 0;
-    return count * cardWidth + Math.max(0, count - 1) * cardGap;
+    return count * (cardWidth + cardGap);
   }, [bottomRowSource.length, cardWidth, cardGap]);
 
-  // CONDITION 1: Each row contains at least 3 unique photographs
-  const hasMinUniquePhotosPerRow =
-    topRowSource.length >= 3 && bottomRowSource.length >= 3;
+  // Adaptive marquee activation:
+  // - Real published photos: 1-5 photos stay static; >5 photos animate if overflowing container.
+  // - Demo/Curated photos: activates infinite marquee once sequence satisfies width (>= 1.0x width)
+  const isMarqueeEligible = useMemo(() => {
+    if (isReal) {
+      if (activePhotos.length < 6) return false;
+      return (
+        containerWidth > 0 &&
+        topRowNaturalWidth >= containerWidth + cardGap &&
+        bottomRowNaturalWidth >= containerWidth + cardGap
+      );
+    }
+    // Demo Mode:
+    return (
+      topRowSource.length >= 3 &&
+      bottomRowSource.length >= 3 &&
+      (containerWidth === 0 ||
+        (topRowNaturalWidth >= containerWidth && bottomRowNaturalWidth >= containerWidth))
+    );
+  }, [
+    isReal,
+    activePhotos.length,
+    topRowSource.length,
+    bottomRowSource.length,
+    containerWidth,
+    topRowNaturalWidth,
+    bottomRowNaturalWidth,
+    cardGap,
+  ]);
 
-  // CONDITION 2: The natural rendered width of each row's unique image sequence
-  // exceeds its visible container width by at least one card gap
-  const topRowOverflows =
-    containerWidth > 0 && topRowNaturalWidth >= containerWidth + cardGap;
-  const bottomRowOverflows =
-    containerWidth > 0 && bottomRowNaturalWidth >= containerWidth + cardGap;
-
-  const isMarqueeEligible =
-    hasMinUniquePhotosPerRow && topRowOverflows && bottomRowOverflows;
   const isMarqueeActive = isMarqueeEligible && !shouldReduceMotion;
-
-  // Seamless Looping Duplication: Duplicate each complete row sequence EXACTLY ONCE
-  // when eligible. Zero fake individual photo repetition.
-  const topMarqueeItems: PublishedPhotoItem[] = useMemo(
-    () => (isMarqueeActive ? [...topRowSource, ...topRowSource] : topRowSource),
-    [isMarqueeActive, topRowSource]
-  );
-  const bottomMarqueeItems: PublishedPhotoItem[] = useMemo(
-    () => (isMarqueeActive ? [...bottomRowSource, ...bottomRowSource] : bottomRowSource),
-    [isMarqueeActive, bottomRowSource]
-  );
 
   return (
     <section
@@ -444,7 +604,7 @@ export function GalleryPreviewClient({
       <div
         ref={containerRef}
         className={`relative w-full overflow-hidden select-none space-y-3.5 sm:space-y-4 md:space-y-5 py-2 ${
-          !isInView ? "is-paused" : ""
+          !isInView || !isTabVisible ? "is-paused" : ""
         }`}
       >
         {/* ------------------------------------------------------------------ */}
@@ -455,23 +615,40 @@ export function GalleryPreviewClient({
           aria-label="Wedding photographs top row"
         >
           {isMarqueeActive ? (
-            <div className="marquee-track flex gap-3 sm:gap-4 md:gap-5 w-max animate-marquee-left">
-              {topMarqueeItems.map((photo, idx) => {
-                const isDuplicate = idx >= topRowSource.length;
-                const originalIdx = activePhotos.findIndex((p) => p.id === photo.id);
-                return (
-                  <div
-                    key={`top-${photo.id}-${idx}`}
-                    aria-hidden={isDuplicate ? "true" : undefined}
-                  >
+            <div className="marquee-track flex w-max animate-marquee-left">
+              {/* Primary Sequence */}
+              <div className="flex gap-3 sm:gap-4 md:gap-5 pr-3 sm:pr-4 md:pr-5 shrink-0">
+                {topRowSource.map((photo) => {
+                  const originalIdx = activePhotos.findIndex((p) => p.id === photo.id);
+                  return (
                     <SquarePhotoCard
+                      key={`top-primary-${photo.id}`}
                       photo={photo}
                       originalIndex={originalIdx >= 0 ? originalIdx : 0}
                       onClick={() => setSelectedPhotoIndex(originalIdx >= 0 ? originalIdx : 0)}
                     />
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Seamless Looping Duplicate (Identical width, aria-hidden) */}
+              <div
+                className="flex gap-3 sm:gap-4 md:gap-5 pr-3 sm:pr-4 md:pr-5 shrink-0"
+                aria-hidden="true"
+              >
+                {topRowSource.map((photo, idx) => {
+                  const originalIdx = activePhotos.findIndex((p) => p.id === photo.id);
+                  return (
+                    <SquarePhotoCard
+                      key={`top-loop-${photo.id}-${idx}`}
+                      photo={photo}
+                      originalIndex={originalIdx >= 0 ? originalIdx : 0}
+                      onClick={() => setSelectedPhotoIndex(originalIdx >= 0 ? originalIdx : 0)}
+                      isDuplicate
+                    />
+                  );
+                })}
+              </div>
             </div>
           ) : (
             /* Static Centered Layout when insufficient photos or reduced motion */
@@ -500,23 +677,40 @@ export function GalleryPreviewClient({
             aria-label="Wedding photographs bottom row"
           >
             {isMarqueeActive ? (
-              <div className="marquee-track flex gap-3 sm:gap-4 md:gap-5 w-max animate-marquee-right">
-                {bottomMarqueeItems.map((photo, idx) => {
-                  const isDuplicate = idx >= bottomRowSource.length;
-                  const originalIdx = activePhotos.findIndex((p) => p.id === photo.id);
-                  return (
-                    <div
-                      key={`bottom-${photo.id}-${idx}`}
-                      aria-hidden={isDuplicate ? "true" : undefined}
-                    >
+              <div className="marquee-track flex w-max animate-marquee-right">
+                {/* Primary Sequence */}
+                <div className="flex gap-3 sm:gap-4 md:gap-5 pr-3 sm:pr-4 md:pr-5 shrink-0">
+                  {bottomRowSource.map((photo) => {
+                    const originalIdx = activePhotos.findIndex((p) => p.id === photo.id);
+                    return (
                       <SquarePhotoCard
+                        key={`bottom-primary-${photo.id}`}
                         photo={photo}
                         originalIndex={originalIdx >= 0 ? originalIdx : 0}
                         onClick={() => setSelectedPhotoIndex(originalIdx >= 0 ? originalIdx : 0)}
                       />
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
+
+                {/* Seamless Looping Duplicate (Identical width, aria-hidden) */}
+                <div
+                  className="flex gap-3 sm:gap-4 md:gap-5 pr-3 sm:pr-4 md:pr-5 shrink-0"
+                  aria-hidden="true"
+                >
+                  {bottomRowSource.map((photo, idx) => {
+                    const originalIdx = activePhotos.findIndex((p) => p.id === photo.id);
+                    return (
+                      <SquarePhotoCard
+                        key={`bottom-loop-${photo.id}-${idx}`}
+                        photo={photo}
+                        originalIndex={originalIdx >= 0 ? originalIdx : 0}
+                        onClick={() => setSelectedPhotoIndex(originalIdx >= 0 ? originalIdx : 0)}
+                        isDuplicate
+                      />
+                    );
+                  })}
+                </div>
               </div>
             ) : (
               /* Static Centered Layout when insufficient photos or reduced motion */

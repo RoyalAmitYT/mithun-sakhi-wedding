@@ -16,7 +16,7 @@ export const DEFAULT_INVITATION_SETTINGS: InvitationPreviewSettings = {
   headline_text: "WITH THE DIVINE BLESSINGS OF OUR FAMILIES",
   intro_text:
     "With joyful hearts, we invite you to celebrate our sacred union\nand bless the beautiful beginning of our life together.",
-  qr_code_target_url: "https://mithun-sakhi-wedding.vercel.app/#invitation",
+  qr_code_target_url: "https://mithun-sakhi-wedding.vercel.app",
   default_template: "cinematic",
   is_published: true,
 };
@@ -28,7 +28,7 @@ export interface InvitationPreviewSectionProps {
 export function InvitationPreviewSkeleton() {
   return (
     <section
-      id="invitation"
+      id="invitation-skeleton"
       aria-label="Loading Official Wedding Invitation"
       className="relative py-20 sm:py-28 md:py-32 bg-gradient-to-b from-[#FFFDF9] via-[#FFFCF6] to-[#FAF5EB] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
     >

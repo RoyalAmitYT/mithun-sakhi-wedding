@@ -35,7 +35,7 @@ export function InvitationPreviewClient({ settings }: InvitationPreviewClientPro
   const luxuryEase = MOTION_EASINGS.luxury as [number, number, number, number];
 
   const canonicalUrl =
-    settings?.qr_code_target_url || "https://mithun-sakhi-wedding.vercel.app/#invitation";
+    settings?.qr_code_target_url || "https://mithun-sakhi-wedding.vercel.app";
   const headlineText =
     settings?.headline_text || "WITH THE DIVINE BLESSINGS OF OUR FAMILIES";
   const introText =

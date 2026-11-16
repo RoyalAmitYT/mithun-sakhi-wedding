@@ -70,15 +70,34 @@ const EditorialFooter = dynamic(
 );
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mithun-sakhi-wedding.vercel.app"),
   title: "Mithun & Sakhi — Wedding Celebration",
   description:
-    "Official wedding celebration website for Mithun Gorain and Sakhi Gorain. 19–22 November 2026 • Purulia, West Bengal.",
+    "Join us in celebrating the wedding festivities of Mithun & Sakhi, 19–22 November 2026, in Purulia, West Bengal.",
   openGraph: {
-    title: "Mithun & Sakhi Wedding Celebration",
-    description:
-      "Join us in celebrating the sacred union of Mithun & Sakhi. 19–22 November 2026, Purulia, West Bengal.",
     type: "website",
     locale: "en_IN",
+    url: "https://mithun-sakhi-wedding.vercel.app",
+    siteName: "Mithun & Sakhi Wedding",
+    title: "Mithun & Sakhi — Wedding Celebration",
+    description:
+      "Join us in celebrating the wedding festivities of Mithun & Sakhi, 19–22 November 2026, in Purulia, West Bengal.",
+    images: [
+      {
+        url: "https://mithun-sakhi-wedding.vercel.app/opengraph-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Mithun & Sakhi — Wedding Celebration",
+        type: "image/jpeg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mithun & Sakhi — Wedding Celebration",
+    description:
+      "Join us in celebrating the wedding festivities of Mithun & Sakhi, 19–22 November 2026, in Purulia, West Bengal.",
+    images: ["https://mithun-sakhi-wedding.vercel.app/opengraph-image.jpg"],
   },
 };
 

@@ -8,6 +8,7 @@ interface QrCodeDisplayProps {
   size?: number;
   label?: string;
   className?: string;
+  labelClassName?: string;
 }
 
 export function QrCodeDisplay({
@@ -15,6 +16,7 @@ export function QrCodeDisplay({
   size = 140,
   label = "Scan for Ceremony Details & Updates",
   className = "",
+  labelClassName = "text-[11px] font-sans text-[#8A8280] mt-2 max-w-[160px] leading-tight",
 }: QrCodeDisplayProps) {
   const svgMarkup = useMemo(() => {
     return generateQrSvg(url, {
@@ -34,7 +36,7 @@ export function QrCodeDisplay({
         role="img"
       />
       {label && (
-        <span className="text-[11px] font-sans text-[#8A8280] mt-2 max-w-[160px] leading-tight">
+        <span className={labelClassName}>
           {label}
         </span>
       )}

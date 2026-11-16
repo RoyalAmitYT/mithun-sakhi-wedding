@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { CalendarDropdown } from "./calendar-dropdown";
 import { OfficialWeddingInvitation } from "./official-wedding-invitation";
+import { InvitationShareModal } from "./invitation-share-modal";
 import {
   downloadInvitationCardAsPng,
   printOfficialInvitation,
-  shareOrCopyInvitationUrl,
 } from "@/lib/invitation-export";
 
 export interface InvitationStudioSettings {
@@ -26,6 +26,7 @@ interface InvitationStudioProps {
 export function InvitationStudio({ initialSettings }: InvitationStudioProps = {}) {
   const [downloading, setDownloading] = useState(false);
   const [shareFeedback, setShareFeedback] = useState<string | null>(null);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
 
   const handleDownloadPng = async () => {
     try {
@@ -52,10 +53,8 @@ export function InvitationStudio({ initialSettings }: InvitationStudioProps = {}
     }
   };
 
-  const handleShare = async () => {
-    const res = await shareOrCopyInvitationUrl();
-    setShareFeedback(res.message);
-    setTimeout(() => setShareFeedback(null), 3000);
+  const handleShare = () => {
+    setShareModalOpen(true);
   };
 
   return (
@@ -197,6 +196,13 @@ export function InvitationStudio({ initialSettings }: InvitationStudioProps = {}
           introText={initialSettings?.intro_text || undefined}
         />
       </div>
+
+      {/* Luxury Share Modal */}
+      <InvitationShareModal
+        isOpen={shareModalOpen}
+        onClose={() => setShareModalOpen(false)}
+        canonicalUrl={initialSettings?.qr_code_target_url}
+      />
     </div>
   );
 }

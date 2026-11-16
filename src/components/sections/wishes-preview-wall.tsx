@@ -31,7 +31,7 @@ interface WishesPreviewWallProps {
 export function WishesPreviewSkeleton() {
   return (
     <section
-      id="wishes"
+      id="wishes-skeleton"
       aria-labelledby="wishes-title"
       className="relative pt-16 sm:pt-22 md:pt-26 lg:pt-32 pb-14 sm:pb-18 md:pb-22 lg:pb-28 bg-[#FFFCF6] border-t border-[rgba(184,151,94,0.2)] scroll-mt-24 overflow-hidden"
     >

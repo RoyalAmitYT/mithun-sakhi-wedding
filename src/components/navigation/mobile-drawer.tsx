@@ -103,7 +103,9 @@ export function MobileDrawer({
         e.preventDefault();
         const targetEl = document.getElementById(link.id);
         if (targetEl) {
-          scrollTo(targetEl, { offset: -64 });
+          const navbarEl = document.querySelector<HTMLElement>('header[role="banner"]');
+          const offset = navbarEl ? -(navbarEl.offsetHeight - 2) : -64;
+          scrollTo(targetEl, { offset });
           window.history.pushState(null, "", `#${link.id}`);
         }
       }

@@ -8,6 +8,10 @@ export {
 } from "./official-wedding-invitation";
 export { InvitationActionButtons } from "./invitation-action-buttons";
 export {
+  InvitationShareModal,
+  type InvitationShareModalProps,
+} from "./invitation-share-modal";
+export {
   InvitationArchitecturalFrame,
   RoyalMonogramSeal,
   EditorialGoldDivider,
