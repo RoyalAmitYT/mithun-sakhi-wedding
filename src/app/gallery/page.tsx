@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navigation";
 import { EditorialFooter } from "@/components/sections";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "@/types/database.types";
-import { GalleryView, type PublishedMediaItem } from "./gallery-view";
+import { GalleryView } from "./gallery-view";
+import { getCachedPublishedMedia } from "@/lib/server-data";
+import { Skeleton } from "@/components/ui/skeleton";
 import { SectionHeaderFiligree } from "@/components/ui/decorative-surfaces";
 import { Container } from "@/components/ui/container";
 import { AnimatedDivider } from "@/components/motion/animated-divider";
@@ -22,25 +22,41 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function GalleryPage() {
-  let publishedMedia: PublishedMediaItem[] = [];
+async function GalleryMediaContainer() {
+  const publishedMedia = await getCachedPublishedMedia();
+  return <GalleryView initialMedia={publishedMedia} />;
+}
 
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey =
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+function GallerySkeletonFallback() {
+  return (
+    <div className="space-y-8 animate-pulse">
+      {/* Category Filter Pills Skeleton */}
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+        {[...Array(6)].map((_, i) => (
+          <Skeleton key={i} className="h-10 w-24 sm:w-28 rounded-full" />
+        ))}
+      </div>
 
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseKey);
-      const { data: rawMedia } = await supabase.rpc("get_published_media");
-      publishedMedia = (rawMedia as unknown as PublishedMediaItem[]) || [];
-    }
-  } catch (err) {
-    console.error("Failed to hydrate published media for gallery page:", err);
-    publishedMedia = [];
-  }
+      {/* Photo Grid Skeleton */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="rounded-2xl border border-[#B8975E]/20 bg-white/70 overflow-hidden shadow-xs space-y-3 pb-4"
+          >
+            <Skeleton className="aspect-4/3 w-full rounded-none" />
+            <div className="px-4 space-y-2">
+              <Skeleton className="h-5 w-3/4 rounded-md" />
+              <Skeleton className="h-3.5 w-1/2 rounded-md" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
+export default function GalleryPage() {
   return (
     <>
       <Navbar />
@@ -172,8 +188,10 @@ export default async function GalleryPage() {
             </div>
           </header>
 
-          {/* Interactive Tabbed Gallery Component */}
-          <GalleryView initialMedia={publishedMedia} />
+          {/* Interactive Tabbed Gallery Component with Streaming Suspense */}
+          <Suspense fallback={<GallerySkeletonFallback />}>
+            <GalleryMediaContainer />
+          </Suspense>
         </Container>
         </PageTransition>
       </main>

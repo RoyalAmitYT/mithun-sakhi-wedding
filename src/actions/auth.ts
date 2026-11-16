@@ -18,7 +18,7 @@ export type AuthActionResult = {
  * Handles guest registration with full name, email, password, and optional mobile number.
  */
 export async function signUpAction(
-  prevState: AuthActionResult | null,
+  _prevState: AuthActionResult | null,
   formData: FormData
 ): Promise<AuthActionResult> {
   if (isMemoriesModeActive()) {
@@ -97,7 +97,7 @@ export async function signUpAction(
  * Handles guest login with email and password.
  */
 export async function signInAction(
-  prevState: AuthActionResult | null,
+  _prevState: AuthActionResult | null,
   formData: FormData
 ): Promise<AuthActionResult> {
   const email = formData.get("email")?.toString().trim().toLowerCase();
@@ -132,7 +132,7 @@ export async function signInAction(
  * Strictly prevents non-admin users from obtaining an administrator session.
  */
 export async function adminSignInAction(
-  prevState: AuthActionResult | null,
+  _prevState: AuthActionResult | null,
   formData: FormData
 ): Promise<AuthActionResult> {
   const email = formData.get("email")?.toString().trim().toLowerCase();
@@ -200,7 +200,7 @@ export async function adminSignOutAction(): Promise<void> {
  * Initiates password recovery email dispatch.
  */
 export async function forgotPasswordAction(
-  prevState: AuthActionResult | null,
+  _prevState: AuthActionResult | null,
   formData: FormData
 ): Promise<AuthActionResult> {
   const email = formData.get("email")?.toString().trim().toLowerCase();
@@ -233,7 +233,7 @@ export async function forgotPasswordAction(
  * Updates the authenticated user's password.
  */
 export async function updatePasswordAction(
-  prevState: AuthActionResult | null,
+  _prevState: AuthActionResult | null,
   formData: FormData
 ): Promise<AuthActionResult> {
   const password = formData.get("password")?.toString();

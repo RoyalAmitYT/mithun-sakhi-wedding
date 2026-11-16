@@ -43,7 +43,8 @@ export function FloatingMusicPlayer() {
   // Defer scroll activity and modal lock observers until after idle to eliminate hydration contention
   useEffect(() => {
     let cleanup: (() => void) | null = null;
-    let idleTimer: any = null;
+    type IdleHandle = number | ReturnType<typeof setTimeout>;
+    let idleTimer: IdleHandle | null = null;
 
     const setupObservers = () => {
       let scrollingActive = false;
@@ -106,17 +107,17 @@ export function FloatingMusicPlayer() {
     };
 
     if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      idleTimer = (window as any).requestIdleCallback(setupObservers, { timeout: 2000 });
+      idleTimer = window.requestIdleCallback(setupObservers, { timeout: 2000 });
     } else {
       idleTimer = setTimeout(setupObservers, 1200);
     }
 
     return () => {
-      if (idleTimer) {
-        if (typeof window !== "undefined" && "cancelIdleCallback" in window) {
-          (window as any).cancelIdleCallback(idleTimer);
+      if (idleTimer !== null) {
+        if (typeof window !== "undefined" && "cancelIdleCallback" in window && typeof idleTimer === "number") {
+          window.cancelIdleCallback(idleTimer);
         } else {
-          clearTimeout(idleTimer);
+          clearTimeout(idleTimer as ReturnType<typeof setTimeout>);
         }
       }
       if (cleanup) cleanup();

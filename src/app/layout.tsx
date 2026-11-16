@@ -110,6 +110,15 @@ export default function RootLayout({
           as="image"
           type="image/webp"
           href="/images/hero/mithun-sakhi-cinematic-hero-bg.webp"
+          media="(orientation: portrait)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          type="image/webp"
+          href="/images/hero-portrait-desktop.webp"
+          media="(orientation: landscape)"
           fetchPriority="high"
         />
       </head>

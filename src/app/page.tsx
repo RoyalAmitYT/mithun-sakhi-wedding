@@ -45,9 +45,6 @@ const VenuesSection = dynamic(
     )
 );
 
-
-
-
 const RsvpPreviewSection = dynamic(
   () =>
     import("@/components/sections/rsvp-preview-section").then(

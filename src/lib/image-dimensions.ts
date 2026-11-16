@@ -104,6 +104,19 @@ export function getImageDimensionsFromBuffer(
         offset += 2 + length;
       }
     }
+
+    // 5. AVIF Detection (ftyp with avif/avis brand)
+    if (
+      buffer.length >= 16 &&
+      buffer.toString("ascii", 4, 8) === "ftyp"
+    ) {
+      const ispeIdx = buffer.indexOf("ispe");
+      if (ispeIdx !== -1 && ispeIdx + 16 <= buffer.length) {
+        const width = buffer.readUInt32BE(ispeIdx + 8);
+        const height = buffer.readUInt32BE(ispeIdx + 12);
+        if (width > 0 && height > 0) return { width, height };
+      }
+    }
   } catch {
     // Return null on parsing failure
     return null;

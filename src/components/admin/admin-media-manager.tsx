@@ -464,7 +464,7 @@ export function AdminMediaManager({ initialItems }: AdminMediaManagerProps) {
             const previewUrl = isVideo
               ? videoId
                 ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-                : "/placeholder.jpg"
+                : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='100%25' height='100%25' fill='%231F0A10'/%3E%3Cpath d='M170 110 L250 150 L170 190 Z' fill='%23C5A880'/%3E%3C/svg%3E"
               : `/api/media/${item.id}`;
 
             return (

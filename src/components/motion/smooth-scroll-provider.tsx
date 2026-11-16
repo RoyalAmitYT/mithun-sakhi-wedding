@@ -167,12 +167,18 @@ export function SmoothScrollProvider({
       }
     ) => {
       if (activeLenis) {
-        activeLenis.scrollTo(target, options);
+        if (typeof target === "string") {
+          const selector = target.startsWith("#") ? target : `#${target}`;
+          activeLenis.scrollTo(selector, options);
+        } else {
+          activeLenis.scrollTo(target, options);
+        }
       } else if (typeof window !== "undefined") {
         if (typeof target === "number") {
           window.scrollTo({ top: target, behavior: options?.immediate ? "auto" : "smooth" });
         } else if (typeof target === "string") {
-          const el = document.querySelector(target);
+          const selector = target.startsWith("#") ? target : `#${target}`;
+          const el = document.querySelector(selector);
           if (el) {
             const top = el.getBoundingClientRect().top + window.scrollY + (options?.offset || 0);
             window.scrollTo({ top, behavior: options?.immediate ? "auto" : "smooth" });

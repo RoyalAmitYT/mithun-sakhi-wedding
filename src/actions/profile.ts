@@ -15,7 +15,7 @@ export type ProfileActionResult = {
  * Strictly respects PostgreSQL column-level grants from Phase P-07.2.
  */
 export async function updateProfileAction(
-  prevState: ProfileActionResult | null,
+  _prevState: ProfileActionResult | null,
   formData: FormData
 ): Promise<ProfileActionResult> {
   const { user } = await requireAuth("/account");

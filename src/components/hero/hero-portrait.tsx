@@ -65,13 +65,20 @@ export function HeroPortrait() {
           }}
           className="absolute inset-0 -bottom-2 w-full h-[calc(100%+8px)]"
         >
-          <img
-            src="/images/hero/mithun-sakhi-cinematic-hero-bg.webp"
-            alt="Mithun and Sakhi - The Sacred Wedding Celebration"
-            fetchPriority="high"
-            decoding="sync"
-            className="w-full h-full object-cover object-[center_top]"
-          />
+          <picture className="w-full h-full">
+            <source
+              media="(orientation: portrait)"
+              type="image/webp"
+              srcSet="/images/hero/mithun-sakhi-cinematic-hero-bg.webp"
+            />
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              alt="Mithun and Sakhi - The Sacred Wedding Celebration"
+              fetchPriority="high"
+              decoding="sync"
+              className="w-full h-full object-cover object-[center_top]"
+            />
+          </picture>
         </motion.div>
 
         {/* Top Navbar Scrim: Guarantees high-contrast readability for monogram & menu */}
@@ -459,6 +466,8 @@ export function HeroPortrait() {
                   if (targetEl) {
                     scrollTo(targetEl, { offset: -72 });
                     window.history.pushState(null, "", `#${targetId}`);
+                  } else {
+                    scrollTo(`#${targetId}`, { offset: -72 });
                   }
                 }
               }}
@@ -488,6 +497,8 @@ export function HeroPortrait() {
                   if (targetEl) {
                     scrollTo(targetEl, { offset: -72 });
                     window.history.pushState(null, "", `#${targetId}`);
+                  } else {
+                    scrollTo(`#${targetId}`, { offset: -72 });
                   }
                 }
               }}

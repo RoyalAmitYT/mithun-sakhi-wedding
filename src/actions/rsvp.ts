@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireAuth } from "@/lib/supabase/auth-helpers";
 import { isMemoriesModeActive } from "@/lib/lifecycle";
+import { checkRateLimit } from "@/lib/rate-limit";
 import type { Json } from "@/types/database.types";
 
 export type AttendeeInput = {
@@ -187,7 +188,18 @@ export async function submitPublicRsvpAction(
       return { success: true, rsvpId: "mock-submission-id" };
     }
 
-    // 2. Lifecycle cutoff check
+    // 2. Distributed persistent rate limiting defense (max 5 requests per 60s per client)
+    const rateLimit = await checkRateLimit("rsvp", { limit: 5, windowSeconds: 60 });
+    if (!rateLimit.allowed) {
+      return {
+        success: false,
+        error:
+          rateLimit.error ||
+          `Too many RSVP confirmations submitted from your connection. Please wait ${rateLimit.retryAfter || 60} seconds before trying again.`,
+      };
+    }
+
+    // 3. Lifecycle cutoff check
     if (isMemoriesModeActive()) {
       return {
         success: false,

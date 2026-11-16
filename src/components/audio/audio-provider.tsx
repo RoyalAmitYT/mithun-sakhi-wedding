@@ -7,6 +7,7 @@ import React, {
   useRef,
   useEffect,
   useCallback,
+  useMemo,
 } from "react";
 import { WEDDING_PLAYLIST, type WeddingTrack } from "@/data/wedding-playlist";
 
@@ -57,11 +58,18 @@ export function AudioProvider({ children }: AudioProviderProps) {
 
   const currentTrackIndexRef = useRef<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const volumeRef = useRef<number>(0.75);
+  const isMutedRef = useRef<boolean>(false);
   const currentTrack = WEDDING_PLAYLIST[currentTrackIndex] || WEDDING_PLAYLIST[0];
 
   useEffect(() => {
     currentTrackIndexRef.current = currentTrackIndex;
   }, [currentTrackIndex]);
+
+  useEffect(() => {
+    volumeRef.current = volume;
+    isMutedRef.current = isMuted;
+  }, [volume, isMuted]);
 
   const switchTrack = useCallback(
     (index: number, startPlaying: boolean) => {
@@ -106,23 +114,30 @@ export function AudioProvider({ children }: AudioProviderProps) {
   }, [switchTrack]);
 
   // Initialize single persistent Audio instance lazily or deferred until idle
-  const initAudio = useCallback(() => {
+  const initAudio = () => {
     if (audioRef.current || typeof window === "undefined") return audioRef.current;
 
     const audio = new Audio();
     audio.preload = "none";
-    audio.volume = volume;
-    audio.muted = isMuted;
-    audio.src = currentTrack.src;
+    audio.volume = volumeRef.current;
+    audio.muted = isMutedRef.current;
+    const initialTrack = WEDDING_PLAYLIST[currentTrackIndexRef.current] || WEDDING_PLAYLIST[0];
+    audio.src = initialTrack.src;
     audioRef.current = audio;
 
+    let lastTimeUpdate = 0;
     const handleTimeUpdate = () => {
       if (!audio) return;
-      setCurrentTime(audio.currentTime);
+      const now = performance.now();
+      // Throttle timeupdate state updates to at most once every 500ms to eliminate high-frequency main-thread re-renders
+      if (now - lastTimeUpdate < 500) return;
+      lastTimeUpdate = now;
+
+      const cur = audio.currentTime;
       const dur = audio.duration || 0;
-      setDuration(dur);
+      setCurrentTime(cur);
       if (dur > 0) {
-        setProgress((audio.currentTime / dur) * 100);
+        setProgress((cur / dur) * 100);
       }
     };
 
@@ -171,24 +186,30 @@ export function AudioProvider({ children }: AudioProviderProps) {
     audio.addEventListener("error", handleError);
 
     return audio;
-  }, [currentTrack.src, isMuted, volume]);
+  };
+
+  const initAudioRef = useRef(initAudio);
+  useEffect(() => {
+    initAudioRef.current = initAudio;
+  });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    let idleId: any = null;
+    type IdleHandle = number | ReturnType<typeof setTimeout>;
+    let idleId: IdleHandle | null = null;
     if ("requestIdleCallback" in window) {
-      idleId = (window as any).requestIdleCallback(() => initAudio(), { timeout: 6000 });
+      idleId = window.requestIdleCallback(() => initAudioRef.current(), { timeout: 6000 });
     } else {
-      idleId = setTimeout(() => initAudio(), 5000);
+      idleId = setTimeout(() => initAudioRef.current(), 5000);
     }
 
     return () => {
-      if (idleId) {
-        if ("cancelIdleCallback" in window) {
-          (window as any).cancelIdleCallback(idleId);
+      if (idleId !== null) {
+        if ("cancelIdleCallback" in window && typeof idleId === "number") {
+          window.cancelIdleCallback(idleId);
         } else {
-          clearTimeout(idleId);
+          clearTimeout(idleId as ReturnType<typeof setTimeout>);
         }
       }
       const audio = audioRef.current;
@@ -198,7 +219,6 @@ export function AudioProvider({ children }: AudioProviderProps) {
         audioRef.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sync volume & mute
@@ -210,10 +230,10 @@ export function AudioProvider({ children }: AudioProviderProps) {
   }, [volume, isMuted]);
 
   const togglePlay = useCallback(() => {
-    let audio = audioRef.current;
-    if (!audio) {
-      audio = initAudio();
+    if (!audioRef.current) {
+      initAudioRef.current();
     }
+    const audio = audioRef.current;
     if (!audio) return;
 
     const track = WEDDING_PLAYLIST[currentTrackIndex];
@@ -268,10 +288,10 @@ export function AudioProvider({ children }: AudioProviderProps) {
   }, [currentTrackIndex, isPlaying, switchTrack]);
 
   const seek = useCallback((seconds: number) => {
-    let audio = audioRef.current;
-    if (!audio) {
-      audio = initAudio();
+    if (!audioRef.current) {
+      initAudioRef.current();
     }
+    const audio = audioRef.current;
     if (!audio) return;
     const clamped = Math.max(0, Math.min(audio.duration || 0, seconds));
     audio.currentTime = clamped;
@@ -295,34 +315,57 @@ export function AudioProvider({ children }: AudioProviderProps) {
     setErrorMessage(null);
   }, []);
 
+  const contextValue = useMemo<AudioContextType>(
+    () => ({
+      playlist: WEDDING_PLAYLIST,
+      currentTrackIndex,
+      currentTrack,
+      isPlaying,
+      isMuted,
+      volume,
+      currentTime,
+      duration,
+      progress,
+      isLoading,
+      hasError,
+      errorMessage,
+      trackTitle: currentTrack.title,
+      hasAudioSource: true,
+      showComingSoonNotice: hasError,
+      togglePlay,
+      playTrack,
+      nextTrack,
+      previousTrack,
+      seek,
+      toggleMute,
+      setVolume,
+      dismissNotice,
+    }),
+    [
+      currentTrackIndex,
+      currentTrack,
+      isPlaying,
+      isMuted,
+      volume,
+      currentTime,
+      duration,
+      progress,
+      isLoading,
+      hasError,
+      errorMessage,
+      togglePlay,
+      playTrack,
+      nextTrack,
+      previousTrack,
+      seek,
+      toggleMute,
+      setVolume,
+      dismissNotice,
+    ]
+  );
+
   return (
-    <AudioContext.Provider
-      value={{
-        playlist: WEDDING_PLAYLIST,
-        currentTrackIndex,
-        currentTrack,
-        isPlaying,
-        isMuted,
-        volume,
-        currentTime,
-        duration,
-        progress,
-        isLoading,
-        hasError,
-        errorMessage,
-        trackTitle: currentTrack.title,
-        hasAudioSource: true,
-        showComingSoonNotice: hasError,
-        togglePlay,
-        playTrack,
-        nextTrack,
-        previousTrack,
-        seek,
-        toggleMute,
-        setVolume,
-        dismissNotice,
-      }}
-    >
+    <AudioContext.Provider value={contextValue}>
       {children}
     </AudioContext.Provider>
   );

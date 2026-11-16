@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/supabase/auth-helpers";
 import { extractYouTubeVideoId } from "@/lib/youtube";
-import { getImageDimensionsFromBuffer } from "@/lib/image-dimensions";
+import { validateAndInspectImageBuffer } from "@/lib/image-validator";
 
 export { extractYouTubeVideoId };
 
@@ -23,14 +23,6 @@ const VALID_CATEGORIES: MediaCategory[] = [
   "reception",
   "portraits",
   "others",
-];
-
-const ALLOWED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-  "image/avif",
 ];
 
 /** Supabase Storage bucket name */
@@ -82,9 +74,6 @@ export async function uploadMediaAction(formData: FormData) {
       };
     }
 
-    const widthsRaw = formData.getAll("widths") as string[];
-    const heightsRaw = formData.getAll("heights") as string[];
-
     const createdIds: string[] = [];
     const uploadResults: Array<{
       fileName: string;
@@ -103,49 +92,27 @@ export async function uploadMediaAction(formData: FormData) {
         };
       }
 
-      if (!ALLOWED_IMAGE_TYPES.includes(file.type.toLowerCase())) {
+      // Read buffer immediately for authoritative binary inspection
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      // Deep binary validation: inspects magic bytes, detects scripts/markup, validates dimensions & MIME consistency
+      const validation = validateAndInspectImageBuffer(buffer, file.name, file.type);
+      if (!validation.valid) {
         return {
           success: false,
-          error: `File "${file.name}" has an unsupported format. Allowed formats: JPEG, PNG, WebP, AVIF.`,
+          error: `File "${file.name}" rejected: ${validation.error}`,
         };
       }
 
       const mediaId = crypto.randomUUID();
       const originalBytes = file.size;
 
-      // Convert file to buffer for storage upload
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-
-      // Detect natural dimensions directly from binary buffer or client form hints
-      const detectedDimensions = getImageDimensionsFromBuffer(buffer);
-      const clientW = widthsRaw[fileIdx] ? parseInt(widthsRaw[fileIdx], 10) : undefined;
-      const clientH = heightsRaw[fileIdx] ? parseInt(heightsRaw[fileIdx], 10) : undefined;
-      const width =
-        detectedDimensions && detectedDimensions.width > 0
-          ? detectedDimensions.width
-          : clientW && clientW > 0
-            ? clientW
-            : undefined;
-      const height =
-        detectedDimensions && detectedDimensions.height > 0
-          ? detectedDimensions.height
-          : clientH && clientH > 0
-            ? clientH
-            : undefined;
-
-      // Determine content type and extension
-      // The client-side compression in admin-media-manager sends WebP blobs,
-      // so we detect the actual MIME from the file object
-      const contentType = file.type || "image/webp";
-      const ext =
-        contentType.includes("webp")
-          ? ".webp"
-          : contentType.includes("png")
-            ? ".png"
-            : contentType.includes("avif")
-              ? ".avif"
-              : ".jpg";
+      // Use authoritative properties derived strictly from verified binary content
+      const contentType = validation.mimeType;
+      const ext = validation.extension;
+      const width = validation.width;
+      const height = validation.height;
 
       // Storage path: {category}/{mediaId}{ext}
       const storagePath = `${category}/${mediaId}${ext}`;
@@ -223,6 +190,7 @@ export async function uploadMediaAction(formData: FormData) {
     revalidatePath("/admin/media");
     revalidatePath("/gallery");
     revalidatePath("/");
+    revalidateTag("gallery-media", { expire: 0 });
 
     const failedUploads = uploadResults.filter((r) => !r.success);
     if (failedUploads.length > 0 && createdIds.length === 0) {
@@ -290,6 +258,7 @@ export async function createVideoMediaAction(data: {
     revalidatePath("/admin/media");
     revalidatePath("/gallery");
     revalidatePath("/");
+    revalidateTag("gallery-media", { expire: 0 });
 
     return { success: true, item: createdItem };
   } catch (err: unknown) {
@@ -340,6 +309,7 @@ export async function updateMediaAction(data: {
     revalidatePath("/admin/media");
     revalidatePath("/gallery");
     revalidatePath("/");
+    revalidateTag("gallery-media", { expire: 0 });
 
     return { success: true };
   } catch (err: unknown) {
@@ -414,6 +384,7 @@ export async function deleteMediaAction(mediaId: string) {
     revalidatePath("/admin/media");
     revalidatePath("/gallery");
     revalidatePath("/");
+    revalidateTag("gallery-media", { expire: 0 });
 
     return { success: true };
   } catch (err: unknown) {
@@ -442,6 +413,7 @@ export async function toggleMediaPublishedAction(mediaId: string) {
     revalidatePath("/admin/media");
     revalidatePath("/gallery");
     revalidatePath("/");
+    revalidateTag("gallery-media", { expire: 0 });
 
     const result = data as { is_published: boolean } | null;
     return { success: true, is_published: result?.is_published };
@@ -473,6 +445,7 @@ export async function toggleMediaDownloadAction(mediaId: string) {
     revalidatePath("/admin/media");
     revalidatePath("/gallery");
     revalidatePath("/");
+    revalidateTag("gallery-media", { expire: 0 });
 
     const result = data as { download_enabled: boolean } | null;
     return { success: true, download_enabled: result?.download_enabled };
@@ -505,6 +478,7 @@ export async function toggleMediaFeaturedAction(mediaId: string) {
     revalidatePath("/admin/media");
     revalidatePath("/gallery");
     revalidatePath("/");
+    revalidateTag("gallery-media", { expire: 0 });
 
     const result = data as { is_featured: boolean } | null;
     return { success: true, is_featured: result?.is_featured };

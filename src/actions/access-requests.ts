@@ -15,7 +15,7 @@ export type AccessRequestActionResult = {
  * Submits an access request for an authenticated unapproved wedding guest.
  */
 export async function submitAccessRequestAction(
-  prevState: AccessRequestActionResult | null,
+  _prevState: AccessRequestActionResult | null,
   formData: FormData
 ): Promise<AccessRequestActionResult> {
   if (isMemoriesModeActive()) {
@@ -104,7 +104,7 @@ export async function submitAccessRequestAction(
  * Restricted to administrators holding the 'guest_rsvp' permission group.
  */
 export async function adminReviewAccessRequestAction(
-  prevState: AccessRequestActionResult | null,
+  _prevState: AccessRequestActionResult | null,
   formData: FormData
 ): Promise<AccessRequestActionResult> {
   await requireAdmin("guest_rsvp");

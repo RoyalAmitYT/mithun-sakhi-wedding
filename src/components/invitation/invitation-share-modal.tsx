@@ -255,7 +255,7 @@ export function InvitationShareModal({
                 {/* Mini Top Velvet Corner Drape Accent */}
                 <div
                   className="absolute top-0 left-0 w-16 h-16 pointer-events-none opacity-40 z-0 bg-no-repeat bg-contain"
-                  style={{ backgroundImage: "url('/images/corner-drape-top-left.webp')" }}
+                  style={{ backgroundImage: "url('/images/invitationcard-topleft-display.webp')" }}
                   aria-hidden="true"
                 />
 

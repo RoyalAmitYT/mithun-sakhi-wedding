@@ -107,6 +107,8 @@ export function MobileDrawer({
           const offset = navbarEl ? -(navbarEl.offsetHeight - 2) : -64;
           scrollTo(targetEl, { offset });
           window.history.pushState(null, "", `#${link.id}`);
+        } else {
+          scrollTo(`#${link.id}`, { offset: -64 });
         }
       }
     }

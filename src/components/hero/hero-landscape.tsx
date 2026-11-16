@@ -483,6 +483,8 @@ export function HeroLandscape() {
                       if (targetEl) {
                         scrollTo(targetEl, { offset: -72 });
                         window.history.pushState(null, "", `#${targetId}`);
+                      } else {
+                        scrollTo(`#${targetId}`, { offset: -72 });
                       }
                     }
                   }}
@@ -506,6 +508,8 @@ export function HeroLandscape() {
                       if (targetEl) {
                         scrollTo(targetEl, { offset: -72 });
                         window.history.pushState(null, "", `#${targetId}`);
+                      } else {
+                        scrollTo(`#${targetId}`, { offset: -72 });
                       }
                     }
                   }}

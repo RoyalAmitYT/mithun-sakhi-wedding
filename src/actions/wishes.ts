@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireAuth, requireAdmin } from "@/lib/supabase/auth-helpers";
 import { isWeddingCutoffPassed } from "@/data/wedding-data";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export type WishActionResponse =
   | { success: true; wishId?: string }
@@ -14,24 +14,6 @@ export interface PublicWishInput {
   authorName: string;
   wishText: string;
   honeypot?: string;
-}
-
-// In-memory sliding rate limiter for anonymous submissions: max 5 submissions per 60s per IP
-const ipRateLimitMap = new Map<string, number[]>();
-
-function checkRateLimit(ip: string, limit = 5, windowMs = 60000): boolean {
-  const now = Date.now();
-  const timestamps = ipRateLimitMap.get(ip) || [];
-  const validTimestamps = timestamps.filter((t) => now - t < windowMs);
-
-  if (validTimestamps.length >= limit) {
-    ipRateLimitMap.set(ip, validTimestamps);
-    return false;
-  }
-
-  validTimestamps.push(now);
-  ipRateLimitMap.set(ip, validTimestamps);
-  return true;
 }
 
 /**
@@ -56,16 +38,14 @@ export async function submitPublicWishAction(
       return { success: true };
     }
 
-    // Rate limiting defense
-    const headerList = await headers();
-    const forwarded = headerList.get("x-forwarded-for");
-    const ip = forwarded ? forwarded.split(",")[0].trim() : "127.0.0.1";
-
-    if (!checkRateLimit(ip)) {
+    // Distributed persistent rate limiting defense (max 5 requests per 60s per client)
+    const rateLimit = await checkRateLimit("wishes", { limit: 5, windowSeconds: 60 });
+    if (!rateLimit.allowed) {
       return {
         success: false,
         error:
-          "Too many blessing requests submitted. Please wait a minute before sending another.",
+          rateLimit.error ||
+          `Too many blessings submitted from your connection. Please wait ${rateLimit.retryAfter || 60} seconds before sending another.`,
       };
     }
 
@@ -273,8 +253,10 @@ export async function deleteWishAction(
     }
 
     revalidatePath("/");
+    revalidatePath("/wishes");
     revalidatePath("/account");
     revalidatePath("/admin/wishes");
+    revalidateTag("public-wishes", { expire: 0 });
     return { success: true, wishId };
   } catch (err) {
     return {
@@ -306,6 +288,7 @@ export async function adminDeleteWishAction(
     revalidatePath("/");
     revalidatePath("/wishes");
     revalidatePath("/admin/wishes");
+    revalidateTag("public-wishes", { expire: 0 });
     return { success: true, wishId };
   } catch (err) {
     return {
@@ -341,8 +324,10 @@ export async function adminModerateWishAction(
     }
 
     revalidatePath("/");
+    revalidatePath("/wishes");
     revalidatePath("/account");
     revalidatePath("/admin/wishes");
+    revalidateTag("public-wishes", { expire: 0 });
     return { success: true, wishId };
   } catch (err) {
     return {

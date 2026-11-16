@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "@/types/database.types";
 import { Navbar } from "@/components/navigation";
 import { EditorialFooter } from "@/components/sections";
 import { SectionHeaderFiligree } from "@/components/ui/decorative-surfaces";
 import { PageTransition } from "@/components/motion/page-transition";
 import { WishesView } from "./wishes-view";
-import type { ApprovedWish } from "@/components/sections/wishes-preview-wall";
+import { getCachedPublicWishes } from "@/lib/server-data";
+import { Container } from "@/components/ui/container";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 export const metadata: Metadata = {
@@ -21,32 +21,51 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function WishesPage() {
-  let approvedWishes: ApprovedWish[] = [];
+async function WishesAsyncContainer() {
+  const approvedWishes = await getCachedPublicWishes();
+  return <WishesView initialWishes={approvedWishes} />;
+}
 
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey =
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+function WishesSkeletonFallback() {
+  return (
+    <Container size="default" className="relative z-10 space-y-8 animate-pulse">
+      {/* Header Skeleton */}
+      <div className="text-center max-w-3xl mx-auto space-y-3 flex flex-col items-center">
+        <Skeleton className="h-4 w-36 rounded-full" />
+        <Skeleton className="h-10 sm:h-12 w-64 sm:w-80 rounded-xl" />
+        <Skeleton className="h-4 w-4/5 max-w-md rounded-md" />
+        <div className="w-24 h-0.5 bg-[#B8975E]/30 rounded-full my-3" />
+      </div>
 
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseKey);
-      const { data } = await supabase.rpc("get_public_wishes");
-      if (data && Array.isArray(data)) {
-        approvedWishes = (data as unknown as Array<{ id: string; author_display_name: string; wish_text: string; created_at: string }>).map((item) => ({
-          id: item.id,
-          author_display_name: item.author_display_name,
-          wish_text: item.wish_text,
-          created_at: item.created_at,
-        }));
-      }
-    }
-  } catch (err) {
-    console.error("Failed to fetch approved wishes for wishes page:", err);
-    approvedWishes = [];
-  }
+      {/* CTA Bar Skeleton */}
+      <div className="flex items-center justify-between bg-white/70 border border-[#B8975E]/30 rounded-2xl p-4 sm:p-5">
+        <Skeleton className="h-5 w-40 rounded-md" />
+        <Skeleton className="h-11 w-44 rounded-full" />
+      </div>
 
+      {/* Wishes Cards Grid Skeleton */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="rounded-2xl border border-[#B8975E]/20 bg-white/80 p-5 space-y-3.5 shadow-xs"
+          >
+            <div className="flex items-center justify-between">
+              <Skeleton className="h-4 w-32 rounded-md" />
+              <Skeleton className="h-4 w-16 rounded-full" />
+            </div>
+            <Skeleton className="h-4 w-full rounded-md" />
+            <Skeleton className="h-4 w-5/6 rounded-md" />
+            <Skeleton className="h-4 w-2/3 rounded-md" />
+            <Skeleton className="h-3 w-24 rounded-md pt-2" />
+          </div>
+        ))}
+      </div>
+    </Container>
+  );
+}
+
+export default function WishesPage() {
   return (
     <>
       <Navbar />
@@ -81,7 +100,9 @@ export default async function WishesPage() {
             </svg>
           </div>
 
-          <WishesView initialWishes={approvedWishes} />
+          <Suspense fallback={<WishesSkeletonFallback />}>
+            <WishesAsyncContainer />
+          </Suspense>
         </PageTransition>
       </main>
 

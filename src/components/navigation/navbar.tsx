@@ -292,6 +292,8 @@ export function Navbar() {
         const offset = navbarEl ? -(navbarEl.offsetHeight - 2) : -72;
         scrollTo(targetEl, { offset });
         window.history.pushState(null, "", `#${item.id}`);
+      } else {
+        scrollTo(`#${item.id}`, { offset: -72 });
       }
     }
   };
