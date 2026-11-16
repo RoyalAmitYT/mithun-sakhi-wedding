@@ -2,7 +2,6 @@ import React, { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
 import dynamic from "next/dynamic";
 import { Cormorant_Garamond, Manrope, Great_Vibes, Cinzel } from "next/font/google";
-import { getSiteUrl } from "@/lib/site-url";
 import { MotionProvider, SmoothScrollProvider } from "@/components/motion";
 import { AudioProvider } from "@/components/audio";
 import { PetalCanvas } from "@/components/effects";
@@ -47,7 +46,7 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
+  metadataBase: new URL("https://mithun-sakhi-wedding.vercel.app"),
   title: {
     default: "Mithun & Sakhi — Wedding Celebration",
     template: "%s | Mithun & Sakhi Wedding",
@@ -57,13 +56,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
+    url: "https://mithun-sakhi-wedding.vercel.app",
     siteName: "Mithun & Sakhi Wedding",
     title: "Mithun & Sakhi — Wedding Celebration",
     description:
       "Join us in celebrating the wedding festivities of Mithun & Sakhi, 19–22 November 2026, in Purulia, West Bengal.",
     images: [
       {
-        url: "/opengraph-image.jpg",
+        url: "https://mithun-sakhi-wedding.vercel.app/opengraph-image.jpg",
         width: 1200,
         height: 630,
         alt: "Mithun & Sakhi — Wedding Celebration",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     title: "Mithun & Sakhi — Wedding Celebration",
     description:
       "Join us in celebrating the wedding festivities of Mithun & Sakhi, 19–22 November 2026, in Purulia, West Bengal.",
-    images: ["/opengraph-image.jpg"],
+    images: ["https://mithun-sakhi-wedding.vercel.app/opengraph-image.jpg"],
   },
   icons: {
     icon: [

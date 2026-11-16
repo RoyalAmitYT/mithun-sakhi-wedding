@@ -819,11 +819,11 @@ export function OfficialWeddingInvitation({
         </div>
 
         {/* Balanced Two-Column Footer — High Contrast & Elevated Readability */}
-        <footer className={`flex items-center ${isCanonical ? "gap-4 pb-1 pl-7 pr-[32%]" : "gap-2.5 sm:gap-4 pb-0.5 sm:pb-1 pl-3 xs:pl-5 sm:pl-7 pr-[28%] sm:pr-[30%] md:pr-[32%]"}`}>
+        <footer className={`flex items-center ${isCanonical ? "gap-4 pb-1 pl-7 pr-[32%]" : "gap-2.5 sm:gap-4 pb-0.5 sm:pb-1 pl-[22px] sm:pl-7 pr-[25%] sm:pr-[30%] md:pr-[32%]"}`}>
           {/* LEFT: Square Dynamic Vector QR Code in Crisp White Tile with Gold Double Border */}
           <div className={`shrink-0 bg-white rounded-xl border border-[#B8975E]/80 shadow-[0_2px_8px_rgba(184,151,94,0.18)] flex items-center justify-center ${isCanonical ? "p-1.5" : "p-1 sm:p-1.5"}`}>
             <div
-              className={`aspect-square [&>svg]:w-full [&>svg]:h-full flex items-center justify-center overflow-hidden ${isCanonical ? "w-[66px] h-[66px]" : "w-[44px] h-[44px] xs:w-[50px] xs:h-[50px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px]"}`}
+              className={`aspect-square [&>svg]:w-full [&>svg]:h-full flex items-center justify-center overflow-hidden ${isCanonical ? "w-[66px] h-[66px]" : "w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] md:w-[66px] md:h-[66px]"}`}
               dangerouslySetInnerHTML={{ __html: qrSvgMarkup }}
               aria-label={`Scannable QR Code linking to ${canonicalUrl}`}
               role="img"

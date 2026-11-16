@@ -25,22 +25,18 @@ export const CANONICAL_PUBLIC_INVITATION_URL =
   "https://mithun-sakhi-wedding.vercel.app";
 
 export const APPROVED_WHATSAPP_INVITATION_MESSAGE =
-`✨ *A Celebration of Love & Togetherness* ✨
+`✨ *Mithun & Sakhi* ✨
 
-With immense joy and the blessings of our families, we cordially invite you to celebrate the wedding festivities of
+With joy and blessings, we invite you to celebrate our wedding festivities.
 
-❤️ *Mithun & Sakhi* ❤️
+🗓️ *19–22 November 2026*
+📍 *Purulia, West Bengal*
 
-🗓️ *19th – 22nd November 2026*
+Four days of love, traditions and beautiful celebrations.
 
-📍 *Purulia, West Bengal, India*
+Your presence and blessings would mean the world to us. ❤️
 
-Four beautiful celebrations, countless precious moments, and the beginning of a lifetime together.
-
-Your gracious presence and blessings would make our celebration even more special.
-
-💌 *Explore the Wedding Invitation & Complete Celebration Details:*
-
+💌 *Explore the Wedding Invitation:*
 https://mithun-sakhi-wedding.vercel.app`;
 export const CANONICAL_INVITATION_PNG_FILENAME =
   "mithun-sakhi-official-wedding-invitation-4x5.png";
